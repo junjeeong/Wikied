@@ -1,6 +1,48 @@
+@import url("https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css");
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NEXON';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f1f4fd;
+  --background-bold: #ecf0fa;
+
+  --gray-50: #ffffff;
+  --gray-100: #f7f7fa;
+  --gray-200: #e4e5f0;
+  --gray-300: #c6cada;
+  --gray-400: #8f95b2;
+  --gray-500: #474d66;
+  --gray-600: #3b415b;
+
+  --green-100: #eef9f6;
+  --green-200: #4cbfa4;
+  --green-300: #32a68a;
+
+  --red-100: #fbeded;
+  --red-200: #d14343;
+
+  --purple-100: #8e66ff;
+
+  --yellow-100: #fdd181;
+
+  --notice-background: #ced8d5;
+  --notice-text: #1b1b1b;
+  --notice-gray-1: #a1a1a1;
+  --notice-gray-2: #a4a1aa;
+  --notice-blue: #0085ff;
+  --notice-red: #ff472e;
 }
 
 html,
@@ -10,9 +52,9 @@ body {
 }
 
 body {
-  color: var(--foreground);
+  color: var(--gray-500);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Pretendard, NEXON, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
