@@ -13,6 +13,7 @@ interface PostProfileQuery {
   securityQuestion: string;
 }
 
+// 프로필 목록 조회
 export const getProfile = async (query: GetProfileQuery) => {
   const { teamId, page = 1, pageSize = 10, name = "" } = query;
 
@@ -27,6 +28,7 @@ export const getProfile = async (query: GetProfileQuery) => {
   }
 };
 
+// 프로필 생성
 export const postProfile = async (query: PostProfileQuery) => {
   const { teamId, securityAnswer, securityQuestion } = query;
 

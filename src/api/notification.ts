@@ -11,6 +11,7 @@ interface DeleteNotificationsQuery {
   id: number;
 }
 
+// 알림 목록 조회
 export const getNotifications = async (query: GetNotificationsQuery) => {
   const { teamId, page = 1, pageSize = 10 } = query;
 
@@ -25,6 +26,7 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
   }
 };
 
+// 알림 삭제
 export const deleteNotifications = async (query: DeleteNotificationsQuery) => {
   const { teamId, id } = query;
 
