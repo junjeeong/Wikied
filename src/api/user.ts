@@ -1,5 +1,13 @@
 import instance from "./axios";
 
+interface PatchUserQuery {
+  teamId: string;
+  formData: {
+    currentPassword: string;
+    newPassword: string;
+  };
+}
+
 export const getUser = async (teamId: string) => {
   try {
     const res = await instance.get(`/${teamId}/users/me`);
@@ -17,10 +25,8 @@ export const getUser = async (teamId: string) => {
 };
 
 // 새로운 비밀번호와 현재 비밀번호를 formData로 받아서 변경하는 함수
-export const patchUser = async (
-  teamId: string,
-  formData: { currentPassword: string; newPassword: string }
-) => {
+export const patchUser = async (query: PatchUserQuery) => {
+  const { teamId, formData } = query;
   const { currentPassword, newPassword } = formData;
 
   try {
