@@ -49,7 +49,7 @@ export const postComment = async (query: PostCommentQuery) => {
   const { content } = body;
 
   try {
-    const res = await instance.get(
+    const res = await instance.post(
       `/${teamId}/articles/${articleId}/comments`,
       {
         content: content,
@@ -70,7 +70,7 @@ export const patchComment = async (query: PatchCommentQuery) => {
   const { content } = body;
 
   try {
-    const res = await instance.get(`/${teamId}/comments/${commentId}`, {
+    const res = await instance.patch(`/${teamId}/comments/${commentId}`, {
       content: content,
     });
     if (res.status === 200) {
@@ -87,7 +87,7 @@ export const deleteComment = async (query: DeleteCommentQuery) => {
   const { teamId, commentId } = query;
 
   try {
-    const res = await instance.get(`/${teamId}/comments/${commentId}`);
+    const res = await instance.delete(`/${teamId}/comments/${commentId}`);
     if (res.status === 200) {
       return res.data;
     }

@@ -33,7 +33,7 @@ export const postProfile = async (query: PostProfileQuery) => {
   const { teamId, securityAnswer, securityQuestion } = query;
 
   try {
-    const res = await instance.get(`/${teamId}/profiles`, {
+    const res = await instance.post(`/${teamId}/profiles`, {
       securityAnswer: securityAnswer,
       securityQuestion: securityQuestion,
     });

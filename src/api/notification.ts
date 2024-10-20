@@ -31,7 +31,7 @@ export const deleteNotifications = async (query: DeleteNotificationsQuery) => {
   const { teamId, id } = query;
 
   try {
-    const res = await instance.get(`/${teamId}/notifications/${id}`);
+    const res = await instance.delete(`/${teamId}/notifications/${id}`);
     if (res.status === 200) {
       return res.data;
     }
