@@ -9,7 +9,7 @@ export const SearchInput = ({ onSubmit, onChange, value }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="styles.container">
+      <div className={styles.container}>
         <input
           className={styles.input}
           type="text"
