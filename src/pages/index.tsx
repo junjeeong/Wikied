@@ -1,4 +1,3 @@
-export const index = () => {
-  return ()
-    
-};
+const HomePage = () => {};
+
+export default HomePage;
