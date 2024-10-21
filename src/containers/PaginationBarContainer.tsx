@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PaginationBar from "@/components/ui/PaginationBar";
+import PaginationBar from "@/components/PaginationBar";
 
 interface PaginationBarContainerProps { 
   totalCount: number;
