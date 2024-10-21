@@ -1,0 +1,36 @@
+.container {
+    width: 100vw;
+    padding: 25px 80px;
+    height: 80px;
+    background-color: var(--gray-50);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navList {
+    display: flex;
+    flex-grow: 1;
+    gap: 40px;
+    margin-left: 40px;
+}
+
+.navList ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navItem {
+    font-size: 14px;
+    color: var(--gray-500);
+}
+
+.login {
+    font-size: 14px;
+    color: var(--gray-500);
+}
+
+.isActive {
+    font-weight: bold;
+}
