@@ -10,9 +10,11 @@
 
 .navList {
     display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
     flex-grow: 1;
     gap: 40px;
-    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .navList ul {
@@ -23,12 +25,24 @@
 
 .navItem {
     font-size: 14px;
-    color: var(--gray-500);
+    color: var(--gray-400);
 }
 
 .login {
     font-size: 14px;
-    color: var(--gray-500);
+    height: 32px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 0 16px;
+    background-color: var(--green-200);
+    color: var(--gray-50);
+    cursor: pointer;
+
+    &:hover {
+        /* global.css에 "green-50"으로 추가해야함. */
+        background-color: rgb(108, 217, 191);
+    }
 }
 
 .isActive {
