@@ -1,7 +1,6 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
 import Image from "next/image";
 import searchIcon from "@/assets/icon/ic_search.svg";
-import styles from "./SearchInput.module.css";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
@@ -16,30 +15,28 @@ export const SearchInput = ({
   onSubmit,
   onChange,
 }: SearchInputProps) => {
-  // 들어오는 size에 따라 크기가 달라지게 설계함.
-  // 검색 input이니까 제출했을떄 value가 url에 표시가 되어야 함.
-  // input 안에있는 값이 바뀔때마다 부모 컴포넌트의 state 값이 바뀌어야 함. -> 제어 컴포넌트
-  // value = state 값이라고 보면 됨.
-
   const sizes = {
-    large: { width: "860px", height: "45px" },
-    medium: { width: "704px", height: "45px" },
-    small: { width: "335px", height: "45px" },
+    large: "w-[860px] h-[45px]",
+    medium: "w-[704px] h-[45px]",
+    small: "w-[335px] h-[45px]",
   };
 
   const style = sizes[size] || sizes.large;
+
   return (
     <form onSubmit={onSubmit}>
-      <div className={styles.container}>
+      <div className="relative">
         <input
-          className={styles.input}
-          style={sizes[size]}
+          className={`p-2 pl-14 pr-32 border-none rounded-lg bg-gray-100 text-gray-500 text-sm focus:outline-green200${style}`}
           type="text"
           value={value}
           placeholder="이름으로 위키 찾기"
           onChange={onChange}
         />
-        <button className={styles.button} type="submit">
+        <button
+          className={`absolute top-2 left-4 border-transparent bg-gray-100 cursor-pointer focus:outline-green200`}
+          type="submit"
+        >
           <Image src={searchIcon} width={24} height={24} alt="/" />
         </button>
       </div>

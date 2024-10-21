@@ -27,10 +27,3 @@ body {
 body {
   @apply text-gray-500 bg-bg-light font-pretendard antialiased;
 }
-
-/* Custom global focus outline */
-@layer base {
-  *:focus {
-    outline: 1px solid theme('colors.green.200');
-  }
-}

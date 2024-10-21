@@ -31,7 +31,7 @@ export const Header = () => {
         <li
           className={`${
             router.pathname === "/boards" ? "font-bold" : "text-gray-400"
-          } text-sm hover:font-bold`}
+          } text-md hover:font-bold`}
         >
           <Link href="/boards" aria-label="자유 게시판">
             자유 게시판
@@ -40,7 +40,7 @@ export const Header = () => {
         <li
           className={`${
             router.pathname === "/wikilist" ? "font-bold" : "text-gray-400"
-          } text-sm hover:font-bold`}
+          } text-md hover:font-bold`}
         >
           <Link href="/wikilist" aria-label="모든 위키">
             모든 위키
@@ -57,7 +57,7 @@ export const Header = () => {
       </ul>
 
       <Link href="/signin">
-        <button className="text-sm h-8 font-bold border-none rounded-lg px-4 bg-green-200 text-gray-50 cursor-pointer hover:bg-green-100">
+        <button className="text-md h-8 font-bold border-none rounded-lg px-4 bg-green200 text-gray-50 cursor-pointer hover:bg-green100">
           로그인
         </button>
       </Link>
