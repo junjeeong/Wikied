@@ -34,3 +34,10 @@
 .pagination-btn.selected {
   color: var(--green-200);
 }
+
+@media (max-width: 768px) {
+  .pagination-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
