@@ -27,14 +27,14 @@ export const SearchInput = ({
     <form onSubmit={onSubmit}>
       <div className="relative">
         <input
-          className={`p-2 pl-14 pr-32 border-none rounded-lg bg-gray-100 text-gray-500 text-sm focus:outline-green200${style}`}
+          className={`p-2 pl-14 pr-32 border-none rounded-lg bg-gray-100 text-gray-500 text-md focus:outline-green100 ${style}`}
           type="text"
           value={value}
           placeholder="이름으로 위키 찾기"
           onChange={onChange}
         />
         <button
-          className={`absolute top-2 left-4 border-transparent bg-gray-100 cursor-pointer focus:outline-green200`}
+          className={`absolute top-2.5 left-4 border-transparent bg-gray-100 cursor-pointer focus:outline-green100`}
           type="submit"
         >
           <Image src={searchIcon} width={24} height={24} alt="/" />
