@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 
-@import url("https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css");
+/* @tailwind base : reset CSS 포함 */
+@tailwind base;
+/* @tailwind components : 재사용할 CSS 규칙 */
+@tailwind components;
+/* @tailwind utilities : 유틸리티 클래스 로드 */
+@tailwind utilities;
 
 @font-face {
   font-family: "Pretendard";
@@ -19,6 +24,15 @@
     format("woff");
   font-weight: normal;
   font-style: normal;
+}
+
+html,
+body {
+  @apply max-w-full overflow-x-hidden;
+}
+
+body {
+  @apply text-gray-500 bg-bg-light font-pretendard antialiased;
 }
 
 :root {
