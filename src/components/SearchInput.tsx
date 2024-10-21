@@ -39,7 +39,7 @@ export const SearchInput = ({
           onChange={onChange}
         />
         <button className={styles.button} type="submit">
-          <Image src={searchIcon} width={22} height={22} alt="/" />
+          <Image src={searchIcon} width={24} height={24} alt="/" />
         </button>
       </div>
     </form>
