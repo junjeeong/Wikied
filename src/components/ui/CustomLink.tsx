@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./LinkComp.module.css";
+import styles from "./CustomLink.module.css";
 import linkIcon from "@/assets/icon/ic_link.svg";
 
-interface LinkCompProps {
+interface CustomLinkProps {
   link: string;
   size?: "small" | "medium";
 }
 
-const LinkComp = ({ link, size = "medium" }: LinkCompProps) => {
+const CustomLink = ({ link, size = "medium" }: CustomLinkProps) => {
   const imageSize = {
     small: { width: 16, height: 16 },
     medium: { width: 20, height: 20 },
@@ -29,4 +29,4 @@ const LinkComp = ({ link, size = "medium" }: LinkCompProps) => {
   );
 };
 
-export default LinkComp;
+export default CustomLink;
