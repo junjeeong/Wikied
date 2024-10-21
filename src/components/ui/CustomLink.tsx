@@ -15,7 +15,7 @@ const CustomLink = ({ link, size = "medium" }: CustomLinkProps) => {
   };
 
   return (
-    <div className={styles.linkContainer}>
+    <div className={styles["link-container"]}>
       <Image
         src={linkIcon}
         width={imageSize[size].width}
