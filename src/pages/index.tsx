@@ -1,6 +1,5 @@
 const HomePage = () => {
-    return 
-    d
+    return ();
 };
 
 export default HomePage;
