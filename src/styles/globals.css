@@ -1,4 +1,9 @@
-@import url("https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css");
+/* @tailwind base : reset CSS 포함 */
+@tailwind base;
+/* @tailwind components : 재사용할 CSS 규칙 */
+@tailwind components;
+/* @tailwind utilities : 유틸리티 클래스 로드 */
+@tailwind utilities;
 
 @font-face {
   font-family: "Pretendard";
@@ -16,59 +21,11 @@
   font-style: normal;
 }
 
-:root {
-  --background: #f1f4fd;
-  --background-bold: #ecf0fa;
-
-  --gray-50: #ffffff;
-  --gray-100: #f7f7fa;
-  --gray-200: #e4e5f0;
-  --gray-300: #c6cada;
-  --gray-400: #8f95b2;
-  --gray-500: #474d66;
-  --gray-600: #3b415b;
-
-  --green-50: #eef9f6;
-  --green-100: #6cd9bf;
-  --green-200: #4cbfa4;
-  --green-300: #32a68a;
-
-  --red-100: #fbeded;
-  --red-200: #d14343;
-
-  --purple-100: #8e66ff;
-
-  --yellow-100: #fdd181;
-
-  --notice-background: #ced8d5;
-  --notice-text: #1b1b1b;
-  --notice-gray-1: #a1a1a1;
-  --notice-gray-2: #a4a1aa;
-  --notice-blue: #0085ff;
-  --notice-red: #ff472e;
-}
-
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  @apply max-w-full overflow-x-hidden;
 }
 
 body {
-  color: var(--gray-500);
-  background: var(--background);
-  font-family: Pretendard, NEXON, Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  @apply text-gray-500 bg-bg-light font-pretendard antialiased;
 }
