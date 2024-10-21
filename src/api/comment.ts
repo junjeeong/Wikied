@@ -35,7 +35,7 @@ export const getComment = async (query: GetCommentQuery) => {
   try {
     const res = await instance.get(`/${teamId}/articles/${articleId}/comments`);
     if (res.status === 200) {
-      return res.data;
+      return res.data.list;
     }
   } catch (err) {
     console.log("댓글 목록을 불러오지 못했습니다.", err);

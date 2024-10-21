@@ -1,6 +1,6 @@
 import instance from "./axios";
 
-interface GetProfileQuery {
+interface GetProfilesQuery {
   teamId: string;
   page: number;
   pageSize: number;
@@ -14,13 +14,13 @@ interface PostProfileQuery {
 }
 
 // 프로필 목록 조회
-export const getProfile = async (query: GetProfileQuery) => {
+export const getProfiles = async (query: GetProfilesQuery) => {
   const { teamId, page = 1, pageSize = 10, name = "" } = query;
 
   try {
     const res = await instance.get(`/${teamId}/profiles`);
     if (res.status === 200) {
-      return res.data;
+      return res.data.list;
     }
   } catch (err) {
     console.log("프로필 정보들을 불러오지 못했습니다.", err);

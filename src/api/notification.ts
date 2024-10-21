@@ -18,7 +18,7 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
   try {
     const res = await instance.get(`/${teamId}/notifications`);
     if (res.status === 200) {
-      return res.data;
+      return res.data.list;
     }
   } catch (err) {
     console.log("알림 목록을 불러오지 못했습니다.", err);
