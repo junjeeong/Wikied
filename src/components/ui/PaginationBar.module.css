@@ -1,0 +1,36 @@
+.pagination-container {
+  display: flex;
+  gap: 15px;
+}
+
+.pagination-btn {
+  border: none;
+  border-radius: 10px;
+  width: 45px;
+  height: 45px;
+  color: var(--gray-400);
+  background-color: var(--gray-50);
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 26px;
+  box-shadow: 0 4px 20px 0 rgba(0 0 0 /0.8%);
+}
+
+.pagination-btn.left-btn {
+  background-image: url(../../assets/icon/ic_arrow_bottom2.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transform: rotate(90deg);
+}
+
+.pagination-btn.right-btn {
+  background-image: url(../../assets/icon/ic_arrow_bottom2.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transform: rotate(-90deg);
+}
+
+.pagination-btn.selected {
+  color: var(--green-200);
+}
