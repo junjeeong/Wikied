@@ -17,14 +17,14 @@ const PaginationBar = ({
         type="button"
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
-        className="border-none rounded-[10px] w-[45px] h-[45px] text-[var(--gray-400)] bg-[var(--gray-50)] font-pretendard text-[18px] font-normal leading-[26px] shadow-[0_4px_20px_rgba(0,0,0,0.008)] bg-[url('../assets/icon/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform rotate-90"
+        className="rounded-[10px] w-[45px] h-[45px] text-gray400 bg-gray50 font-pretendard text-[18px] font-normal leading-[26px] shadow-[0_4px_20px_rgba(0,0,0,0.008)] bg-[url('../assets/icon/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform rotate-90"
       ></button>
       {pageArr.map((page) => (
         <button
           type="button"
           key={page}
-          className={`border-none rounded-[10px] w-[45px] h-[45px] text-[var(--gray-400)] bg-[var(--gray-50)] font-pretendard text-[18px] font-normal leading-[26px] shadow-[0_4px_20px_rgba(0,0,0,0.008)] 
-${currentPage === page ? "text-[var(--green-200)]" : ""}`}
+          className={`rounded-[10px] w-[45px] h-[45px] text-gray400 bg-gray50 font-pretendard text-[18px] font-normal leading-[26px] shadow-[0_4px_20px_rgba(0,0,0,0.008)] 
+${currentPage === page ? "text-green200" : ""}`}
           onClick={() => handlePageChange(page)}
         >
           {page}
@@ -34,7 +34,7 @@ ${currentPage === page ? "text-[var(--green-200)]" : ""}`}
         type="button"
         disabled={currentPage === totalPage}
         onClick={() => handlePageChange(currentPage + 1)}
-        className="border-none rounded-[10px] w-[45px] h-[45px] text-[var(--gray-400)] bg-[var(--gray-50)] font-pretendard text-[18px] font-normal leading-[26px] shadow-[0_4px_20px_rgba(0,0,0,0.008)] bg-[url('../assets/icon/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform -rotate-90"
+        className="rounded-[10px] w-[45px] h-[45px] text-gray400 bg-gray50 font-pretendard text-[18px] font-normal leading-[26px] shadow-[0_4px_20px_rgba(0,0,0,0.008)] bg-[url('../assets/icon/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform -rotate-90"
       ></button>
     </div>
   );

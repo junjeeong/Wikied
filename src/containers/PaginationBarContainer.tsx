@@ -4,15 +4,16 @@ import PaginationBar from "@/components/PaginationBar";
 interface PaginationBarContainerProps { 
   totalCount: number;
   itemsPerPage: number;
+  maxPage: number;
 }
 
 export const PaginationBarContainer = ({
   totalCount,
   itemsPerPage,
+  maxPage = 5,
 }: PaginationBarContainerProps) => {
   
   const [currentPage, setCurrentPage] = useState(1);
-  const maxPage = 5;
   const totalPage = Math.ceil(totalCount / itemsPerPage);
   let startPage;
   let calNum;
