@@ -4,6 +4,7 @@ import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo/wikied.svg";
+import Button from "../ui/Button";
 
 export const Header = () => {
   const router = useRouter();
@@ -57,9 +58,7 @@ export const Header = () => {
       </ul>
 
       <Link href="/signin">
-        <button className="text-md h-8 font-bold border-none rounded-lg px-4 bg-green200 text-gray-50 cursor-pointer hover:bg-green100">
-          로그인
-        </button>
+        <Button>로그인</Button>
       </Link>
     </div>
   );
