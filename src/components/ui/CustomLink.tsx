@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./CustomLink.module.css";
 import linkIcon from "@/assets/icon/ic_link.svg";
 
 interface CustomLinkProps {
@@ -15,16 +14,17 @@ const CustomLink = ({ link, size = "medium" }: CustomLinkProps) => {
   };
 
   return (
-    <div className={styles.linkContainer}>
+    <div className="flex items-center gap-[5px] w-fit px-[10px] py-[3px] rounded-[10px] bg-green50 text-green200">
       <Image
         src={linkIcon}
         width={imageSize[size].width}
         height={imageSize[size].height}
         alt="링크 아이콘"
       />
-      <Link className={styles[size]} href={link}>
+      <Link className={size === "medium" ? "text-md" : "text-xs"} href={link}>
         {link}
       </Link>
+      <p className="text-"></p>
     </div>
   );
 };

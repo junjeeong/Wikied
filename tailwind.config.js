@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // Tailwind CSS 클래스를 사용할 파일 경로
+    "./src/pages/**/*.{js,ts,jsx,tsx}", // 페이지 파일들
+    "./src/components/**/*.{js,ts,jsx,tsx}", // 컴포넌트 파일들
+    "./src/**/*.{js,ts,jsx,tsx}", // src 폴더 안의 모든 파일들 (컴포넌트, 페이지 등 포함)
   ],
   theme: {
     screens: {
@@ -15,28 +17,28 @@ module.exports = {
         nexon: ["NEXON", "sans-serif"],
       },
       colors: {
-        "bg-light": "#f1f4fd",
-        "bg-bold": "#ecf0fa",
+        "landing-light": "#f1f4fd",
+        "landing-bold": "#ecf0fa",
 
-        gray50: "#ffffff",
-        gray100: "#f7f7fa",
-        gray200: "#e4e5f0",
-        gray300: "#c6cada",
-        gray400: "#8f95b2",
-        gray500: "#474d66",
-        gray600: "#3b415b",
+        background: "#ffffff",
+        "gray-100": "#f7f7fa",
+        "gray-200": "#e4e5f0",
+        "gray-300": "#c6cada",
+        "gray-400": "#8f95b2",
+        "gray-500": "#474d66",
+        "gray-600": "#3b415b",
 
-        green50: "#EEF9F6",
-        green100: "#6cd9bf",
-        green200: "#4CBFA4",
-        green300: "#32A68A",
+        "green-50": "#EEF9F6",
+        "green-100": "#6cd9bf",
+        "green-200": "#4CBFA4",
+        "green-300": "#32A68A",
 
-        red100: "#fbeded",
-        red200: "#d14343",
+        "red-100": "#fbeded",
+        "red-200": "#d14343",
 
-        purple100: "#8e66ff",
+        "purple-100": "#8e66ff",
 
-        yellow100: "#fdd181",
+        "yellow-100": "#fdd181",
 
         "notice-bg": "#ced8d5",
         "notice-text": "#1b1b1b",
@@ -55,7 +57,7 @@ module.exports = {
         lg: ["16px", { lineHeight: "26px" }],
         md: ["14px", { lineHeight: "24px" }],
         sm: ["13px", { lineHeight: "22px" }],
-        xs: ["12px", { lineHeight: "20px" }],
+        xs: ["12px", { lineHeight: "18px" }],
       },
     },
   },
