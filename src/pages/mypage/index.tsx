@@ -60,7 +60,7 @@ const MyPage = () => {
         </label>
         <div className="flex flex-col gap-2">
           <input
-            className="w-full h-[45px] py-5 px-4 mt-2 rounded-xl bg-gray-50 placeholder:text-gray-400 text-sm"
+            className="mypage-input placeholder: text-gray-400"
             type="password"
             placeholder="기존 비밀번호"
             {...registerPassword("currentPassword", {
@@ -68,13 +68,13 @@ const MyPage = () => {
             })}
           />
           {passwordErrors.currentPassword && (
-            <span className="pl-2 text-red-500 text-sm">
+            <span className="errormessage">
               {passwordErrors.currentPassword.message}
             </span>
           )}
 
           <input
-            className="w-full h-[45px] py-5 px-4 rounded-xl bg-gray-50 placeholder:text-gray-400 text-sm"
+            className="mypage-input placeholder: text-gray-400"
             type="password"
             placeholder="새 비밀번호"
             {...registerPassword("newPassword", {
@@ -82,13 +82,13 @@ const MyPage = () => {
             })}
           />
           {passwordErrors.newPassword && (
-            <span className="pl-2 text-red-500 text-sm">
+            <span className="errormessage">
               {passwordErrors.newPassword.message}
             </span>
           )}
 
           <input
-            className="w-full h-[45px] py-5 px-4 rounded-xl bg-gray-50 placeholder:text-gray-400 text-sm"
+            className="mypage-input placeholder: text-gray-400"
             type="password"
             placeholder="새 비밀번호 확인"
             {...registerPassword("confirmPassword", {
@@ -101,18 +101,15 @@ const MyPage = () => {
             })}
           />
           {passwordErrors.confirmPassword && (
-            <span className="pl-2 text-red-500 text-sm">
+            <span className="errormessage">
               {passwordErrors.confirmPassword.message}
             </span>
           )}
         </div>
-        <button className="mt-4 ml-auto px-[20px] py-[11px] text-sm font-bold text-gray50 bg-green200 rounded-[10px] hover:bg-green100">
-          변경하기
-        </button>
+        <button className="mypage-button hover: bg-green100">변경하기</button>
       </form>
 
-      {/* divider 따로 ui컴포넌트로 구현해야 함. */}
-      <div className="w-full border border-gray-50 mt-[32px]"></div>
+      <div className="divider mt-[32px]"></div>
 
       {/* 위키 생성 폼 */}
       <form
@@ -123,32 +120,28 @@ const MyPage = () => {
           위키 생성하기
         </label>
         <input
-          className="mt-2 w-full h-[45px] py-5 px-4 rounded-xl bg-gray-50 placeholder:text-gray-400 text-sm"
+          className="mypage-input placeholder: text-gray-400"
           type="text"
           placeholder="질문을 입력해 주세요"
           {...registerWiki("wikiQuestion", { required: "질문은 필수입니다." })}
         />
         {wikiErrors.wikiQuestion && (
-          <span className="pl-2 text-red-500 text-sm">
+          <span className="errormessage">
             {wikiErrors.wikiQuestion.message}
           </span>
         )}
 
         <input
-          className="mt-2 w-full h-[45px] py-5 px-4 rounded-xl bg-gray-50 placeholder:text-gray-400 text-sm"
+          className="mypage-input placeholder: text-gray-400"
           type="text"
           placeholder="답을 입력해 주세요"
           {...registerWiki("wikiAnswer", { required: "답은 필수입니다." })}
         />
         {wikiErrors.wikiAnswer && (
-          <span className="pl-2 text-red-500 text-sm">
-            {wikiErrors.wikiAnswer.message}
-          </span>
+          <span className="errormessage">{wikiErrors.wikiAnswer.message}</span>
         )}
 
-        <button className="mt-4 ml-auto px-[20px] py-[11px] text-sm font-bold text-gray50 bg-green200 rounded-[10px] hover:bg-green100">
-          생성하기
-        </button>
+        <button className="mypage-button hover: bg-green100">생성하기</button>
       </form>
     </div>
   );
