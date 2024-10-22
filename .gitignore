@@ -7,10 +7,6 @@
 .pnp.js
 .yarn/install-state.gz
 
-# Ignore Tailwind CSS config
-tailwind.config.js
-postcss.config.js
-
 # testing
 /coverage
 
