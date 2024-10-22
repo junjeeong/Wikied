@@ -5,7 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "small" | "medium" | "large";
   mode?: "normal" | "empty" | "main" | "mainR";
   fullWidth?: boolean;
-  loading?: boolean;
+  editing?: boolean;
 }
 
 export default function Button({
@@ -13,7 +13,7 @@ export default function Button({
   size = "medium",
   mode = "normal",
   fullWidth = false,
-  loading = false,
+  editing = false,
   ...rest
 }: ButtonProps) {
   const sizeClasses = {
@@ -24,12 +24,12 @@ export default function Button({
 
   const modeClasses = {
     normal:
-      "bg-green200 rounded-[10px] text-gray50 text-[14px] font-semibold leading-[24px] hover:bg-green100 disabled:bg-gray300",
+      "bg-green-200 rounded-[10px] text-gray50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300",
     empty:
-      "bg-transparent border border-green200 rounded-[10px] text-green200 text-[14px] font-semibold leading-[24px] hover:border-green100 hover:text-green100",
-    main: "bg-gray500 rounded-[15px] py-[15px] px-[30px] text-gray50 text-[24px] font-bold leading-[28.64px] hover:bg-gray400",
+      "bg-transparent border border-green-200 rounded-[10px] text-green-200 text-[14px] font-semibold leading-[24px] hover:border-green-100 hover:text-green-100",
+    main: "bg-gray-500 rounded-[15px] py-[15px] px-[30px] text-gray-50 text-[24px] font-bold leading-[28.64px] hover:bg-gray-400",
     mainR:
-      "bg-gray50 rounded-[15px] py-[15px] px-[30px] text-gray500 text-[24px] font-bold leading-[28.64px] hover:bg-gray100",
+      "bg-gray-50 rounded-[15px] py-[15px] px-[30px] text-gray-500 text-[24px] font-bold leading-[28.64px] hover:bg-gray-100",
   };
 
   return (
@@ -40,7 +40,7 @@ export default function Button({
         }`}
         {...rest}
       >
-        {loading ? "편집 중 ..." : children}
+        {editing ? "편집 중 ..." : children}
       </button>
     </>
   );
