@@ -1,9 +1,8 @@
-import PaginationBarContainer from "@/containers/PaginationBarContainer"
+import UserPaginationContainer from "@/containers/UserPaginationContainer";
+
 
 const Login = () => {
-  return (
-  <PaginationBarContainer/>
-  )
-}
+  return <UserPaginationContainer />;
+};
 
 export default Login;
