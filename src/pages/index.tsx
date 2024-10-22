@@ -1,11 +1,7 @@
-import Button from "@/components/ui/Button";
+import { Header } from "@/components/Layout/Header";
 
 const HomePage = () => {
-  return (
-    <>
-      <Button>내 위키 만들기</Button>
-    </>
-  );
+  return <Header />;
 };
 
 export default HomePage;
