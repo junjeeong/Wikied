@@ -1,0 +1,42 @@
+.button-container {
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.small {
+  padding: 11px 20px;
+}
+
+.medium {
+  padding: 13px 40px;
+}
+
+.large {
+  padding: 13px 175px;
+}
+
+.normal {
+  background-color: var(--green-200);
+  border: none;
+  color: var(--gray-50);
+}
+
+.normal:disabled {
+  background-color: var(--gray-300);
+}
+
+.empty {
+  background-color: transparent;
+  border: 1px solid var(--green-200);
+  color: var(--green-200);
+}
+
+.full-width {
+  width: 100%;
+}
