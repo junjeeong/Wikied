@@ -24,7 +24,7 @@ export default function Button({
 
   const modeClasses = {
     normal:
-      "bg-green-200 rounded-[10px] text-gray50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300",
+      "bg-green-200 rounded-[10px] text-gray-50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300",
     empty:
       "bg-transparent border border-green-200 rounded-[10px] text-green-200 text-[14px] font-semibold leading-[24px] hover:border-green-100 hover:text-green-100",
     main: "bg-gray-500 rounded-[15px] py-[15px] px-[30px] text-gray-50 text-[24px] font-bold leading-[28.64px] hover:bg-gray-400",
