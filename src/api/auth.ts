@@ -1,7 +1,6 @@
 import instance from "./axios";
 
 interface PostSignUpQuery {
-  teamId: string;
   body: {
     email: string;
     name: string;
@@ -11,11 +10,8 @@ interface PostSignUpQuery {
 }
 
 interface PostSignInQuery {
-  teamId: string;
-  body: {
-    email: string;
-    password: string;
-  };
+  email: string;
+  password: string;
 }
 interface PostRefreshTokenQuery {
   teamId: string;
@@ -25,46 +21,40 @@ interface PostRefreshTokenQuery {
 }
 
 // 회원가입
-export const postSignUp = async (query: PostSignUpQuery) => {
-  const { teamId, body } = query;
-
+export const postSignUp = async (body: PostSignUpQuery) => {
   try {
-    const res = await instance.post(`/${teamId}/auth/signUp`, body);
+    const res = await instance.post(`/auth/signUp`, body);
     if (res.status === 200) {
       return res.data;
     }
   } catch (err) {
-    console.log("회원가입에 실패했습니다.", err);
+    console.error("회원가입에 실패했습니다.", err);
     return {};
   }
 };
 
 // 로그인
-export const postSignIn = async (query: PostSignInQuery) => {
-  const { teamId, body } = query;
-
+export const postSignIn = async (body: PostSignInQuery) => {
   try {
-    const res = await instance.post(`/${teamId}/auth/signIn`, body);
+    const res = await instance.post(`/auth/signIn`, body);
     if (res.status === 200) {
       return res.data;
     }
   } catch (err) {
-    console.log("로그인에 실패했습니다.", err);
+    console.error("로그인에 실패했습니다.", err);
     return {};
   }
 };
 
 // 토큰 재갱신
-export const postRefreshToken = async (query: PostRefreshTokenQuery) => {
-  const { teamId, body } = query;
-
+export const postRefreshToken = async (body: PostRefreshTokenQuery) => {
   try {
-    const res = await instance.post(`/${teamId}/auth/refresh-token`, body);
+    const res = await instance.post(`/auth/refresh-token`, body);
     if (res.status === 200) {
       return res.data;
     }
   } catch (err) {
-    console.log("토큰 재갱신에 실패했습니다.", err);
+    console.error("토큰 재갱신에 실패했습니다.", err);
     return {};
   }
 };
