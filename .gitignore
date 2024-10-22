@@ -34,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore Tailwind CSS config
+tailwind.config.js
+postcss.config.js
