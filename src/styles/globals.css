@@ -27,5 +27,5 @@ body {
 }
 
 body {
-  @apply text-gray-500 bg-bg-light font-pretendard antialiased;
+  @apply text-gray-500 bg-landing-light font-pretendard antialiased;
 }

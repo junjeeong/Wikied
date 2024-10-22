@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import PaginationBar from "@/components/PaginationBar";
 
-interface PaginationBarContainerProps { 
+interface PaginationBarContainerProps {
   totalCount?: number;
   itemsPerPage?: number;
   maxPage?: number;
 }
 
 const PaginationBarContainer = ({
-  totalCount=10,
-  itemsPerPage=2,
+  totalCount = 10,
+  itemsPerPage = 2,
   maxPage = 5,
 }: PaginationBarContainerProps) => {
-  
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
 
   const totalPage = Math.ceil(totalCount / itemsPerPage);
   let startPage;
@@ -32,20 +33,24 @@ const PaginationBarContainer = ({
     (_, i) => startPage + i
   );
 
-  useEffect(() => {
-    //api 함수
-  },[currentPage])
+useEffect(() => {
+  getProfiles()
+})
+
 
   const handlePageChange = (page: number) => {
+    setIsLoading(true);
     setCurrentPage(page);
   };
 
+ 
   return (
     <PaginationBar
       totalPage={totalPage}
       currentPage={currentPage}
       pageArr={pageArr}
       handlePageChange={handlePageChange}
+      isLoading={isLoading}
     ></PaginationBar>
   );
 };
