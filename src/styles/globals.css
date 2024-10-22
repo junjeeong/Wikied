@@ -19,11 +19,28 @@
   font-style: normal;
 }
 
-html,
-body {
-  @apply max-w-full overflow-x-hidden;
-}
+@layer base {
 
-body {
-  @apply text-gray-500 bg-bg-light font-pretendard antialiased;
+  html,
+  body {
+    @apply max-w-full overflow-x-hidden;
+  }
+
+  body {
+    @apply text-gray500 bg-background font-pretendard antialiased;
+  }
+
+  html,
+  body {
+    -ms-overflow-style: none;
+    /* IE와 Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+  }
 }
