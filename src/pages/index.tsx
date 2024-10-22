@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import LandingTexts from "@/components/ui/LandingTexts";
 import titleImg from "@/assets/images/img_home1.png";
 import writeImg from "@/assets/images/img_home4.png";
