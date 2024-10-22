@@ -1,44 +1,47 @@
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { postSignIn } from "@/api/auth";
-import {useNavigate} from "react-router-dom";
-
+import { useRouter } from "next/router";
+import instance from "@/api/axios";
+import { AxiosError } from "axios";
 
 export interface InputVlaues {
   email: string;
   name?: string;
   password: string;
-  passwrodConfirm?: string;
+  passwrodConfirmation?: string;
 }
 
 export const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    setError, // 에러 설정을 위한 메서드
     formState: { isSubmitting, errors },
   } = useForm<InputVlaues>({
     mode: "onChange",
   });
-  const navigte = useNavigate();
+
+  const router = useRouter();
 
   const onSubmit = async (data: InputVlaues) => {
-   const response = await postSignIn(data);
-
-   if(response.error){
-    if(response.error === "PasswordMismatch") {
-      setError("password", {
-        type: "manual",
-        message: "비밀번호가 일치하지 않습니다."
-      })
+   try {
+     await instance.post('/auth/signIn', {
+     email: data.email,
+     password: data.password,
+   })
+   router.push('/')
+  } catch (err) {
+    if(err instanceof AxiosError ){
+      window.alert(err.response?.data.message)
     }
-   }
+  }
+    
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen Mobile:px-5 bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-gray-50">
       <div className="w-full max-w-md">
-        <h1 className="text-2xl font-semibold mb-[50px] text-center">로그인</h1>
+        <h2 className="text-2xl font-semibold mb-[50px] text-center">로그인</h2>
         <form
           noValidate
           onSubmit={handleSubmit(onSubmit)}
