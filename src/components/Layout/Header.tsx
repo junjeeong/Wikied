@@ -57,7 +57,7 @@ export const Header = () => {
       </ul>
 
       <Link href="/signin">
-        <button className="text-md h-8 font-bold border-none rounded-lg px-4 bg-green200 text-gray-50 cursor-pointer hover:bg-green100">
+        <button className="text-md h-8 font-bold border-none rounded-lg px-4 bg-green-200 text-gray-50 cursor-pointer hover:bg-green-100">
           로그인
         </button>
       </Link>
