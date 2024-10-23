@@ -24,7 +24,7 @@ export const getProfiles = async (query: GetProfilesQuery) => {
     }
   } catch (err) {
     console.error("프로필 정보들을 불러오지 못했습니다.", err);
-    return {};
+    return [];
   }
 };
 
