@@ -18,7 +18,7 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
     }
   } catch (err) {
     console.error("알림 목록을 불러오지 못했습니다.", err);
-    return {};
+    return [];
   }
 };
 
