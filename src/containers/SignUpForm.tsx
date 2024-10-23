@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { postSignUp } from "@/api/auth";
-import { InputVlaues } from "../containers/LoginForm";
+import { InputValues } from "../containers/LoginForm";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import { AxiosError } from "axios";
 
@@ -12,14 +12,14 @@ const SignUpForm = () => {
     handleSubmit,
     watch,
     formState: { isSubmitting, errors },
-  } = useForm<InputVlaues>({
+  } = useForm<InputValues>({
     mode: "onSubmit",
   });
 
   const password = watch("password");
   const router = useRouter();
 
-  const onSubmit = async (data: InputVlaues) => {
+  const onSubmit = async (data: InputValues) => {
     try {
       await postSignUp({
         email: data.email,
@@ -158,7 +158,6 @@ const SignUpForm = () => {
           <FilledButton
             type="submit"
             disabled={isSubmitting}
-            onClick={handleSubmit(onSubmit)}
           >
             회원가입
           </FilledButton>

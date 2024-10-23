@@ -6,9 +6,9 @@ import useAuthStore from "@/store/AuthStore";
 import { AxiosError } from "axios";
 import FilledButton from "@/components/ui/Button/FilledButton";
 
-export interface InputVlaues {
+export interface InputValues {
   email: string;
-  name?: string ;
+  name?: string;
   password: string;
   passwordConfirmation?: string;
 }
@@ -18,14 +18,14 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<InputVlaues>({
+  } = useForm<InputValues>({
     mode: "onSubmit",
   });
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
   const { login } = useAuthStore();
 
-  const onSubmit = async (data: InputVlaues) => {
+  const onSubmit = async (data: InputValues) => {
     try {
       await login(data.email, data.password);
       router.push("/");
@@ -111,13 +111,12 @@ const LoginForm = () => {
           <FilledButton
             type="submit"
             disabled={isSubmitting}
-            onClick={handleSubmit(onSubmit)}
           >
             로그인
           </FilledButton>
         </form>
         <div className="flex justify-center">
-          <Link href="/login" className="text-md font-normal text-green-200">
+          <Link href="/signup" className="text-md font-normal text-green-200">
             회원가입
           </Link>
         </div>
