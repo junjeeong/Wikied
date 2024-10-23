@@ -9,8 +9,13 @@ import shareImg4 from "@/assets/images/img_item4.png";
 import viewImg1 from "@/assets/images/img_home3.png";
 import viewImg2 from "@/assets/images/img_home2.png";
 import bellImg from "@/assets/images/img_bell.png";
+import useAuthStore from "@/store/AuthStore";
+import Link from "next/link";
 
 const MainPage = () => {
+  const { isLoggedIn, user } = useAuthStore();
+  const linkURL = isLoggedIn ? `/wiki/${user?.id}` : "/login";
+
   const shareItems = [
     { src: shareImg1, bgColor: "#B2A5FD" },
     { src: shareImg2, bgColor: "#ADEDDE" },
@@ -30,7 +35,9 @@ const MainPage = () => {
               나만의 위키
             </span>
           </h2>
-          <LandingButton>위키 만들기</LandingButton>
+          <Link href={linkURL}>
+            <LandingButton>위키 만들기</LandingButton>
+          </Link>
           <Image
             className="absolute z-20 Mobile:top-[368px] top-[461px] w-[498px] h-[590px] Mobile:w-[336px] Mobile:h-[398px]"
             src={titleImg}
@@ -142,7 +149,9 @@ const MainPage = () => {
         <h3 className="text-background font-bold Mobile:text-[30px] Mobile:leading-[34.5px] text-[60px] leading-[69px] ">
           나만의 위키 만들어 보기
         </h3>
-        <LandingButton mode="Bottom">지금 시작하기</LandingButton>
+        <Link href={linkURL}>
+          <LandingButton mode="bottom">지금 시작하기</LandingButton>
+        </Link>
       </section>
 
       {/* footer section */}
