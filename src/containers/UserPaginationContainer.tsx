@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import PaginationBar from "@/components/PaginationBar";
 import { getProfiles } from "@/api/profile";
-import ProfileList from "@/components/ProfileList";
+// import ProfileList from "@/components/ProfileList";
 
-export interface Data {
+interface Data {
   name: string;
   city: string;
   job: string;
@@ -38,23 +38,6 @@ const UserPaginationContainer = () => {
     setIsLoading(false); //데이터 가져온 후 로딩 끝
   }, [userName, currentPage]);
 
-  const maxPage = 5;
-  let startPage;
-  let calNum;
-
-  if (totalPage <= maxPage) startPage = 1;
-  else {
-    calNum = Math.ceil(currentPage / maxPage);
-    startPage = (calNum - 1) * maxPage + 1;
-  }
-
-  const pageArr = Array.from(
-    {
-      length: Math.min(maxPage, totalPage),
-    },
-    (_, i) => startPage + i
-  );
-
   const handlePageChange = (page: number) => {
     setIsLoading(true);
     setCurrentPage(page);
@@ -62,13 +45,13 @@ const UserPaginationContainer = () => {
 
   return (
     <>
-      <ProfileList data={data} /> {/* css미완성 */}
+      {/* <ProfileList data={data} /> css미완성 */}
       <PaginationBar
         totalPage={totalPage}
         currentPage={currentPage}
-        pageArr={pageArr}
         handlePageChange={handlePageChange}
         isLoading={isLoading}
+        maxPage={5}
       ></PaginationBar>
     </>
   );
