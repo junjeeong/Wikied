@@ -14,10 +14,7 @@ interface PostSignInQuery {
   password: string;
 }
 interface PostRefreshTokenQuery {
-  teamId: string;
-  body: {
-    refreshToken: string;
-  };
+  refreshToken: string;
 }
 
 // 회원가입
@@ -47,9 +44,9 @@ export const postSignIn = async (body: PostSignInQuery) => {
 };
 
 // 토큰 재갱신
-export const postRefreshToken = async (body: PostRefreshTokenQuery) => {
+export const postRefreshToken = async (refreshToken: string) => {
   try {
-    const res = await instance.post(`/auth/refresh-token`, body);
+    const res = await instance.post(`/auth/refresh-token`, refreshToken);
     if (res.status === 200) {
       return res.data;
     }
