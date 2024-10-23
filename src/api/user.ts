@@ -6,8 +6,13 @@ interface PatchUserQuery {
 }
 
 export const getUser = async () => {
+  const token = localStorage.getItem("accessToken");
   try {
-    const res = await instance.get(`/users/me`);
+    const res = await instance.get(`/users/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }

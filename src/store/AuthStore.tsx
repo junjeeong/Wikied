@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { postRefreshToken, postSignIn } from "@/api/auth";
+import { postSignIn } from "@/api/auth";
 
 interface AuthStore {
   user: { id: number; name: string; email: string } | null;
@@ -9,7 +9,7 @@ interface AuthStore {
   isLoggedIn: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  renewToken: (refreshToken: string) => Promise<void>;
+  setAccessToken: (token: string) => void; // Access Token을 업데이트하는 함수 추가
 }
 
 const useAuthStore = create(
@@ -28,25 +28,28 @@ const useAuthStore = create(
             refreshToken: userData.refreshToken,
             isLoggedIn: true,
           });
+          localStorage.setItem("accessToken", userData.accessToken);
+          localStorage.setItem("refreshToken", userData.refreshToken);
         }
       },
-      logout: () =>
+      logout: () => {
         set({
           user: null,
           accessToken: null,
           refreshToken: null,
           isLoggedIn: false,
-        }),
-      renewToken: async (refreshToken) => {
-        const data = await postRefreshToken(refreshToken);
-        if (data) {
-          set({
-            accessToken: data.accessToken,
-          });
-        }
+        });
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      },
+      setAccessToken: (token) => {
+        set({ accessToken: token });
+        localStorage.setItem("accessToken", token);
       },
     }),
-    { name: "auto-storage" }
+    {
+      name: "auto-storage",
+    }
   )
 );
 
