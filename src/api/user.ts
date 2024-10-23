@@ -7,7 +7,9 @@ interface PatchUserQuery {
 }
 
 // 유저 정보를 받아오는 함수
-export const getUser = async (token: string) => {
+export const getUser = async () => {
+  const token = localStorage.getItem("accessToken");
+
   try {
     const res = await instance.get(`/users/me`, {
       headers: {
@@ -28,7 +30,9 @@ export const getUser = async (token: string) => {
 };
 
 // 새로운 비밀번호와 현재 비밀번호를 data로 받아서 변경하는 함수
-export const patchUser = async (data: PatchUserQuery, token: string) => {
+export const patchUser = async (data: PatchUserQuery) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
     const res = await instance.patch(`/users/me/password`, data, {
       headers: {

@@ -6,11 +6,9 @@ interface GetNotificationsQuery {
 }
 
 // 알림 목록 조회
-export const getNotifications = async (
-  query: GetNotificationsQuery,
-  token: string
-) => {
+export const getNotifications = async (query: GetNotificationsQuery) => {
   const { page = 1, pageSize = 10 } = query;
+  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.get(
@@ -31,7 +29,9 @@ export const getNotifications = async (
 };
 
 // 알림 삭제
-export const deleteNotifications = async (id: number, token: string) => {
+export const deleteNotifications = async (id: number) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
     const res = await instance.delete(`/notifications/${id}`, {
       headers: {

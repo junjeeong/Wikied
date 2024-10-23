@@ -61,7 +61,9 @@ export const getArticles = async (query: getArticlesProps) => {
 };
 
 // 게시글 상세 조회
-export const getArticle = async (articleId: number, token: string) => {
+export const getArticle = async (articleId: number) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
     const res = await instance.get(`/articles/${articleId}`, {
       headers: {
@@ -81,8 +83,9 @@ export const getArticle = async (articleId: number, token: string) => {
 };
 
 // 게시글 수정
-export const patchArticle = async (query: patchArticleProps, token: string) => {
+export const patchArticle = async (query: patchArticleProps) => {
   const { articleId, body } = query;
+  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.patch(`/articles/${articleId}`, body, {
@@ -103,10 +106,9 @@ export const patchArticle = async (query: patchArticleProps, token: string) => {
 };
 
 // 게시글 삭제
-export const deleteArticle = async (
-  articleId: deleteArticleProps,
-  token: string
-) => {
+export const deleteArticle = async (articleId: deleteArticleProps) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
     const res = await instance.delete(`/articles/${articleId}`, {
       headers: {
@@ -139,10 +141,9 @@ export const postArticleLike = async (articleId: postArticleLikeProps) => {
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async (
-  articleId: deleteArticleLikeProps,
-  token: string
-) => {
+export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
     const res = await instance.delete(`/articles/${articleId}/like`, {
       headers: {
