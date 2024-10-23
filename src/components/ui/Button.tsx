@@ -24,12 +24,13 @@ export default function Button({
 
   const modeClasses = {
     normal:
-      "bg-green-200 rounded-[10px] text-gray-50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300",
+      "bg-green-200 text-gray-50 hover:bg-green-100 disabled:bg-gray-300                                        text-[14px] leading-[24px] rounded-[10px] font-semibold",
     empty:
-      "bg-transparent border border-green-200 rounded-[10px] text-green-200 text-[14px] font-semibold leading-[24px] hover:border-green-100 hover:text-green-100",
-    main: "bg-gray-500 rounded-[15px] px-[30px] py-[15px] text-gray-50 font-bold text-[24px] leading-[28.64px] Mobile:text-[20px] Mobile:leading-[23.87px] hover:bg-gray-400 font-pretendard",
+      "bg-transparent text-green-200 border border-green-200 hover:border-green-100 hover:text-green-100        text-[14px] leading-[24px] rounded-[10px] font-semibold",
+
+    main: "bg-gray-500 text-gray-50 hover:bg-gray-400                 rounded-[15px] px-[30px] py-[15px] font-bold text-[24px] leading-[28.64px]  font-pretendard",
     mainR:
-      "bg-gray-50 rounded-[15px] py-[15px] px-[30px] text-gray-500 text-[24px] font-bold leading-[28.64px] hover:bg-gray-100 font-pretendard",
+      "bg-gray-50 text-gray-500 hover:bg-gray-100                     rounded-[15px] px-[30px] py-[15px] font-bold text-[24px] leading-[28.64px]  font-pretendard",
   };
 
   return (

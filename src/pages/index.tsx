@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
-import LandingTexts from "@/components/ui/LandingTexts";
 import titleImg from "@/assets/images/img_home1.png";
 import writeImg from "@/assets/images/img_home4.png";
 import shareImg1 from "@/assets/images/img_item1.png";
@@ -12,24 +11,6 @@ import viewImg2 from "@/assets/images/img_home2.png";
 import bellImg from "@/assets/images/img_bell.png";
 
 const MainPage = () => {
-  const SECTION_TEXTS = {
-    write: {
-      subtitle: "WRITE",
-      line1: "친구의 위키,",
-      line2: "직접 작성해 봐요",
-    },
-    share: {
-      subtitle: "SHARE",
-      line1: "내 위키 만들고",
-      line2: "친구에게 공유해요",
-    },
-    view: {
-      subtitle: "VIEW",
-      line1: "친구들이 달아준",
-      line2: "내용을 확인해 봐요",
-    },
-  };
-
   const shareItems = [
     { src: shareImg1, bgColor: "#B2A5FD" },
     { src: shareImg2, bgColor: "#ADEDDE" },
@@ -64,7 +45,14 @@ const MainPage = () => {
 
         <div className="flex max-w-[924px] w-full justify-center mx-auto gap-[10px] Tablet:gap-[20px] PC:gap-[40px] mt-[274px] Tablet:mt-[303.29px] PC:mt-[330px] mb-[100px] Tablet:mb-[160px] PC:mb-[200px]">
           <div className="flex flex-col justify-between flex-grow flex-shrink-0 gap-[30px] Tablet:gap-[40px] PC:gap-[60px]">
-            <LandingTexts texts={SECTION_TEXTS.write} mode="dark" />
+            <div>
+              <p className="section-title">WRITE</p>
+              <p className="text-gray-50 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px]">
+                친구의 위키,
+                <br />
+                직접 작성해 봐요
+              </p>
+            </div>
 
             <div className="relative pb-[120%] overflow-hidden rounded-[10px] w-full aspect-[0.808]">
               <video
@@ -88,8 +76,16 @@ const MainPage = () => {
       </section>
 
       {/* share section */}
-      <section className="max-w-[924px] w-full Mobile:px-5 Tablet:px-12 py-[100px] Tablet:py-[160px] PC:py-[200px]">
-        <LandingTexts texts={SECTION_TEXTS.share} textAlign="right" />
+      <section className="max-w-[924px] w-full Mobile:px-5 Tablet:px-12 section-padding">
+        <div className="text-right">
+          <p className="section-title">SHARE</p>
+          <p className="text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px]">
+            내 위키 만들고
+            <br />
+            친구에게 공유해요
+          </p>
+        </div>
+
         <div className="flex justify-center overflow-visible gap-[10px] Tablet:gap-[20px] PC:gap-[70px] mt-10 Tablet:mt-20 PC:mt-[120px]">
           <div className="w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0 rounded-[10px] bg-[#DEE5F5]"></div>
           {shareItems.map((item, index) => (
@@ -111,9 +107,16 @@ const MainPage = () => {
       </section>
 
       {/* view section */}
-      <section className="bg-landing-bold w-full Mobile:px-5 Tablet:px-12 py-[100px] Tablet:py-[160px] PC:py-[200px]">
+      <section className="bg-landing-bold w-full Mobile:px-5 Tablet:px-12 section-padding">
         <div className="w-full max-w-[924px] mx-auto">
-          <LandingTexts texts={SECTION_TEXTS.view} />
+          <div className="text-left">
+            <p className="section-title">VIEW</p>
+            <p className="text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px]">
+              친구들이 달아준
+              <br />
+              내용을 확인해 봐요
+            </p>
+          </div>
 
           <div className="flex flex-col mt-10 Tablet:mt-20 PC:mt-[120px] gap-[10px] Tablet:gap-[22px] PC:gap-[40px]">
             <Image
@@ -135,7 +138,7 @@ const MainPage = () => {
       </section>
 
       {/* bottom section */}
-      <section className="bg-gray-500 w-full flex flex-col items-center gap-10 py-[100px] Tablet:py-[160px] PC:py-[200px]">
+      <section className="bg-gray-500 w-full flex flex-col items-center gap-10 section-padding">
         <h3 className="text-background font-bold Mobile:text-[30px] Mobile:leading-[34.5px] text-[60px] leading-[69px] ">
           나만의 위키 만들어 보기
         </h3>
