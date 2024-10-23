@@ -32,7 +32,7 @@ export const getComment = async (query: GetCommentQuery) => {
     }
   } catch (err) {
     console.error("댓글 목록을 불러오지 못했습니다.", err);
-    return {};
+    return [];
   }
 };
 
