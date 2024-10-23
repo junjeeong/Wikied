@@ -1,49 +1,50 @@
+import { postProfile } from "@/api/profile";
 import { patchUser } from "@/api/user";
-import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface ChangePasswordForm {
   currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 interface WikiForm {
-  wikiQuestion: string;
-  wikiAnswer: string;
+  securityQuestion: string;
+  securityAnswer: string;
 }
 
 const MyPage = () => {
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,
-    getValues,
     formState: { errors: passwordErrors },
+    getValues: changePasswordValue,
   } = useForm<ChangePasswordForm>();
 
   const {
     register: registerWiki,
     handleSubmit: handleWikiSubmit,
     formState: { errors: wikiErrors },
+    getValues: registWikiValue,
   } = useForm<WikiForm>();
-
-  // 단순히 배경색을 흰색으로 바꾸는 코드
-  useEffect(() => {
-    document.body.style.backgroundColor = "white";
-    return () => {
-      document.body.style.backgroundColor = "";
-    };
-  }, []);
 
   const onChangePasswordSubmit: SubmitHandler<ChangePasswordForm> = async (
     data
   ) => {
-    const res = await patchUser(data);
+    const formData = new FormData();
+
+    formData.append("currentPassword", data.currentPassword);
+    formData.append("password", data.password);
+    formData.append("passwordConfirmation", data.passwordConfirmation);
+
+    const res = await patchUser(formData);
     console.log("비밀번호 변경 결과:", res);
   };
 
-  const onWikiSubmit: SubmitHandler<WikiForm> = (data) => {
+  const onSubmitWiki: SubmitHandler<WikiForm> = async (data) => {
     // 위키 생성 로직 구현해야 함.
+    const res = await postProfile(data);
+    console.log("새로 생성된 프로필:", res);
   };
 
   return (
@@ -60,7 +61,7 @@ const MyPage = () => {
         </label>
         <div className="flex flex-col gap-2">
           <input
-            className="mypage-input placeholder: text-gray-400"
+            className="mypage-input"
             type="password"
             placeholder="기존 비밀번호"
             {...registerPassword("currentPassword", {
@@ -74,16 +75,16 @@ const MyPage = () => {
           )}
 
           <input
-            className="mypage-input placeholder: text-gray-400"
+            className="mypage-input"
             type="password"
             placeholder="새 비밀번호"
-            {...registerPassword("newPassword", {
+            {...registerPassword("password", {
               required: "새 비밀번호는 필수입니다.",
             })}
           />
-          {passwordErrors.newPassword && (
+          {passwordErrors.password && (
             <span className="errormessage">
-              {passwordErrors.newPassword.message}
+              {passwordErrors.password.message}
             </span>
           )}
 
@@ -91,18 +92,18 @@ const MyPage = () => {
             className="mypage-input placeholder: text-gray-400"
             type="password"
             placeholder="새 비밀번호 확인"
-            {...registerPassword("confirmPassword", {
+            {...registerPassword("passwordConfirmation", {
               required: "비밀번호 확인은 필수입니다.",
               validate: (value) => {
-                if (value !== getValues("newPassword")) {
+                if (value !== changePasswordValue("password")) {
                   return "비밀번호가 일치하지 않습니다.";
                 }
               },
             })}
           />
-          {passwordErrors.confirmPassword && (
+          {passwordErrors.passwordConfirmation && (
             <span className="errormessage">
-              {passwordErrors.confirmPassword.message}
+              {passwordErrors.passwordConfirmation.message}
             </span>
           )}
         </div>
@@ -114,7 +115,7 @@ const MyPage = () => {
       {/* 위키 생성 폼 */}
       <form
         className="w-full mt-[32px] flex flex-col"
-        onSubmit={handleWikiSubmit(onWikiSubmit)}
+        onSubmit={handleWikiSubmit(onSubmitWiki)}
       >
         <label className="text-md text-gray-500" htmlFor="wikiRegister">
           위키 생성하기
@@ -123,11 +124,13 @@ const MyPage = () => {
           className="mypage-input placeholder: text-gray-400"
           type="text"
           placeholder="질문을 입력해 주세요"
-          {...registerWiki("wikiQuestion", { required: "질문은 필수입니다." })}
+          {...registerWiki("securityQuestion", {
+            required: "질문은 필수입니다.",
+          })}
         />
-        {wikiErrors.wikiQuestion && (
+        {wikiErrors.securityQuestion && (
           <span className="errormessage">
-            {wikiErrors.wikiQuestion.message}
+            {wikiErrors.securityQuestion.message}
           </span>
         )}
 
@@ -135,10 +138,12 @@ const MyPage = () => {
           className="mypage-input placeholder: text-gray-400"
           type="text"
           placeholder="답을 입력해 주세요"
-          {...registerWiki("wikiAnswer", { required: "답은 필수입니다." })}
+          {...registerWiki("securityAnswer", { required: "답은 필수입니다." })}
         />
-        {wikiErrors.wikiAnswer && (
-          <span className="errormessage">{wikiErrors.wikiAnswer.message}</span>
+        {wikiErrors.securityAnswer && (
+          <span className="errormessage">
+            {wikiErrors.securityAnswer.message}
+          </span>
         )}
 
         <button className="mypage-button hover: bg-green100">생성하기</button>
