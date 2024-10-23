@@ -14,10 +14,7 @@ interface PostSignInQuery {
   password: string;
 }
 interface PostRefreshTokenQuery {
-  teamId: string;
-  body: {
-    refreshToken: string;
-  };
+  refreshToken: string;
 }
 
 // 회원가입
