@@ -5,14 +5,14 @@ import instance from "@/api/axios";
 import { InputVlaues } from "./LoginForm";
 import Button from "./ui/Button";
 
-const RegisterForm = () => {
+const SignUpForm = () => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { isSubmitting, errors },
   } = useForm<InputVlaues>({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   const password = watch("password");
@@ -26,7 +26,7 @@ const RegisterForm = () => {
       passwordConfirmation: data.password,
     });
 
-    window.alert("가입이 완료되었습니다");
+    window.alert("가입이 완료되었습니다"); 
 
     router.push("/login");
   };
@@ -165,4 +165,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default SignUpForm;

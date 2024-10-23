@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "./ui/Button";
 import { postSignIn } from "@/api/auth";
+import { AxiosError } from "axios";
 
 export interface InputVlaues {
   email: string;
@@ -17,23 +18,22 @@ const LoginForm = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<InputVlaues>({
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   const router = useRouter();
 
   const onSubmit = async (data: InputVlaues) => {
-    const res = await postSignIn({
-      email: data.email,
-      password: data.password,
-    });
-
-    const accessToken = res.accessToken;
-    const refreshToken = res.refreshToken;
-
-    localStorage.setItem("accessTokon", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
-
+    try {
+      const res = await postSignIn({
+        email: data.email,
+        password: data.password,
+      });
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        window.alert(err.response?.data.message);
+      }
+    }
     router.push("/");
   };
 
@@ -95,7 +95,7 @@ const LoginForm = () => {
             ></input>
             {errors.password && (
               <span className="text-xs text-red-200" role="alert">
-                {errors.password.message as string}
+                {errors.password.message}
               </span>
             )}
           </div>

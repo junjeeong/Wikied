@@ -36,19 +36,13 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
-  try {
     const res = await instance.post(`/auth/signIn`, body);
     if (res.status === 200) {
       return res.data;
-    }
-  } catch (err) {
-   if (err instanceof AxiosError) {
-        window.alert(err.response?.data.message);
-      }
-  }
+    
 };
 
-// 토큰 재갱신
+// 토큰 재갱신 
 export const postRefreshToken = async (body: PostRefreshTokenQuery) => {
   try {
     const res = await instance.post(`/auth/refresh-token`, body);
