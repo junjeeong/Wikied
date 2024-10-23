@@ -61,9 +61,13 @@ export const getArticles = async (query: getArticlesProps) => {
 };
 
 // 게시글 상세 조회
-export const getArticle = async (articleId: number) => {
+export const getArticle = async (articleId: number, token: string) => {
   try {
-    const res = await instance.get(`/articles/${articleId}`);
+    const res = await instance.get(`/articles/${articleId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
@@ -77,11 +81,15 @@ export const getArticle = async (articleId: number) => {
 };
 
 // 게시글 수정
-export const patchArticle = async (query: patchArticleProps) => {
+export const patchArticle = async (query: patchArticleProps, token: string) => {
   const { articleId, body } = query;
 
   try {
-    const res = await instance.patch(`/articles/${articleId}`, body);
+    const res = await instance.patch(`/articles/${articleId}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
@@ -95,9 +103,16 @@ export const patchArticle = async (query: patchArticleProps) => {
 };
 
 // 게시글 삭제
-export const deleteArticle = async (articleId: deleteArticleProps) => {
+export const deleteArticle = async (
+  articleId: deleteArticleProps,
+  token: string
+) => {
   try {
-    const res = await instance.delete(`/articles/${articleId}`);
+    const res = await instance.delete(`/articles/${articleId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
@@ -124,9 +139,16 @@ export const postArticleLike = async (articleId: postArticleLikeProps) => {
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
+export const deleteArticleLike = async (
+  articleId: deleteArticleLikeProps,
+  token: string
+) => {
   try {
-    const res = await instance.delete(`/articles/${articleId}/like`);
+    const res = await instance.delete(`/articles/${articleId}/like`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }

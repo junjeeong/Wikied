@@ -6,12 +6,20 @@ interface GetNotificationsQuery {
 }
 
 // 알림 목록 조회
-export const getNotifications = async (query: GetNotificationsQuery) => {
+export const getNotifications = async (
+  query: GetNotificationsQuery,
+  token: string
+) => {
   const { page = 1, pageSize = 10 } = query;
 
   try {
     const res = await instance.get(
-      `/notifications?page=${page}&pageSize=${pageSize}`
+      `/notifications?page=${page}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     if (res.status === 200) {
       return res.data.list;
@@ -23,9 +31,13 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
 };
 
 // 알림 삭제
-export const deleteNotifications = async (id: number) => {
+export const deleteNotifications = async (id: number, token: string) => {
   try {
-    const res = await instance.delete(`/notifications/${id}`);
+    const res = await instance.delete(`/notifications/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }

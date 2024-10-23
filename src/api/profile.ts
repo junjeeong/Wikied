@@ -29,9 +29,13 @@ export const getProfiles = async (query: GetProfilesQuery) => {
 };
 
 // 프로필 생성
-export const postProfile = async (body: PostProfileQuery) => {
+export const postProfile = async (body: PostProfileQuery, token: string) => {
   try {
-    const res = await instance.post(`/profiles`, body);
+    const res = await instance.post(`/profiles`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }

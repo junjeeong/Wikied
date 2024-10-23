@@ -37,11 +37,15 @@ export const getComment = async (query: GetCommentQuery) => {
 };
 
 // 댓글 등록
-export const postComment = async (query: PostCommentQuery) => {
+export const postComment = async (query: PostCommentQuery, token: string) => {
   const { articleId, body } = query;
 
   try {
-    const res = await instance.post(`/articles/${articleId}/comments`, body);
+    const res = await instance.post(`/articles/${articleId}/comments`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
@@ -52,11 +56,15 @@ export const postComment = async (query: PostCommentQuery) => {
 };
 
 // 댓글 수정
-export const patchComment = async (query: PatchCommentQuery) => {
+export const patchComment = async (query: PatchCommentQuery, token: string) => {
   const { commentId, body } = query;
 
   try {
-    const res = await instance.patch(`/comments/${commentId}`, body);
+    const res = await instance.patch(`/comments/${commentId}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
@@ -67,9 +75,13 @@ export const patchComment = async (query: PatchCommentQuery) => {
 };
 
 // 댓글 삭제
-export const deleteComment = async (commentId: number) => {
+export const deleteComment = async (commentId: number, token: string) => {
   try {
-    const res = await instance.delete(`/comments/${commentId}`);
+    const res = await instance.delete(`/comments/${commentId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
