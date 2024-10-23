@@ -31,7 +31,7 @@ export const patchUser = async (body: PatchUserQuery) => {
     }
   } catch (err) {
     // 오류가 발생한 경우에도 빈 객체를 반환
-    console.error("유저 정보를 불러오지 못했습니다.", err);
+    console.error("비밀번호 변경에 실패했습니다.", err);
     return {};
   }
 };

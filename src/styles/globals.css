@@ -54,13 +54,13 @@
 }
 
 .mypage-input {
-  @apply w-full h-[45px] py-5 px-4 rounded-xl bg-gray-50 text-sm;
+  @apply w-full h-[45px] py-[20px] px-[16px] rounded-xl bg-gray-50 text-sm;
 }
 
 .mypage-button {
-  @apply mt-4 ml-auto px-[20px] py-[11px] text-sm font-bold text-gray-50 bg-green-200 rounded-[10px];
+  @apply mt-[16px] ml-auto px-[20px] py-[11px] text-sm font-bold text-gray-50 bg-green-200 rounded-[10px];
 }
 
 .errormessage {
-  @apply pl-2 text-red-500 text-sm;
+  @apply pl-[8px] text-red-500 text-sm;
 }

@@ -53,7 +53,7 @@ const MyPage = () => {
         <label className="text-md text-gray-500" htmlFor="changePassword">
           비밀번호 변경
         </label>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mt-[8px]">
           <input
             className="mypage-input"
             type="password"
@@ -114,31 +114,35 @@ const MyPage = () => {
         <label className="text-md text-gray-500" htmlFor="wikiRegister">
           위키 생성하기
         </label>
-        <input
-          className="mypage-input placeholder: text-gray-400"
-          type="text"
-          placeholder="질문을 입력해 주세요"
-          {...registerWiki("securityQuestion", {
-            required: "질문은 필수입니다.",
-          })}
-        />
-        {wikiErrors.securityQuestion && (
-          <span className="errormessage">
-            {wikiErrors.securityQuestion.message}
-          </span>
-        )}
+        <div className="flex flex-col gap-2 mt-[8px]">
+          <input
+            className="mypage-input placeholder: text-gray-400"
+            type="text"
+            placeholder="질문을 입력해 주세요"
+            {...registerWiki("securityQuestion", {
+              required: "질문은 필수입니다.",
+            })}
+          />
+          {wikiErrors.securityQuestion && (
+            <span className="errormessage">
+              {wikiErrors.securityQuestion.message}
+            </span>
+          )}
 
-        <input
-          className="mypage-input placeholder: text-gray-400"
-          type="text"
-          placeholder="답을 입력해 주세요"
-          {...registerWiki("securityAnswer", { required: "답은 필수입니다." })}
-        />
-        {wikiErrors.securityAnswer && (
-          <span className="errormessage">
-            {wikiErrors.securityAnswer.message}
-          </span>
-        )}
+          <input
+            className="mypage-input placeholder: text-gray-400"
+            type="text"
+            placeholder="답을 입력해 주세요"
+            {...registerWiki("securityAnswer", {
+              required: "답은 필수입니다.",
+            })}
+          />
+          {wikiErrors.securityAnswer && (
+            <span className="errormessage">
+              {wikiErrors.securityAnswer.message}
+            </span>
+          )}
+        </div>
 
         <button className="mypage-button hover: bg-green100">생성하기</button>
       </form>
