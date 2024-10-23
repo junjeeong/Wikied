@@ -56,7 +56,7 @@ export const getArticles = async (query: getArticlesProps) => {
     }
   } catch (err) {
     console.error("게시글 목록을 조회하는데 실패했습니다.", err);
-    return {};
+    return [];
   }
 };
 
