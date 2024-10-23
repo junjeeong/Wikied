@@ -150,7 +150,7 @@ const MainPage = () => {
           나만의 위키 만들어 보기
         </h3>
         <Link href={linkURL}>
-          <LandingButton mode="bottom">지금 시작하기</LandingButton>
+          <LandingButton mode="Bottom">지금 시작하기</LandingButton>
         </Link>
       </section>
 
