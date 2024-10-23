@@ -18,7 +18,7 @@ export default function Button({
 }: ButtonProps) {
   const sizeClasses = {
     small: "px-[20px] py-[11px]",
-    medium: "px-[40px] py-[13px]",
+    medium: mode === "main" || mode === "mainR" ? "" : "px-[40px]  py-[13px]",
     large: "px-[175px] py-[13px]",
   };
 
@@ -27,9 +27,9 @@ export default function Button({
       "bg-green-200 rounded-[10px] text-gray-50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300",
     empty:
       "bg-transparent border border-green-200 rounded-[10px] text-green-200 text-[14px] font-semibold leading-[24px] hover:border-green-100 hover:text-green-100",
-    main: "bg-gray-500 rounded-[15px] py-[15px] px-[30px] text-gray-50 text-[24px] font-bold leading-[28.64px] hover:bg-gray-400",
+    main: "bg-gray-500 rounded-[15px] px-[30px] py-[15px] text-gray-50 font-bold text-[24px] leading-[28.64px] Mobile:text-[20px] Mobile:leading-[23.87px] hover:bg-gray-400 font-pretendard",
     mainR:
-      "bg-gray-50 rounded-[15px] py-[15px] px-[30px] text-gray-500 text-[24px] font-bold leading-[28.64px] hover:bg-gray-100",
+      "bg-gray-50 rounded-[15px] py-[15px] px-[30px] text-gray-500 text-[24px] font-bold leading-[28.64px] hover:bg-gray-100 font-pretendard",
   };
 
   return (

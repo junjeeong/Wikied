@@ -28,7 +28,7 @@
   }
 
   body {
-    @apply text-gray500 bg-background font-pretendard antialiased;
+    @apply text-gray-500 bg-background font-pretendard antialiased;
   }
 
   html,
