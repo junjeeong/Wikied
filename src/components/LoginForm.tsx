@@ -1,10 +1,8 @@
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-// import { postSignIn } from "@/api/auth";
 import { useRouter } from "next/router";
-import instance from "@/api/axios";
-import { AxiosError } from "axios";
 import Button from "./ui/Button";
+import { postSignIn } from "@/api/auth";
 
 export interface InputVlaues {
   email: string;
@@ -25,21 +23,18 @@ const LoginForm = () => {
   const router = useRouter();
 
   const onSubmit = async (data: InputVlaues) => {
-    try {
-      const res = await instance.post("/auth/signIn", {
-        email: data.email,
-        password: data.password,
-      });
-      
-      window.alert("가입이 완료되었습니다")
+    const res = await postSignIn({
+      email: data.email,
+      password: data.password,
+    });
 
-      router.push("/login");
+    const accessToken = res.accessToken;
+    const refreshToken = res.refreshToken;
 
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        window.alert(err.response?.data.message);
-      }
-    }
+    localStorage.setItem("accessTokon", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+
+    router.push("/");
   };
 
   return (
@@ -104,7 +99,13 @@ const LoginForm = () => {
               </span>
             )}
           </div>
-         <Button type="submit" disabled={isSubmitting} onClick={handleSubmit(onSubmit)}>로그인</Button>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            onClick={handleSubmit(onSubmit)}
+          >
+            로그인
+          </Button>
         </form>
         <div className="flex justify-center">
           <Link href="/login" className="text-md font-normal text-green-200">
@@ -115,6 +116,5 @@ const LoginForm = () => {
     </div>
   );
 };
-
 
 export default LoginForm;

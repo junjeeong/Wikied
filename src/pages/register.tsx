@@ -4,7 +4,6 @@ import RegisterForm  from "@/components/RegisterForm";
 const Login = () => {
   return (
     <>
-      <Header />
       <RegisterForm />
     </>
   );

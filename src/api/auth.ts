@@ -1,4 +1,5 @@
 import instance from "./axios";
+import { AxiosError } from "axios";
 
 interface PostSignUpQuery {
   body: {
@@ -41,8 +42,9 @@ export const postSignIn = async (body: PostSignInQuery) => {
       return res.data;
     }
   } catch (err) {
-    console.error("로그인에 실패했습니다.", err);
-    return {};
+   if (err instanceof AxiosError) {
+        window.alert(err.response?.data.message);
+      }
   }
 };
 

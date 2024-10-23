@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import instance from "@/api/axios";
-import { AxiosError } from "axios";
 import { InputVlaues } from "./LoginForm";
 import Button from "./ui/Button";
 
@@ -20,13 +19,15 @@ const RegisterForm = () => {
   const router = useRouter();
 
   const onSubmit = async (data: InputVlaues) => {
-    const res = await instance.post("/auth/signUp", {
+    await instance.post("/auth/signUp", {
       email: data.email,
       name: data.name,
       password: data.password,
       passwordConfirmation: data.password,
     });
-console.log(res)
+
+    window.alert("가입이 완료되었습니다");
+
     router.push("/login");
   };
 
@@ -62,7 +63,7 @@ console.log(res)
             ></input>
             {errors.name && (
               <span className="text-xs text-red-200" role="alert">
-                {"이름을 입력해주세요"}
+                {errors.name.message}
               </span>
             )}
           </div>
@@ -145,7 +146,13 @@ console.log(res)
               </span>
             )}
           </div>
-          <Button type="submit" disabled={isSubmitting} onClick={handleSubmit(onSubmit)}>회원가입</Button>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            onClick={handleSubmit(onSubmit)}
+          >
+            회원가입
+          </Button>
         </form>
         <div className="flex justify-center gap-[10px]">
           <span className="text-md text-gray-400">이미 회원이신가요?</span>
