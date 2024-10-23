@@ -1,13 +1,13 @@
-import LoginForm from "@/components/LoginForm"
 import { Header } from "@/components/Layout/Header";
+import RegisterForm  from "@/components/RegisterForm";
 
 const Login = () => {
   return (
     <>
       <Header />
-      <LoginForm />
+      <RegisterForm />
     </>
   );
-}
+};
 
 export default Login;
