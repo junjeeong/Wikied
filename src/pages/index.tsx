@@ -11,6 +11,7 @@ import viewImg2 from "@/assets/images/img_home2.png";
 import bellImg from "@/assets/images/img_bell.png";
 import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
+import MenuDropdown from "@/components/ui/Dropdown/MenuDropdown";
 
 const MainPage = () => {
   const { isLoggedIn, user } = useAuthStore();
@@ -28,6 +29,7 @@ const MainPage = () => {
       {/* title section */}
       <section className="relative w-full">
         <div className="flex flex-col items-center Mobile:pt-[100px] pt-[120px]">
+          <MenuDropdown />
           <h2 className="text-center pb-10 Mobile:text-[40px] text-[60px] Mobile:leading-[46px] leading-[69px] font-light">
             남들이 만드는
             <br />
