@@ -1,5 +1,5 @@
 import Image from "next/image";
-import RandingButton from "@/components/ui/Button/RandingButton";
+import LandingButton from "@/components/ui/Button/LandingButton";
 import titleImg from "@/assets/images/img_home1.png";
 import writeImg from "@/assets/images/img_home4.png";
 import shareImg1 from "@/assets/images/img_item1.png";
@@ -30,7 +30,7 @@ const MainPage = () => {
               나만의 위키
             </span>
           </h2>
-          <RandingButton>위키 만들기</RandingButton>
+          <LandingButton>위키 만들기</LandingButton>
           <Image
             className="absolute z-20 Mobile:top-[368px] top-[461px] w-[498px] h-[590px] Mobile:w-[336px] Mobile:h-[398px]"
             src={titleImg}
@@ -142,7 +142,7 @@ const MainPage = () => {
         <h3 className="text-background font-bold Mobile:text-[30px] Mobile:leading-[34.5px] text-[60px] leading-[69px] ">
           나만의 위키 만들어 보기
         </h3>
-        <RandingButton mode="Bottom">지금 시작하기</RandingButton>
+        <LandingButton mode="Bottom">지금 시작하기</LandingButton>
       </section>
 
       {/* footer section */}
