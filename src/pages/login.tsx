@@ -1,4 +1,4 @@
-import LoginForm from "@/components/LoginForm"
+import LoginForm from "@/containers/LoginForm";
 
 const Login = () => {
   return (
@@ -6,6 +6,6 @@ const Login = () => {
       <LoginForm />
     </>
   );
-}
+};
 
 export default Login;
