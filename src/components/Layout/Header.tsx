@@ -4,11 +4,15 @@ import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo/wikied.svg";
-import Button from "../ui/Button";
+import alarm from "@/assets/icon/ic_alarm.svg";
+import profile from "@/assets/icon/ic_profile.svg";
+import FilledButton from "../ui/Button/FilledButton";
+import useAuthStore from "@/store/AuthStore";
 
 export const Header = () => {
   const router = useRouter();
   const [searchedName, setSearchedName] = useState("");
+  const isLoggedIn = true;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchedName(e.target.value);
@@ -57,9 +61,25 @@ export const Header = () => {
         </li>
       </ul>
 
-      <Link href="/signin">
-        <Button>로그인</Button>
-      </Link>
+      {isLoggedIn ? (
+        <ul className="flex">
+          <li className="cursor-pointer hover:text-gray-500">
+            <Image
+              src={alarm}
+              width={32}
+              height={32}
+              alt="notice my wiki Changed"
+            />
+          </li>
+          <li className="ml-[20px] cursor-pointer hover:text-gray-500">
+            <Image src={profile} width={32} height={32} alt="my profile" />
+          </li>
+        </ul>
+      ) : (
+        <Link href="/login">
+          <FilledButton>로그인</FilledButton>
+        </Link>
+      )}
     </div>
   );
 };
