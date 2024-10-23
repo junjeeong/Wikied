@@ -31,13 +31,7 @@ const MyPage = () => {
   const onChangePasswordSubmit: SubmitHandler<ChangePasswordForm> = async (
     data
   ) => {
-    const formData = new FormData();
-
-    formData.append("currentPassword", data.currentPassword);
-    formData.append("password", data.password);
-    formData.append("passwordConfirmation", data.passwordConfirmation);
-
-    const res = await patchUser(formData);
+    const res = await patchUser(data);
     console.log("비밀번호 변경 결과:", res);
   };
 
