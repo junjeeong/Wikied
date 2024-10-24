@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
-import { SearchInput } from "../../components/SearchInput";
+import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
 import FilledButton from "../ui/Button/FilledButton";
