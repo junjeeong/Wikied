@@ -14,7 +14,7 @@ const CustomLink = ({ link, size = "medium" }: CustomLinkProps) => {
   };
 
   return (
-    <div className="flex items-center gap-[5px] w-fit px-[10px] py-[3px] rounded-[10px] bg-green50 text-green200">
+    <div className="flex items-center gap-[5px] w-fit px-[10px] py-[3px] rounded-[10px] bg-green-50 text-green-200">
       <Image
         src={linkIcon}
         width={imageSize[size].width}
@@ -24,7 +24,6 @@ const CustomLink = ({ link, size = "medium" }: CustomLinkProps) => {
       <Link className={size === "medium" ? "text-md" : "text-xs"} href={link}>
         {link}
       </Link>
-      <p className="text-"></p>
     </div>
   );
 };
