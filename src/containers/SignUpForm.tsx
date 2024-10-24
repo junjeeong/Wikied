@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { postSignUp } from "@/api/auth";
+import { postSignUp } from "../api/auth";
 import { InputValues } from "../containers/LoginForm";
 import { AxiosError } from "axios";
 import Link from "next/link";
-import FilledButton from "@/components/ui/Button/FilledButton";
+import FilledButton from "../components/ui/Button/FilledButton";
 
 const SignUpForm = () => {
   const {
