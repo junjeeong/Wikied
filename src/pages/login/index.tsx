@@ -8,13 +8,6 @@ const Login = () => {
   return (
     <>
       <LoginForm />
-      <button
-        type="button"
-        className="absolute top-10 left-10"
-      >
-        열기
-      </button>
-        <QuizModal/>
     </>
   );
 };
