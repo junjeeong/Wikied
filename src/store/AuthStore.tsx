@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { postSignIn } from "../api/auth";
+import { postSignIn } from "@/api/auth";
 
 interface AuthStore {
   user: { id: number; name: string; email: string } | null;

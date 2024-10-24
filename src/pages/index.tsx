@@ -1,6 +1,6 @@
 import Image from "next/image";
-import LandingButton from "../components/ui/Button/LandingButton";
-import useAuthStore from "../store/AuthStore";
+import LandingButton from "@/components/ui/Button/LandingButton";
+import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
 
 const MainPage = () => {
