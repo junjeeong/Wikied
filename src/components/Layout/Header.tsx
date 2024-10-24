@@ -61,7 +61,7 @@ export const Header = () => {
         </li>
       </ul>
 
-      <Link href="/signin">
+      <Link href="/login">
         <FilledButton>로그인</FilledButton>
       </Link>
     </div>

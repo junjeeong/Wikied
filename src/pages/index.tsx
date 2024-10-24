@@ -1,22 +1,7 @@
 import Image from "next/image";
-<<<<<<< HEAD
-import LandingButton from "@/components/ui/Button/LandingButton";
-import titleImg from "/public/images/img_home1.png";
-import writeImg from "/public/images/img_home4.png";
-import shareImg1 from "/public/images/img_item1.png";
-import shareImg2 from "/public/images/img_item2.png";
-import shareImg3 from "/public/images/img_item3.png";
-import shareImg4 from "/public/images/img_item4.png";
-import viewImg1 from "/public/images/img_home3.png";
-import viewImg2 from "/public/images/img_home2.png";
-import bellImg from "/public/images/img_bell.png";
-import useAuthStore from "@/store/AuthStore";
-=======
 import LandingButton from "../components/ui/Button/LandingButton";
 import useAuthStore from "../store/AuthStore";
->>>>>>> d42aae1b81275f3c9f44885f8ee3683084e1ea86
 import Link from "next/link";
-import MenuDropdown from "@/components/ui/Dropdown/MenuDropdown";
 
 const MainPage = () => {
   const { isLoggedIn, user } = useAuthStore();
@@ -33,7 +18,6 @@ const MainPage = () => {
     <div className="bg-landing-light flex flex-col font-nexon items-center">
       {/* title section */}
       <section className="relative w-full">
-        <MenuDropdown />
         <div className="flex flex-col items-center Mobile:pt-[100px] pt-[120px]">
           <h2 className="text-center pb-10 Mobile:text-[40px] text-[60px] Mobile:leading-[46px] leading-[69px] font-light">
             남들이 만드는
