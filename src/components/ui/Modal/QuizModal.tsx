@@ -1,43 +1,23 @@
-import { useEffect, useState,useRef } from "react";
 import FilledButton from "../Button/FilledButton";
-import { getUserProfile, postProfilePng } from "@/api/profile";
-import { AxiosError } from "axios";
 
-const QuizModal = () => {
-  const [question, setQuestion] = useState("") //사용자 질문
-  const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
-  const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
 
-  const code = "e79d333c-d545-48fb-a125-2326aceed778"; //저장되어있을 코드
+interface QuizModalProps {
+  question: string;
+  quizAnswer: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errorMessage: string;
+  handleSubmit:() => void;
+}
+
+const QuizModal = ({
+  question,
+  quizAnswer,
+  handleInputChange,
+  errorMessage,
+  handleSubmit,
+}:QuizModalProps) => {
+
   
-  useEffect(() => {
-    const getQuestion = async () => {
-      const res = await getUserProfile(code);
-       setQuestion(prev => res?.data.securityQuestion);
-    }
-    getQuestion()
-  }, [code]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuizAnswer(e.target.value);
-    setErrorMessage("");
-  };
-
-  const handleSubmit = async () => {
-    try {
-      await postProfilePng({
-        securityAnswer: quizAnswer,
-      },code);
-      console.log("수정가능"); //수정 페이지로 이동
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        setErrorMessage("정답이 아닙니다. 다시 시도해 주세요.");
-      } else {
-        console.error(error);
-      }
-    }
-  };
-
   return (
     <div className="flex flex-col gap-9 pt-10 pb-[2px]">
       <div className="flex flex-col justify-center items-center gap-[10px]">
@@ -92,5 +72,6 @@ const QuizModal = () => {
     </div>
   );
 };
+
 
 export default QuizModal;
