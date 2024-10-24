@@ -39,6 +39,7 @@ const LoginForm = () => {
   const handleChange = () => {
     setSubmitError("");
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-gray-50">
       <div className="w-full max-w-md">
