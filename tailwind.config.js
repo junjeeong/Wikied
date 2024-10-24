@@ -54,7 +54,7 @@ const tailwindConfig = {
         xs: ["12px", { lineHeight: "18px" }],
       },
       boxShadow: {
-        custom: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+        custom: "0px 4px 20px rgba(0, 0, 0, 0.2)",
       },
     },
   },

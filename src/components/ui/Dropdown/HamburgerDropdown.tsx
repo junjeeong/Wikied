@@ -1,4 +1,3 @@
-import useAuthStore from "@/store/AuthStore";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,8 +5,8 @@ import { useState, ReactNode, useRef, useEffect } from "react";
 
 interface MenuItemProps {
   children: ReactNode;
-  href?: string;
-  onClick?: () => void;
+  href: string;
+  onClick: () => void;
 }
 
 const MenuItem = ({ children, href = "", onClick }: MenuItemProps) => {
@@ -22,17 +21,11 @@ const MenuItem = ({ children, href = "", onClick }: MenuItemProps) => {
   );
 };
 
-const MenuDropdown = () => {
+const HamburgerDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const { user, logout } = useAuthStore();
   const router = useRouter();
   const currentPath = router.pathname;
-  const [isMobile, setIsMobile] = useState(false);
-
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 767);
-  };
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
@@ -48,12 +41,9 @@ const MenuDropdown = () => {
   };
 
   useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
@@ -62,47 +52,38 @@ const MenuDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       <button onClick={handleToggle} type="button">
         <Image
-          src={"/icons/ic_profile.svg"}
-          width={32}
-          height={32}
-          alt="프로필"
+          src={"/icons/ic_hamburger.svg"}
+          width={24}
+          height={24}
+          alt="메뉴"
         />
       </button>
       {isOpen && (
         <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-custom absolute top-[37px] right-0 z-10">
           {currentPath !== "/mypage" && (
-            <MenuItem href={"/mypage"} onClick={handleToggle}>
-              계정설정
-            </MenuItem>
-          )}
-          {currentPath !== `/wikilist/12` && (
-            <MenuItem href={`/wikilist/12`} onClick={handleToggle}>
-              내위키
-            </MenuItem>
-          )}
-          {isMobile && currentPath !== "/wikilist" && (
             <MenuItem href={"/wikilist"} onClick={handleToggle}>
               모든위키
             </MenuItem>
           )}
-          {isMobile && currentPath !== "/boards" && (
+          {currentPath !== "/boards" && (
             <MenuItem href={"/boards"} onClick={handleToggle}>
               자유게시판
             </MenuItem>
           )}
-          <MenuItem
-            href="#"
-            onClick={() => {
-              handleToggle();
-              logout();
-            }}
-          >
-            로그아웃
-          </MenuItem>
+          {currentPath !== "/login" && (
+            <MenuItem href={"/login"} onClick={handleToggle}>
+              로그인
+            </MenuItem>
+          )}
+          {currentPath !== "/signup" && (
+            <MenuItem href={"/signup"} onClick={handleToggle}>
+              회원가입
+            </MenuItem>
+          )}
         </div>
       )}
     </div>
   );
 };
 
-export default MenuDropdown;
+export default HamburgerDropdown;
