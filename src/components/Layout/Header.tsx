@@ -3,6 +3,11 @@ import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
+import useAuthStore from "@/store/AuthStore";
+import FilledButton from "../ui/Button/FilledButton";
+import Alarm from "/public/icons/ic_alarm.svg";
+import Profile from "/public/icons/ic_profile.svg";
+import Menu from "/public/icons/ic_menu.svg";
 
 export const Header = () => {
   const router = useRouter();
@@ -36,7 +41,7 @@ export const Header = () => {
         <li
           className={`${
             router.pathname === "/boards" ? "font-bold" : "text-gray-400"
-          } text-md hover:font-bold`}
+          } text-md hover:font-bold Mobile:hidden`}
         >
           <Link href="/boards" aria-label="자유 게시판">
             자유 게시판
@@ -45,13 +50,13 @@ export const Header = () => {
         <li
           className={`${
             router.pathname === "/wikilist" ? "font-bold" : "text-gray-400"
-          } text-md hover:font-bold`}
+          } text-md hover:font-bold Mobile:hidden`}
         >
           <Link href="/wikilist" aria-label="모든 위키">
             모든 위키
           </Link>
         </li>
-        <li>
+        <li className="Mobile:hidden">
           <SearchInput
             size="small"
             onChange={handleChange}
@@ -62,14 +67,11 @@ export const Header = () => {
       </ul>
 
       {isLoggedIn ? (
-        <ul className="flex">
-          <li>
-            <Alarm className="cursor-pointer hover:text-gray-500" />
-          </li>
-          <li>
-            <Profile className="ml-[20px] cursor-pointer hover:text-gray-500" />
-          </li>
-        </ul>
+        <div className="flex items-center">
+          <Alarm className="w cursor-pointer text-gray-400 hover:text-gray-500" />
+          <Profile className="ml-[20px] cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden" />
+          <Menu className="PC:hidden Tablet:hidden ml-[20px] cursor-pointer text-gray-400 hover:text-gray-500" />
+        </div>
       ) : (
         <Link href="/login">
           <FilledButton>로그인</FilledButton>
