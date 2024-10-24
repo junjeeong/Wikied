@@ -1,9 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
-import { SearchInput } from "@/components/SearchInput";
+import { SearchInput } from "../../components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../ui/Button";
 
 export const Header = () => {
   const router = useRouter();
