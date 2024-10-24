@@ -28,6 +28,19 @@ export const getProfiles = async (query: GetProfilesQuery) => {
   }
 };
 
+// 프로필 조회
+export const getProfile = async (code: string) => {
+  try {
+    const res = await instance.get(`/profiles/${code}`);
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (err) {
+    console.error("프로필 정보를 불러오지 못했습니다.", err);
+    return {};
+  }
+};
+
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
   try {
