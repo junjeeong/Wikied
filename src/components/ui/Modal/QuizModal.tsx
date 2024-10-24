@@ -16,7 +16,6 @@ const QuizModal = ({
   errorMessage,
   handleSubmit,
 }:QuizModalProps) => {
-
   
   return (
     <div className="flex flex-col gap-9 pt-10 pb-[2px]">
@@ -72,6 +71,5 @@ const QuizModal = ({
     </div>
   );
 };
-
 
 export default QuizModal;
