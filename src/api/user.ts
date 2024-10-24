@@ -9,7 +9,7 @@ interface PatchUserQuery {
 // 유저 정보를 받아오는 함수
 export const getUser = async () => {
   const token = localStorage.getItem("accessToken");
-
+  
   try {
     const res = await instance.get(`/users/me`, {
       headers: {

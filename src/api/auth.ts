@@ -13,6 +13,10 @@ interface PostSignInQuery {
   password: string;
 }
 
+interface PostRefreshTokenQuery {
+  refreshToken: string;
+}
+
 // 회원가입
 export const postSignUp = async (body: PostSignUpQuery) => {
     const res = await instance.post(`/auth/signUp`, body);
@@ -29,8 +33,9 @@ export const postSignIn = async (body: PostSignInQuery) => {
 };
 }
 
-// 토큰 재갱신 
-export const postRefreshToken = async (body: PostRefreshTokenQuery) => {
+
+// 토큰 재갱신
+export const postRefreshToken = async (refreshToken: string) => {
   try {
     const res = await instance.post(`/auth/refresh-token`, {
       refreshToken: refreshToken,
