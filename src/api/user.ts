@@ -1,12 +1,15 @@
 import instance from "./axios";
 
 interface PatchUserQuery {
+  passwordConfirmation: string;
+  password: string;
   currentPassword: string;
-  newPassword: string;
 }
 
+// 유저 정보를 받아오는 함수
 export const getUser = async () => {
   const token = localStorage.getItem("accessToken");
+  
   try {
     const res = await instance.get(`/users/me`, {
       headers: {
@@ -26,16 +29,22 @@ export const getUser = async () => {
   }
 };
 
-// 새로운 비밀번호와 현재 비밀번호를 formData로 받아서 변경하는 함수
-export const patchUser = async (formData: PatchUserQuery) => {
+// 새로운 비밀번호와 현재 비밀번호를 data로 받아서 변경하는 함수
+export const patchUser = async (data: PatchUserQuery) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    const res = await instance.patch(`/users/me/password`, formData);
+    const res = await instance.patch(`/users/me/password`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }
   } catch (err) {
     // 오류가 발생한 경우에도 빈 객체를 반환
-    console.error("유저 정보를 불러오지 못했습니다.", err);
+    console.error("비밀번호 변경에 실패하였습니다.", err);
     return {};
   }
 };
