@@ -1,6 +1,6 @@
 import Image from "next/image";
-import LandingButton from "@/components/ui/Button/LandingButton";
-import useAuthStore from "@/store/AuthStore";
+import LandingButton from "../components/ui/Button/LandingButton";
+import useAuthStore from "../store/AuthStore";
 import Link from "next/link";
 
 const MainPage = () => {
@@ -32,9 +32,9 @@ const MainPage = () => {
           <Image
             className="absolute z-20 Mobile:top-[368px] top-[461px] Mobile:w-[336px] Mobile:h-[398px]"
             src={"/images/img_home1.png"}
-            alt="타이틀 섹션 이미지"
             width={498}
             height={590}
+            alt="타이틀 섹션 이미지"
           />
         </div>
       </section>
@@ -93,7 +93,7 @@ const MainPage = () => {
           {shareItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-[10px] w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
+              className="rounded-[10px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
               style={{ backgroundColor: item.bgColor }}
             >
               <Image
