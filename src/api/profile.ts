@@ -11,6 +11,10 @@ interface PostProfileQuery {
   securityQuestion: string;
 }
 
+interface PostProfilePingQuery {
+  securityAnswer: string;
+}
+
 // 프로필 목록 조회
 export const getProfiles = async (query: GetProfilesQuery) => {
   const { page = 1, pageSize = 10, name = "" } = query;
@@ -27,6 +31,21 @@ export const getProfiles = async (query: GetProfilesQuery) => {
     return [];
   }
 };
+
+//사용자 프로필 조회
+export const getUserProfile = async (code:string) => {
+  
+  try {
+    const res = await instance.get(`/profiles/${code}`);
+    if (res.status === 200) {
+      return res;
+    }
+  } catch (err) {
+    console.error("프로필 정보들을 불러오지 못했습니다.", err);
+    return
+  }
+};
+
 
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
@@ -47,4 +66,17 @@ export const postProfile = async (body: PostProfileQuery) => {
   }
 };
 
-// 프로필 수정, 프로필 수정 중 체크, 프로필 수정 중 갱신 api 구현해야 함
+// 프로필 수정 중 체크
+export const postProfilePng = async (body: PostProfilePingQuery,code:string) => {
+  const token = localStorage.getItem("accessToken");
+
+  const res = await instance.post(`/profiles/${code}/ping`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return res;
+};
+  
+// 프로필 수정, 프로필 수정 중 갱신 api 구현해야 함

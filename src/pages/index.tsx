@@ -33,6 +33,8 @@ const MainPage = () => {
             className="absolute z-20 Mobile:top-[368px] top-[461px] w-[498px] h-[590px] Mobile:w-[336px] Mobile:h-[398px]"
             src="/images/img_home1.png"
             alt="타이틀 섹션 이미지"
+            width={100}
+            height={100}
           />
         </div>
       </section>
@@ -67,6 +69,8 @@ const MainPage = () => {
               src="/images/img_home4.png"
               className="w-full h-full"
               alt="write 섹션 이미지"
+              width={100}
+              height={100}
             />
           </div>
         </div>
@@ -95,6 +99,8 @@ const MainPage = () => {
                 className="w-full h-full"
                 src={item.src}
                 alt={`share 이미지 ${index + 1}`}
+                width={100}
+                height={100}
               />
             </div>
           ))}
@@ -118,14 +124,26 @@ const MainPage = () => {
               src="/images/img_home3.png"
               className="w-full h-auto"
               alt="view 이미지 1"
+              width={100}
+              height={100}
             />
 
             <div className="flex justify-between gap-[10px] Tablet:gap-[22px] PC:gap-[40px] ">
               <div className="bg-purple-100 rounded-[10px]">
-                <Image src="/images/img_bell.png" alt="bell 이미지" />
+                <Image
+                  src="/images/img_bell.png"
+                  alt="bell 이미지"
+                  width={100}
+                  height={100}
+                />
               </div>
               <div>
-                <Image src="/images/img_home2.png" alt="view 이미지 2" />
+                <Image
+                  src="/images/img_home2.png"
+                  alt="view 이미지 2"
+                  width={100}
+                  height={100}
+                />
               </div>
             </div>
           </div>
@@ -137,34 +155,25 @@ const MainPage = () => {
           나만의 위키 만들어 보기
         </h3>
         <Link href={linkURL}>
-          // <LandingButton mode="Bottom">지금 시작하기</LandingButton>
-          //{" "}
+          <LandingButton mode="Bottom">지금 시작하기</LandingButton>
         </Link>
-        //{" "}
       </section>
-      // {/* footer section */}
-      //{" "}
+      {/* footer section */}
       <footer className="bg-gray-600 text-background font-pretendard w-full Mobile:text-[8px] Mobile:leading-[9.55px] text-[14px] leading-[16.71px] px-5 py-10 Tablet:px-12 Tablet:py-[60px] PC:p-20">
-        //{" "}
         <p className="font-bold Mobile:text-[10px] Mobile:leading-[11.93px] text-[16px] leading-[19.09px]">
-          // Copyright ⓒ Wikied.All Rights Reserved //{" "}
+          Copyright ⓒ Wikied.All Rights Reserved
         </p>
-        //{" "}
         <p className="pt-[10px] Mobile:pb-[20px] pb-[30px]">
-          // 사업자등록번호 000-00-00000 &nbsp;|&nbsp; 통신판매신고 //
+          사업자등록번호 000-00-00000 &nbsp;|&nbsp; 통신판매신고
           제2020-서울-00000호 &nbsp;|&nbsp; 대표 : 이지은 <br />
-          // 서울특별시 중구 청계천로 123, 위키드빌딩 //{" "}
+          서울특별시 중구 청계천로 123, 위키드빌딩
         </p>
-        //{" "}
         <div className="flex Mobile:gap-[15px] gap-[30px] font-medium">
-          // <span>서비스 이용약관</span>
-          // <span>개인정보 취급방법</span>
-          // <span>전자금융거래 기본약관</span>
-          //{" "}
+          <span>서비스 이용약관</span>
+          <span>개인정보 취급방법</span>
+          <span>전자금융거래 기본약관</span>
         </div>
-        //{" "}
       </footer>
-      //{" "}
     </div>
   );
 };
