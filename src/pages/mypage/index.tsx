@@ -1,6 +1,9 @@
 import { postProfile } from "@/api/profile";
 import { patchUser } from "@/api/user";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import useAuthStore from "@/store/AuthStore";
+import { useRouter } from "next/router";
 
 interface ChangePasswordForm {
   currentPassword: string;
@@ -14,6 +17,9 @@ interface WikiForm {
 }
 
 const MyPage = () => {
+  const router = useRouter();
+  const { isLoggedIn } = useAuthStore();
+
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,
@@ -25,9 +31,9 @@ const MyPage = () => {
     register: registerWiki,
     handleSubmit: handleWikiSubmit,
     formState: { errors: wikiErrors },
-    getValues: registWikiValue,
   } = useForm<WikiForm>();
 
+  // 비밀번호 변경 요청
   const onChangePasswordSubmit: SubmitHandler<ChangePasswordForm> = async (
     data
   ) => {
@@ -35,11 +41,15 @@ const MyPage = () => {
     console.log("비밀번호 변경 결과:", res);
   };
 
+  // 위키 퀴즈 생성 요청
   const onSubmitWiki: SubmitHandler<WikiForm> = async (data) => {
-    // 위키 생성 로직 구현해야 함.
     const res = await postProfile(data);
     console.log("새로 생성된 프로필:", res);
   };
+
+  useEffect(() => {
+    if (isLoggedIn) router.replace("/login");
+  }, [isLoggedIn, router]);
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen mx-auto w-[400px] Mobile:w-[335px]">
