@@ -1,6 +1,5 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
 import Image from "next/image";
-import searchIcon from "@/assets/icon/ic_search.svg";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
@@ -37,7 +36,12 @@ export const SearchInput = ({
           className={`absolute top-[10px] left-[16px] border-transparent bg-gray-100 cursor-pointer focus:outline-green-100`}
           type="submit"
         >
-          <Image src={searchIcon} width={24} height={24} alt="검색 아이콘" />
+          <Image
+            src={"/icons/ic_search.svg"}
+            width={24}
+            height={24}
+            alt="검색 아이콘"
+          />
         </button>
       </div>
     </form>
