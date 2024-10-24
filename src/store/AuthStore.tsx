@@ -9,6 +9,7 @@ interface AuthStore {
   isLoggedIn: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  setAccessToken: (token: string) => void; // Access Token을 업데이트하는 함수 추가
 }
 
 const useAuthStore = create(
@@ -27,17 +28,28 @@ const useAuthStore = create(
             refreshToken: userData.refreshToken,
             isLoggedIn: true,
           });
+          localStorage.setItem("accessToken", userData.accessToken);
+          localStorage.setItem("refreshToken", userData.refreshToken);
         }
       },
-      logout: () =>
+      logout: () => {
         set({
           user: null,
           accessToken: null,
           refreshToken: null,
           isLoggedIn: false,
-        }),
+        });
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      },
+      setAccessToken: (token) => {
+        set({ accessToken: token });
+        localStorage.setItem("accessToken", token);
+      },
     }),
-    { name: "auto-storage" }
+    {
+      name: "auto-storage",
+    }
   )
 );
 
