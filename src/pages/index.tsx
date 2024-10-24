@@ -28,8 +28,8 @@ const MainPage = () => {
     <div className="bg-landing-light flex flex-col font-nexon items-center">
       {/* title section */}
       <section className="relative w-full">
+        <MenuDropdown />
         <div className="flex flex-col items-center Mobile:pt-[100px] pt-[120px]">
-          <MenuDropdown />
           <h2 className="text-center pb-10 Mobile:text-[40px] text-[60px] Mobile:leading-[46px] leading-[69px] font-light">
             남들이 만드는
             <br />
