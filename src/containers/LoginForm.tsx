@@ -108,10 +108,7 @@ const LoginForm = () => {
               </span>
             )}
           </div>
-          <FilledButton
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <FilledButton type="submit" disabled={isSubmitting}>
             로그인
           </FilledButton>
         </form>

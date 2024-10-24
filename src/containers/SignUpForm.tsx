@@ -155,10 +155,7 @@ const SignUpForm = () => {
               </span>
             )}
           </div>
-          <FilledButton
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <FilledButton type="submit" disabled={isSubmitting}>
             회원가입
           </FilledButton>
         </form>
