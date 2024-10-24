@@ -31,7 +31,7 @@ const MainPage = () => {
           </Link>
           <Image
             className="absolute z-20 Mobile:top-[368px] top-[461px] w-[498px] h-[590px] Mobile:w-[336px] Mobile:h-[398px]"
-            src={"/aegims/img_home1"}
+            src={"/images/img_home1.png"}
             alt="타이틀 섹션 이미지"
           />
         </div>
@@ -65,7 +65,7 @@ const MainPage = () => {
           </div>
           <div className="relative flex-grow flex-shrink-0 aspect-[0.761] w-[192px] Tablet:w-[365px] PC:w-[520px]">
             <Image
-              src={"/aegims/img_home4.png"}
+              src={"/images/img_home4.png"}
               className="w-full h-full"
               alt="write 섹션 이미지"
             />
