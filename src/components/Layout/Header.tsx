@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
+import FilledButton from "../ui/Button/FilledButton";
 
 export const Header = () => {
   const router = useRouter();
@@ -61,7 +62,7 @@ export const Header = () => {
       </ul>
 
       <Link href="/signin">
-        <Button>로그인</Button>
+        <FilledButton>로그인</FilledButton>
       </Link>
     </div>
   );
