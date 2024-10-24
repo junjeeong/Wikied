@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getProfiles } from "../api/profile";
-import PaginationBar from "../components/PaginationBar";
+import { getProfiles } from "@/api/profile";
+import PaginationBar from "@/components/PaginationBar";
 // import ProfileList from "@/components/ProfileList";
 
 interface Data {
