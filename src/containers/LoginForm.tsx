@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { AxiosError } from "axios";
 import Link from "next/link";
-import useAuthStore from "../store/AuthStore";
-import FilledButton from "../components/ui/Button/FilledButton";
+import useAuthStore from "@/store/AuthStore";
+import FilledButton from "@/components/ui/Button/FilledButton";
 
 export interface InputValues {
   email: string;
