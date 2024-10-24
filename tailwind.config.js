@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const tailwindConfig = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}", // 페이지 파일들
     "./src/components/**/*.{js,ts,jsx,tsx}", // 컴포넌트 파일들
@@ -19,7 +19,6 @@ module.exports = {
       colors: {
         "landing-light": "#f1f4fd",
         "landing-bold": "#ecf0fa",
-
         background: "#ffffff",
         "gray-100": "#f7f7fa",
         "gray-200": "#e4e5f0",
@@ -27,19 +26,14 @@ module.exports = {
         "gray-400": "#8f95b2",
         "gray-500": "#474d66",
         "gray-600": "#3b415b",
-
         "green-50": "#EEF9F6",
         "green-100": "#6cd9bf",
         "green-200": "#4CBFA4",
         "green-300": "#32A68A",
-
         "red-100": "#fbeded",
         "red-200": "#d14343",
-
         "purple-100": "#8e66ff",
-
         "yellow-100": "#fdd181",
-
         "notice-bg": "#ced8d5",
         "notice-text": "#1b1b1b",
         "notice-gray-1": "#a1a1a1",
@@ -66,3 +60,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+export default tailwindConfig;

@@ -1,4 +1,5 @@
 import Image from "next/image";
+<<<<<<< HEAD
 import LandingButton from "@/components/ui/Button/LandingButton";
 import titleImg from "/public/images/img_home1.png";
 import writeImg from "/public/images/img_home4.png";
@@ -10,6 +11,10 @@ import viewImg1 from "/public/images/img_home3.png";
 import viewImg2 from "/public/images/img_home2.png";
 import bellImg from "/public/images/img_bell.png";
 import useAuthStore from "@/store/AuthStore";
+=======
+import LandingButton from "../components/ui/Button/LandingButton";
+import useAuthStore from "../store/AuthStore";
+>>>>>>> d42aae1b81275f3c9f44885f8ee3683084e1ea86
 import Link from "next/link";
 import MenuDropdown from "@/components/ui/Dropdown/MenuDropdown";
 
@@ -18,10 +23,10 @@ const MainPage = () => {
   const linkURL = isLoggedIn ? `/wiki/${user?.id}` : "/login";
 
   const shareItems = [
-    { src: shareImg1, bgColor: "#B2A5FD" },
-    { src: shareImg2, bgColor: "#ADEDDE" },
-    { src: shareImg3, bgColor: "#DEE5F5" },
-    { src: shareImg4, bgColor: "#DEE5F5" },
+    { src: "/images/img_item1.png", bgColor: "#B2A5FD" },
+    { src: "/images/img_item2.png", bgColor: "#ADEDDE" },
+    { src: "/images/img_item3.png", bgColor: "#DEE5F5" },
+    { src: "/images/img_item4.png", bgColor: "#DEE5F5" },
   ];
 
   return (
@@ -41,8 +46,10 @@ const MainPage = () => {
             <LandingButton>위키 만들기</LandingButton>
           </Link>
           <Image
-            className="absolute z-20 Mobile:top-[368px] top-[461px] w-[498px] h-[590px] Mobile:w-[336px] Mobile:h-[398px]"
-            src={titleImg}
+            className="absolute z-20 Mobile:top-[368px] top-[461px] Mobile:w-[336px] Mobile:h-[398px]"
+            src={"/images/img_home1.png"}
+            width={498}
+            height={590}
             alt="타이틀 섹션 이미지"
           />
         </div>
@@ -74,11 +81,13 @@ const MainPage = () => {
               </video>
             </div>
           </div>
-          <div className="relative flex-grow flex-shrink-0 aspect-[0.761] w-[192px] Tablet:w-[365px] PC:w-[520px]">
+          <div className="relative flex-grow flex-shrink-0 aspect-[0.761] Tablet:w-[365px] PC:w-[520px]">
             <Image
-              src={writeImg}
+              src={"/images/img_home4.png"}
               className="w-full h-full"
               alt="write 섹션 이미지"
+              width={192}
+              height={100}
             />
           </div>
         </div>
@@ -100,7 +109,7 @@ const MainPage = () => {
           {shareItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-[10px] w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
+              className="rounded-[10px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
               style={{ backgroundColor: item.bgColor }}
             >
               <Image
@@ -108,6 +117,8 @@ const MainPage = () => {
                 className="w-full h-full"
                 src={item.src}
                 alt={`share 이미지 ${index + 1}`}
+                width={360}
+                height={100}
               />
             </div>
           ))}
@@ -129,17 +140,29 @@ const MainPage = () => {
 
           <div className="flex flex-col mt-10 Tablet:mt-20 PC:mt-[120px] gap-[10px] Tablet:gap-[22px] PC:gap-[40px]">
             <Image
-              src={viewImg1}
+              src={"/images/img_home3.png"}
               className="w-full h-auto"
               alt="view 이미지 1"
+              width={100}
+              height={100}
             />
 
             <div className="flex justify-between gap-[10px] Tablet:gap-[22px] PC:gap-[40px] ">
               <div className="bg-purple-100 rounded-[10px]">
-                <Image src={bellImg} alt="bell 이미지" />
+                <Image
+                  src={"/images/img_bell.png"}
+                  alt="bell 이미지"
+                  width={100}
+                  height={100}
+                />
               </div>
               <div>
-                <Image src={viewImg2} alt="view 이미지 2" />
+                <Image
+                  src={"/images/img_home2.png"}
+                  alt="view 이미지 2"
+                  width={100}
+                  height={100}
+                />
               </div>
             </div>
           </div>

@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import useAuthStore from "@/store/AuthStore";
 import { AxiosError } from "axios";
-import FilledButton from "@/components/ui/Button/FilledButton";
+import Link from "next/link";
+import useAuthStore from "../store/AuthStore";
+import FilledButton from "../components/ui/Button/FilledButton";
 
 export interface InputValues {
   email: string;
@@ -108,10 +108,7 @@ const LoginForm = () => {
               </span>
             )}
           </div>
-          <FilledButton
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <FilledButton type="submit" disabled={isSubmitting}>
             로그인
           </FilledButton>
         </form>

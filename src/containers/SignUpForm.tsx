@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { postSignUp } from "@/api/auth";
+import { postSignUp } from "../api/auth";
 import { InputValues } from "../containers/LoginForm";
-import FilledButton from "@/components/ui/Button/FilledButton";
 import { AxiosError } from "axios";
+import Link from "next/link";
+import FilledButton from "../components/ui/Button/FilledButton";
 
 const SignUpForm = () => {
   const {
@@ -155,10 +155,7 @@ const SignUpForm = () => {
               </span>
             )}
           </div>
-          <FilledButton
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <FilledButton type="submit" disabled={isSubmitting}>
             회원가입
           </FilledButton>
         </form>
