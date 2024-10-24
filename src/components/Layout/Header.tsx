@@ -1,12 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
-import { SearchInput } from "@/components/SearchInput";
+import { SearchInput } from "../../components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
-import Alarm from "/public/icons/ic_alarm";
-import Profile from "/public/icons/ic_profile";
-import FilledButton from "../ui/Button/FilledButton";
-import useAuthStore from "@/store/AuthStore";
 
 export const Header = () => {
   const router = useRouter();
