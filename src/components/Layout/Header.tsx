@@ -5,7 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo/wikied.svg";
 import FilledButton from "../ui/Button/FilledButton";
+<<<<<<< HEAD
 import MenuDropdown from "../ui/Dropdown/MenuDropdown";
+=======
+>>>>>>> dev
 
 export const Header = () => {
   const router = useRouter();
@@ -57,8 +60,15 @@ export const Header = () => {
           />
         </li>
       </ul>
+<<<<<<< HEAD
       <MenuDropdown />
       <Link href="/signin">{/* <FilledButton>로그인</FilledButton> */}</Link>
+=======
+
+      <Link href="/signin">
+        <FilledButton>로그인</FilledButton>
+      </Link>
+>>>>>>> dev
     </div>
   );
 };

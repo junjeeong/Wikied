@@ -1,4 +1,4 @@
-import Profile from "@/assets/icon/ic_profile.png";
+import Profile from "/public/icons/ic_profile.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, ReactNode, useRef, useEffect } from "react";
@@ -45,15 +45,12 @@ const MenuDropdown = () => {
   });
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button onClick={handleToggle} type="button">
         <Image src={Profile} width={32} height={32} alt="프로필" />
       </button>
       {isOpen && (
-        <div
-          ref={dropdownRef}
-          className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-custom absolute top-[37px] right-0"
-        >
+        <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-custom absolute top-[37px] right-0">
           <MenuItem href={"/wikilist"}>위키목록</MenuItem>
           <MenuItem href={"/boards"}>자유게시판</MenuItem>
           <MenuItem>알림</MenuItem>
