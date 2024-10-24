@@ -1,14 +1,5 @@
 import Image from "next/image";
 import LandingButton from "@/components/ui/Button/LandingButton";
-// import titleImg from "@/assets/images/img_home1.png";
-// import writeImg from "@/assets/images/img_home4.png";
-// import shareImg1 from "@/assets/images/img_item1.png";
-// import shareImg2 from "@/assets/images/img_item2.png";
-// import shareImg3 from "@/assets/images/img_item3.png";
-// import shareImg4 from "@/assets/images/img_item4.png";
-// import viewImg1 from "@/assets/images/img_home3.png";
-// import viewImg2 from "@/assets/images/img_home2.png";
-// import bellImg from "@/assets/images/img_bell.png";
 import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
 
