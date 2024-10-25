@@ -21,6 +21,7 @@ export const getServerSideProps: GetServerSideProps<
   WikiListProps
 > = async () => {
   const res = await getProfiles();
+  console.log(res);
 
   return {
     props: {
@@ -31,14 +32,14 @@ export const getServerSideProps: GetServerSideProps<
 
 export const WikiList = ({ list }: WikiListProps) => {
   return (
-    <>
-      <div className="mt-[24px] mb-[24px] text-xl text-gray-400">모든 위키</div>
-      <div className="grid grid-cols-3 auto-rows-auto gap-[24px]">
-        {list.map((el) => (
-          <WikiCard key={el.id} info={el} />
-        ))}
+    <div className="max-w-[840px] w-full mx-auto my-[40px] h-full px-[20px]">
+      <div className="mt-[24px] mb-[24px] text-3xl text-gray-400">
+        모든 위키
       </div>
-    </>
+      <div className="grid grid-cols-3 auto-rows-auto gap-[24px]">
+        <WikiCard key={list[0].id} info={list[0]} />
+      </div>
+    </div>
   );
 };
 
