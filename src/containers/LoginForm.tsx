@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import FilledButton from "@/components/ui/Button/FilledButton";
+import { postSignIn } from "@/api/auth";
 
 export interface InputValues {
   email: string;
@@ -23,18 +24,28 @@ const LoginForm = () => {
   });
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
-  const { login } = useAuthStore();
+  const { login, user } = useAuthStore();
 
   const onSubmit = async (data: InputValues) => {
     try {
       await login(data.email, data.password);
-      router.push("/");
     } catch (error) {
       if (error instanceof AxiosError) {
         setSubmitError(error.response?.data.message);
       }
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      const code = user?.profile?.code;
+      if (code) {
+        router.push(`/wiki/${code}`)
+      } else {
+        router.push('/profile-settings')
+      }
+    }
+  },[user, router])
 
   const handleChange = () => {
     setSubmitError("");
