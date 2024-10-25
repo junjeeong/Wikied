@@ -1,5 +1,10 @@
+import { useState } from "react";
 import Image from "next/image";
 import ProfileInput from "./ProfileInput";
+import ProfileImg from "/public/icons/ic_profile.svg";
+import CameraImg from "/public/icons/ic_camera.svg";
+import ArrowBottom from "/public/icons/ic_arrow_bottom2.svg";
+import { postImage } from "@/api/image";
 
 interface UserProfile {
   id: number;
@@ -23,43 +28,102 @@ interface UserProfile {
 
 interface ProfileCardProps {
   userProfile: UserProfile;
+  isMe: boolean;
+  isEditing: boolean;
 }
 
-const ProfileCard = ({ userProfile }: ProfileCardProps) => {
-  // 수정해야 할 부분
-  const isEditing = true;
-  const isMe = true;
-
+const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
   const defaultURL = "https://example.com/...";
-  userProfile.image = defaultURL;
+  // userProfile.image = defaultURL;
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  // 클릭 시 유저 프로필의 영역이 확장됨
+  const expandContent = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const maxSizeInMB = 5;
+      if (file.size / 1024 / 1024 > maxSizeInMB) {
+        alert("파일 크기가 너무 큽니다. 5MB 이하의 파일을 선택해주세요!");
+        return;
+      }
+      postImage(file);
+    }
+  };
 
   return (
     <div
       className={`${
-        isEditing
-          ? "w-[400px] h-[828px] p-10 gap-10"
-          : "w-80 h-[671px] p-[30px] gap-[30px]"
-      } flex flex-col rounded-[10px] shadow-[0_4px_20px_#00000014]`}
+        isMe && isEditing
+          ? "w-[400px] h-[828px] p-10 gap-10 pb-9 Tablet:flex-col Tablet:h-[388px] Tablet:px-4 Tablet:pb-[37px] Tablet:gap-8 Mobile:flex-col Mobile:h-[511px] Mobile:pt-6 Mobile:px-[34px] Mobile:pb-[17px] Mobile:gap-6"
+          : `w-80 h-[671px] p-[30px] gap-[30px] Tablet:gap-10 Mobile:pt-[15px] Mobile:px-5 Mobile:pb-[41px] Mobile:gap-5 ${
+              isExpanded
+                ? "Tablet:h-[270px] Mobile:h-64"
+                : "Tablet:h-[130px] Mobile:h-[126px]"
+            }`
+      } flex relative text-md rounded-[10px] shadow-[0_4px_20px_#00000014] PC:flex-col Tablet:w-[624px] Tablet:pt-5 Mobile:text-xs Mobile:w-[335px]`}
     >
       <div
         className={`${
-          isEditing ? "m-5" : "m-[30px]"
-        } relative self-center w-[200px] h-[200px]`}
+          isMe && isEditing
+            ? "m-5 self-center Mobile:m-0"
+            : "m-[30px] Mobile:m-0"
+        } relative PC:self-center w-[200px] h-[200px] Tablet:w-[71px] Tablet:h-[71px] Tablet:m-0 Mobile:w-[62px] Mobile:h-[62px]`}
       >
         {userProfile.image === defaultURL ? (
-          <div className="w-full h-full rounded-full bg-gray-400 "></div>
+          <ProfileImg className="w-full h-full text-gray-400" />
         ) : (
           <Image
             src={userProfile.image}
-            layout="fill"
-            objectFit="cover"
+            fill
             className="rounded-full"
+            style={{ objectFit: "cover" }}
             alt="유저 프로필 이미지"
+            priority
+            sizes="(max-width: 767px) 62px, (max-width: 1199px) 71px, 200px"
           />
+        )}
+        {isMe && isEditing && (
+          <>
+            <input
+              id="image"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+            <label
+              htmlFor="image"
+              className="relative block w-full h-full cursor-pointer transform transition-transform duration-300 hover:scale-105"
+            >
+              <div className="absolute top-0 left-0 rounded-full w-full h-full bg-[#00000080]"></div>
+              <CameraImg className="absolute w-9 h-9 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 right-0 text-gray-200 Tablet:w-5 Tablet:h-5 Mobile:w-[17px] Mobile:h-[17px] " />
+            </label>
+          </>
         )}
       </div>
 
-      <div className="flex flex-col gap-4">
+      <button
+        onClick={expandContent}
+        className="absolute left-1/2 -translate-x-1/2 bottom-[5px]"
+      >
+        <ArrowBottom
+          className={`${isMe && isEditing ? "hidden" : ""} ${
+            isExpanded ? "scale-y-[-1]" : ""
+          } text-gray-300 PC:hidden`}
+        />
+      </button>
+
+      <div
+        className={`${
+          isMe && isEditing
+            ? "Tablet:h-[228px] Tablet:flex-wrap Mobile:flex-wrap"
+            : "Tablet:gap-1 Mobile:w-[213px] Mobile:gap-2"
+        } ${isExpanded ? "" : "overflow-hidden"} flex flex-col gap-4 `}
+      >
         <ProfileInput
           isMe={isMe}
           isEditing={isEditing}
