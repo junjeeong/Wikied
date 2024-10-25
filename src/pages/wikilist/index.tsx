@@ -13,12 +13,15 @@ interface Profile {
   nationality: string;
 }
 
-interface Props {
+interface WikiListProps {
   list: Profile[];
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<
+  WikiListProps
+> = async () => {
   const res = await getProfiles();
+
   return {
     props: {
       list: res,
@@ -26,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   };
 };
 
-export const WikiList: React.FC<Props> = ({ list }) => {
+export const WikiList = ({ list }: WikiListProps) => {
   return (
     <>
       <div className="mt-[24px] mb-[24px] text-xl text-gray-400">모든 위키</div>
