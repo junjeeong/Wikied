@@ -12,7 +12,7 @@ interface AuthStore {
     id: number;
     name: string;
     email: string;
-    profile: UserProfile;
+    profile: { code: string; id: number };
   } | null;
   accessToken: string | null;
   refreshToken: string | null;
