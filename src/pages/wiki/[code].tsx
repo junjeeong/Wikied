@@ -20,7 +20,8 @@ const WikiPage = () => {
   const userProfile = {
     id: 472,
     code: "ed5652ad-9d61-4c26-9d85-617044b06534",
-    image: "https://example.com/...",
+    image:
+      "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wikied/user/1512/1729820442316/userProfileImg.jpg",
     city: "서울",
     mbti: "INTP",
     job: "은행원",
@@ -33,7 +34,7 @@ const WikiPage = () => {
     content: "내용 없음",
     teamId: "9-3",
     securityQuestion: "좋아하는 동물은?",
-    updatedAt: "2024-10-24T03:13:19.192Z",
+    updatedAt: "2024-10-25T01:44:23.627Z",
     name: "연습용",
   };
 

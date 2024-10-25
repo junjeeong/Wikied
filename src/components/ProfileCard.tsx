@@ -1,6 +1,5 @@
-import userProfileImg from "@/assets/images/userProfileImg.jpg";
 import Image from "next/image";
-import { useFormContext } from "react-hook-form";
+import ProfileInput from "./ProfileInput";
 
 interface UserProfile {
   id: number;
@@ -27,11 +26,12 @@ interface ProfileCardProps {
 }
 
 const ProfileCard = ({ userProfile }: ProfileCardProps) => {
-  const { register } = useFormContext();
-
-  const image = userProfileImg;
+  // 수정해야 할 부분
   const isEditing = true;
   const isMe = true;
+
+  const defaultURL = "https://example.com/...";
+  userProfile.image = defaultURL;
 
   return (
     <div
@@ -41,47 +41,81 @@ const ProfileCard = ({ userProfile }: ProfileCardProps) => {
           : "w-80 h-[671px] p-[30px] gap-[30px]"
       } flex flex-col rounded-[10px] shadow-[0_4px_20px_#00000014]`}
     >
-      <div className="relative self-center w-[200px] h-[200px] m-[30px]">
-        <Image
-          src={image}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-full"
-          alt="유저 프로필 이미지"
-        />
+      <div
+        className={`${
+          isEditing ? "m-5" : "m-[30px]"
+        } relative self-center w-[200px] h-[200px]`}
+      >
+        {userProfile.image === defaultURL ? (
+          <div className="w-full h-full rounded-full bg-gray-400 "></div>
+        ) : (
+          <Image
+            src={userProfile.image}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-full"
+            alt="유저 프로필 이미지"
+          />
+        )}
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className={`${isEditing ? "" : "gap-5"} flex`}>
-          <label
-            htmlFor="city"
-            className={`${
-              isEditing ? "w-20 h-[45px]" : "w-[60px] h-6"
-            } content-center text-gray-400`}
-          >
-            거주 도시
-          </label>
-          {isMe && isEditing ? (
-            <input
-              className="w-60 h-[45px] rounded-[10px] px-5 py-[10.5px] bg-gray-100"
-              id="city"
-              type="text"
-              placeholder="제공하지 않음"
-              {...register("city")}
-            />
-          ) : (
-            <p className="w-[180px] h-6 overflow-hidden whitespace-pre text-ellipsis">
-              {userProfile.city}
-            </p>
-          )}
-        </div>
-        <p className="text-gray-400">MBTI</p>
-        <p className="text-gray-400">직업</p>
-        <p className="text-gray-400">SNS 계정</p>
-        <p className="text-gray-400">생일</p>
-        <p className="text-gray-400">별명</p>
-        <p className="text-gray-400">혈액형</p>
-        <p className="text-gray-400">국적</p>
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="거주 도시"
+          Id="city"
+          inputValue={userProfile.city}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="MBTI"
+          Id="mbti"
+          inputValue={userProfile.mbti}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="직업"
+          Id="job"
+          inputValue={userProfile.job}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="SNS 계정"
+          Id="sns"
+          inputValue={userProfile.sns}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="생일"
+          Id="birthday"
+          inputValue={userProfile.birthday}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="별명"
+          Id="nickname"
+          inputValue={userProfile.nickname}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="혈액형"
+          Id="bloodType"
+          inputValue={userProfile.bloodType}
+        />
+        <ProfileInput
+          isMe={isMe}
+          isEditing={isEditing}
+          label="국적"
+          Id="nationality"
+          inputValue={userProfile.nationality}
+        />
       </div>
     </div>
   );
