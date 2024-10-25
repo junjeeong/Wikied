@@ -1,5 +1,6 @@
 import { getProfiles } from "@/api/profile";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import WikiCard from "@/containers/WikiCard";
 
 interface Profile {
@@ -37,7 +38,11 @@ export const WikiList = ({ list }: WikiListProps) => {
         모든 위키
       </div>
       <div className="grid grid-cols-3 auto-rows-auto gap-[24px]">
-        <WikiCard key={list[0].id} info={list[0]} />
+        {list.map((el) => (
+          <Link key={el.id} href={`/${el.code}`}>
+            <WikiCard info={el} />
+          </Link>
+        ))}
       </div>
     </div>
   );
