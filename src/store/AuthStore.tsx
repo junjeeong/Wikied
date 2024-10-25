@@ -2,8 +2,18 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { postSignIn } from "@/api/auth";
 
+interface UserProfile {
+  id: number;
+  code: string;
+}
+
 interface AuthStore {
-  user: { id: number; name: string; email: string } | null;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    profile: { code: string; id: number };
+  } | null;
   accessToken: string | null;
   refreshToken: string | null;
   isLoggedIn: boolean;

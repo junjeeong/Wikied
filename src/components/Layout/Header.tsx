@@ -1,18 +1,23 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
-import FilledButton from "../ui/Button/FilledButton";
 import Alarm from "/public/icons/ic_alarm.svg";
-import Profile from "/public/icons/ic_profile.svg";
-import Menu from "/public/icons/ic_menu.svg";
+import FilledButton from "../ui/Button/FilledButton";
+import LoginDropdown from "../ui/Dropdown/LoginDropdown";
+import LogoutDropdown from "../ui/Dropdown/LogoutDropdown";
 
 export const Header = () => {
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
   const [searchedName, setSearchedName] = useState("");
   const { isLoggedIn } = useAuthStore();
+
+  const handleResize = () => {
+    setIsMobile(innerWidth < 768);
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchedName(e.target.value);
@@ -25,6 +30,14 @@ export const Header = () => {
       query: { q: searchedName },
     });
   };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="w-screen p-6 h-20 bg-gray-50 flex justify-between items-center">
@@ -68,10 +81,13 @@ export const Header = () => {
 
       {isLoggedIn ? (
         <div className="flex items-center">
-          <Alarm className="w cursor-pointer text-gray-400 hover:text-gray-500" />
-          <Profile className="ml-[20px] cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden" />
-          <Menu className="PC:hidden Tablet:hidden ml-[20px] cursor-pointer text-gray-400 hover:text-gray-500" />
+          <Alarm className="cursor-pointer text-gray-400 hover:text-gray-500" />
+          <div className="ml-[20px]">
+            <LoginDropdown />
+          </div>
         </div>
+      ) : isMobile ? (
+        <LogoutDropdown />
       ) : (
         <Link href="/login">
           <FilledButton>로그인</FilledButton>
