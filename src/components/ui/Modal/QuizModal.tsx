@@ -1,6 +1,5 @@
 import FilledButton from "@/components/ui/Button/FilledButton";
 
-
 interface QuizModalProps {
   question: string;
   quizAnswer: string;
