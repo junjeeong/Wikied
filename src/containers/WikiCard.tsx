@@ -1,10 +1,6 @@
 import Image from "next/image";
 import LinkSVG from "/icons/ic_link.svg";
 
-interface WikiCardProps {
-  info: Profile;
-}
-
 interface Profile {
   id: number;
   code: string;
@@ -16,7 +12,11 @@ interface Profile {
   nationality: string;
 }
 
-const WikiCard = (info): WikiCardProps => {
+interface WikiCardProps {
+  info: Profile;
+}
+
+const WikiCard = ({ info }: WikiCardProps) => {
   return (
     <div className="flex flex-col w-full h-full border border-solid border-gray-100 shadow-[0_4px_20px_#00000014] rounded-[16px] cursor-pointer overflow-hidden">
       <section className="flex flex-grow-1 justify-between align-middle p-[20px] bg-white">
