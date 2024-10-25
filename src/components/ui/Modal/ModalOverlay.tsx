@@ -31,7 +31,7 @@ const ModalOverlay = ({
           <button
             type="button"
             onClick={onClose}
-            className={`absolute top-5 right-5 bg-cover ${closeButtonSize}`}
+            className={`absolute top-5 right-5 bg-cover ${closeButtonSize} ${closeButtonColor}`}
           >
             <svg
               width="24"

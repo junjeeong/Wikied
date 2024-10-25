@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { getUserProfile, postProfilePng } from "@/api/profile";
+import { getUserProfile, postProfilePing } from "@/api/profile";
 import { AxiosError } from "axios";
-import QuizModal from "../components/ui/Modal/QuizModal";
-import ModalOverlay from "../components/ui/Modal/ModalOverlay";
+import QuizModal from "@/components/ui/Modal/QuizModal";
+import ModalOverlay from "@/components/ui/Modal/ModalOverlay";
 
 interface QuizModalContainerProps {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
   useEffect(() => {
     const getQuestion = async () => {
       const res = await getUserProfile(code);
-      setQuestion((prev) => res?.data.securityQuestion);
+      setQuestion(res?.data.securityQuestion);
     };
     getQuestion();
   }, [code]);
@@ -31,7 +31,7 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
 
   const handleSubmit = async () => {
     try {
-      await postProfilePng(
+      await postProfilePing(
         {
           securityAnswer: quizAnswer,
         },

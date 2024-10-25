@@ -1,4 +1,4 @@
-import FilledButton from "../Button/FilledButton";
+import FilledButton from "@/components/ui/Button/FilledButton";
 
 
 interface QuizModalProps {

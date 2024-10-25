@@ -1,4 +1,4 @@
-import instance from "./axios";
+import instance from "@/api/axios";
 
 interface GetProfilesQuery {
   page: number;
@@ -67,7 +67,7 @@ export const postProfile = async (body: PostProfileQuery) => {
 };
 
 // 프로필 수정 중 체크
-export const postProfilePng = async (body: PostProfilePingQuery,code:string) => {
+export const postProfilePing = async (body: PostProfilePingQuery, code: string) => {
   const token = localStorage.getItem("accessToken");
 
   const res = await instance.post(`/profiles/${code}/ping`, body, {
