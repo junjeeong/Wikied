@@ -8,7 +8,12 @@ interface UserProfile {
 }
 
 interface AuthStore {
-  user: { id: number; name: string; email: string; profile: UserProfile } | null;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    profile: UserProfile;
+  } | null;
   accessToken: string | null;
   refreshToken: string | null;
   isLoggedIn: boolean;

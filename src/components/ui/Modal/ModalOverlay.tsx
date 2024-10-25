@@ -17,7 +17,6 @@ const ModalOverlay = ({
   closeButtonSize = "w-5 h-5",
   closeButtonColor = "#8f95b2", //config color 안먹힘
 }: ModalProps) => {
-  
   if (!isOpen) return null;
 
   return (
