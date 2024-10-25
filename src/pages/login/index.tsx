@@ -1,11 +1,7 @@
 import LoginForm from "@/containers/LoginForm";
 
 const Login = () => {
-  return (
-    <>
-      <LoginForm />
-    </>
-  );
+  return <LoginForm />;
 };
 
 export default Login;
