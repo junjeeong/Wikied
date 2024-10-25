@@ -63,7 +63,6 @@ export const Header = () => {
           />
         </li>
       </ul>
-
       {isLoggedIn ? (
         <LoginDropdown />
       ) : (

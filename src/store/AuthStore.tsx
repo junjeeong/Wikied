@@ -2,6 +2,11 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { postSignIn } from "@/api/auth";
 
+interface UserProfile {
+  id: number;
+  code: string;
+}
+
 interface AuthStore {
   user: {
     id: number;
