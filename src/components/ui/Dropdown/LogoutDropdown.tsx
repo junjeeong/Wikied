@@ -7,21 +7,27 @@ interface MenuItemProps {
   children: ReactNode;
   href: string;
   onClick: () => void;
+  className?: string;
 }
 
-const MenuItem = ({ children, href = "", onClick }: MenuItemProps) => {
+const MenuItem = ({
+  children,
+  href = "",
+  onClick,
+  className = "",
+}: MenuItemProps) => {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="py-[10px] px-[30px] text-gray-500 text-md font-normal transition-transform transform hover:scale-110 "
+      className={`py-[10px] px-[30px] text-gray-500 text-md font-normal transition-transform transform hover:scale-110 ${className}`}
     >
       {children}
     </Link>
   );
 };
 
-const HamburgerDropdown = () => {
+const LogoutDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
@@ -71,13 +77,12 @@ const HamburgerDropdown = () => {
             </MenuItem>
           )}
           {currentPath !== "/login" && (
-            <MenuItem href={"/login"} onClick={handleToggle}>
+            <MenuItem
+              className="hover:text-green-500"
+              href={"/login"}
+              onClick={handleToggle}
+            >
               로그인
-            </MenuItem>
-          )}
-          {currentPath !== "/signup" && (
-            <MenuItem href={"/signup"} onClick={handleToggle}>
-              회원가입
             </MenuItem>
           )}
         </div>
@@ -86,4 +91,4 @@ const HamburgerDropdown = () => {
   );
 };
 
-export default HamburgerDropdown;
+export default LogoutDropdown;

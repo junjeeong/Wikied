@@ -8,21 +8,27 @@ interface MenuItemProps {
   children: ReactNode;
   href?: string;
   onClick?: () => void;
+  className?: string;
 }
 
-const MenuItem = ({ children, href = "", onClick }: MenuItemProps) => {
+const MenuItem = ({
+  children,
+  href = "",
+  onClick,
+  className = "",
+}: MenuItemProps) => {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="py-[10px] px-[30px] text-gray-500 text-md font-normal transition-transform transform hover:scale-110 "
+      className={`py-[10px] px-[30px] text-gray-500 text-md font-normal transition-transform transform hover:scale-110 ${className}`}
     >
       {children}
     </Link>
   );
 };
 
-const MenuDropdown = () => {
+const LoginDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const { user, logout } = useAuthStore();
@@ -69,7 +75,7 @@ const MenuDropdown = () => {
         />
       </button>
       {isOpen && (
-        <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-custom absolute top-[37px] right-0 z-10">
+        <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[37px] right-0 z-10">
           {currentPath !== "/mypage" && (
             <MenuItem href={"/mypage"} onClick={handleToggle}>
               계정설정
@@ -91,6 +97,7 @@ const MenuDropdown = () => {
             </MenuItem>
           )}
           <MenuItem
+            className="hover:text-red-500"
             href="#"
             onClick={() => {
               handleToggle();
@@ -105,4 +112,4 @@ const MenuDropdown = () => {
   );
 };
 
-export default MenuDropdown;
+export default LoginDropdown;

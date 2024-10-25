@@ -54,7 +54,7 @@ const OrderDropdown = ({ order, onChange }: OrderDropdownProps) => {
         />
       </button>
       {isOpen && (
-        <ul className="flex flex-col w-[140px] whitespace-nowrap rounded-[10px] text-gray-500 text-md font-normal bg-gray-50 shadow-custom absolute top-[60px] z-10">
+        <ul className="flex flex-col w-[140px] whitespace-nowrap rounded-[10px] text-gray-500 text-md font-normal bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[60px] z-10">
           <li
             className="flex justify-center py-[14px] px-[20px] cursor-pointer transition-transform transform hover:scale-110"
             onClick={() => handleMenuClick("recent")}

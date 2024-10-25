@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FilledButton from "../ui/Button/FilledButton";
 import useAuthStore from "@/store/AuthStore";
-import MenuDropdown from "../ui/Dropdown/MenuDropdown";
+import LoginDropdown from "../ui/Dropdown/LoginDropdown";
 
 export const Header = () => {
   const router = useRouter();
@@ -65,7 +65,7 @@ export const Header = () => {
       </ul>
 
       {isLoggedIn ? (
-        <MenuDropdown />
+        <LoginDropdown />
       ) : (
         <Link href="/login">
           <FilledButton>로그인</FilledButton>
