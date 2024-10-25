@@ -3,11 +3,14 @@ import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
+import useAuthStore from "@/store/AuthStore";
+import LoginDropdown from "../ui/Dropdown/LoginDropdown";
 import FilledButton from "../ui/Button/FilledButton";
 
 export const Header = () => {
   const router = useRouter();
   const [searchedName, setSearchedName] = useState("");
+  const { isLoggedIn } = useAuthStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchedName(e.target.value);
@@ -60,10 +63,13 @@ export const Header = () => {
           />
         </li>
       </ul>
-
-      <Link href="/signin">
-        <FilledButton>로그인</FilledButton>
-      </Link>
+      {isLoggedIn ? (
+        <LoginDropdown />
+      ) : (
+        <Link href="/login">
+          <FilledButton>로그인</FilledButton>
+        </Link>
+      )}
     </div>
   );
 };
