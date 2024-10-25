@@ -37,8 +37,6 @@ const MainPage = () => {
             width={498}
             height={590}
             alt="타이틀 섹션 이미지"
-            width={100}
-            height={100}
           />
         </div>
       </section>
