@@ -8,10 +8,16 @@ interface GetNotificationsQuery {
 // 알림 목록 조회
 export const getNotifications = async (query: GetNotificationsQuery) => {
   const { page = 1, pageSize = 10 } = query;
+  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.get(
-      `/notifications?page=${page}&pageSize=${pageSize}`
+      `/notifications?page=${page}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     if (res.status === 200) {
       return res.data.list;
@@ -24,8 +30,14 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
 
 // 알림 삭제
 export const deleteNotifications = async (id: number) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    const res = await instance.delete(`/notifications/${id}`);
+    const res = await instance.delete(`/notifications/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (res.status === 200) {
       return res.data;
     }

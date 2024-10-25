@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/logo/wikied.svg";
-import Button from "../ui/Button";
 
 export const Header = () => {
   const router = useRouter();
@@ -25,7 +23,12 @@ export const Header = () => {
   return (
     <div className="w-screen p-6 h-20 bg-gray-50 flex justify-between items-center">
       <Link href="/" aria-label="홈으로 이동">
-        <Image src={logo} width={107} height={30} alt="wikied logo" />
+        <Image
+          src={"/logo/wikied.svg"}
+          width={107}
+          height={30}
+          alt="wikied logo"
+        />
       </Link>
 
       <ul className="flex items-center flex-row-reverse flex-grow gap-10 mr-10">
@@ -56,9 +59,8 @@ export const Header = () => {
           />
         </li>
       </ul>
-
       <Link href="/signin">
-        <Button>로그인</Button>
+        <FilledButton>로그인</FilledButton>
       </Link>
     </div>
   );
