@@ -7,6 +7,7 @@ import useAuthStore from "@/store/AuthStore";
 import Alarm from "/public/icons/ic_alarm.svg";
 import FilledButton from "../ui/Button/FilledButton";
 import LoginDropdown from "../ui/Dropdown/LoginDropdown";
+import FilledButton from "../ui/Button/FilledButton";
 import LogoutDropdown from "../ui/Dropdown/LogoutDropdown";
 
 export const Header = () => {
@@ -81,7 +82,7 @@ export const Header = () => {
 
       {isLoggedIn ? (
         <div className="flex items-center">
-          <Alarm className="cursor-pointer text-gray-400 hover:text-gray-500" />
+          <Alarm className="cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden" />
           <div className="ml-[20px]">
             <LoginDropdown />
           </div>

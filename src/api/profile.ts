@@ -1,9 +1,9 @@
 import instance from "@/api/axios";
 
 interface GetProfilesQuery {
-  page: number;
-  pageSize: number;
-  name: string;
+  page?: number;
+  pageSize?: number;
+  name?: string;
 }
 
 interface PostProfileQuery {
@@ -16,6 +16,7 @@ interface PostProfilePingQuery {
 }
 
 // 프로필 목록 조회
+
 export const getProfiles = async (query: GetProfilesQuery) => {
   const baseUrl = "/profiles";
   const queryString = query

@@ -1,6 +1,7 @@
 import useAuthStore from "@/store/AuthStore";
-import Image from "next/image";
 import Link from "next/link";
+import Profile from "/public/icons/ic_profile.svg";
+import Menu from "/public/icons/ic_menu.svg";
 import { useRouter } from "next/router";
 import { useState, ReactNode, useRef, useEffect } from "react";
 
@@ -66,14 +67,15 @@ const LoginDropdown = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button onClick={handleToggle} type="button">
-        <Image
-          src={"/icons/ic_profile.svg"}
-          width={32}
-          height={32}
-          alt="프로필"
-        />
-      </button>
+      {!isMobile ? (
+        <button className="align-top" onClick={handleToggle} type="button">
+          <Profile className="text-gray-400 hover:text-gray-500" />
+        </button>
+      ) : (
+        <button className="align-top" onClick={handleToggle} type="button">
+          <Menu className="text-gray-400 hover:text-gray-500" />
+        </button>
+      )}
       {isOpen && (
         <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[37px] right-0 z-10">
           {currentPath !== "/mypage" && (
@@ -96,8 +98,9 @@ const LoginDropdown = () => {
               자유게시판
             </MenuItem>
           )}
+          {isMobile && <MenuItem onClick={handleToggle}>알림</MenuItem>}
           <MenuItem
-            className="hover:text-red-500"
+            className="text-red-500"
             href="#"
             onClick={() => {
               handleToggle();
