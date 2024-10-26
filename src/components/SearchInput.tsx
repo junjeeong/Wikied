@@ -3,9 +3,9 @@ import Image from "next/image";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
-  value: string;
-  onSubmit: FormEventHandler;
-  onChange: ChangeEventHandler;
+  value?: string;
+  onSubmit?: FormEventHandler;
+  onChange?: ChangeEventHandler;
 }
 
 export const SearchInput = ({
