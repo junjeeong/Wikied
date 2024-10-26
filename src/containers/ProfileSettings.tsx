@@ -2,7 +2,7 @@ import { postProfile } from "@/api/profile";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import useAuthStore from "@/store/AuthStore";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface TitleProps {
@@ -24,7 +24,11 @@ interface ProfileValues {
   securityQuestion: string;
 }
 
-const ProfileSettings = () => {
+interface ProfileSettingsProps {
+  setShowSettings: React.Dispatch<React.SetStateAction<boolean>>; // setState 타입 지정
+}
+
+const ProfileSettings = ({ setShowSettings }: ProfileSettingsProps) => {
   const {
     register,
     handleSubmit,
@@ -33,27 +37,14 @@ const ProfileSettings = () => {
     mode: "onSubmit",
   });
 
-  const router = useRouter();
-  const { isLoggedIn, user } = useAuthStore();
+  const { user, updateProfile } = useAuthStore();
   const userEmail = user?.email;
   const userUrl = userEmail ? userEmail.split("@")[0] : "";
 
   const createdProfile = async (data: ProfileValues) => {
-    const res= await postProfile({
-      securityAnswer: data.securityAnswer,
-      securityQuestion: data.securityQuestion,
-    });
-    if (res) {
-      const code = res.code;
-      router.push(`/wiki/${code}`)
-    }
+    await updateProfile(data.securityAnswer, data.securityQuestion);
+    setShowSettings(false);
   };
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.push("/login");
-    } 
-  }, [isLoggedIn]);
 
   return (
     <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-background">
