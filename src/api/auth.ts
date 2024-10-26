@@ -1,11 +1,10 @@
 import instance from "./axios";
 
-
 interface PostSignUpQuery {
-    email: string;
-    name?: string;
-    password: string;
-    passwordConfirmation?: string;
+  email: string;
+  name?: string;
+  password: string;
+  passwordConfirmation?: string;
 }
 
 interface PostSignInQuery {
@@ -19,20 +18,19 @@ interface PostRefreshTokenQuery {
 
 // 회원가입
 export const postSignUp = async (body: PostSignUpQuery) => {
-    const res = await instance.post(`/auth/signUp`, body);
-    if (res.status === 200) {
-      return res.data;
-    } 
+  const res = await instance.post(`/auth/signUp`, body);
+  if (res.status === 200) {
+    return res.data;
   }
+};
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
-    const res = await instance.post(`/auth/signIn`, body);
-    if (res.status === 200) {
-      return res.data;
+  const res = await instance.post(`/auth/signIn`, body);
+  if (res.status === 200) {
+    return res.data;
+  }
 };
-}
-
 
 // 토큰 재갱신
 export const postRefreshToken = async (refreshToken: string) => {
