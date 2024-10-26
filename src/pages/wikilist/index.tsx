@@ -33,19 +33,25 @@ export const getServerSideProps: GetServerSideProps<
 const WikiList = ({ initialList }: WikiListProps) => {
   const [list, setList] = useState<Profile[]>(initialList);
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   const loadMoreProfiles = useCallback(async () => {
     const newProfiles = await getProfiles({ page: page + 1 });
-    setList((prev) => [...prev, ...newProfiles]);
-    setPage((prev) => prev + 1);
+
+    if (newProfiles.length === 0) {
+      setHasMore(false);
+    } else {
+      setList((prev) => [...prev, ...newProfiles]);
+      setPage((prev) => prev + 1);
+    }
   }, [page]);
 
   useEffect(() => {
     const currentRef = loadingRef.current;
 
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && hasMore) {
         loadMoreProfiles();
       }
     });
@@ -59,7 +65,7 @@ const WikiList = ({ initialList }: WikiListProps) => {
         observer.unobserve(currentRef);
       }
     };
-  }, [loadMoreProfiles]);
+  }, [loadMoreProfiles, hasMore]);
 
   return (
     <div className="max-w-[840px] w-full mx-auto my-[40px] h-full px-[20px]">
@@ -73,12 +79,14 @@ const WikiList = ({ initialList }: WikiListProps) => {
           </Link>
         ))}
       </div>
-      <div
-        ref={loadingRef}
-        className="mt-[20px] flex justify-center items-center h-10"
-      >
-        <div className="w-[30px] h-[30px] border-4 border-transparent border-t-green-200 rounded-full animate-spin"></div>
-      </div>
+      {hasMore && (
+        <div
+          ref={loadingRef}
+          className="mt-[20px] flex justify-center items-center h-10"
+        >
+          <div className="w-[30px] h-[30px] border-4 border-transparent border-t-green-200 rounded-full animate-spin"></div>
+        </div>
+      )}
     </div>
   );
 };
