@@ -50,14 +50,14 @@ export const getUserProfile = async (code:string) => {
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
   const token = localStorage.getItem("accessToken");
-
   try {
     const res = await instance.post(`/profiles`, body, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
+    //스웨거와 다르게 상태코드 200 아님
+    if (res.status === 201) {
       return res.data;
     }
   } catch (err) {

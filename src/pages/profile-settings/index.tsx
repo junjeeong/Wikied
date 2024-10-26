@@ -2,6 +2,7 @@ import { postProfile } from "@/api/profile";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import useAuthStore from "@/store/AuthStore";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface TitleProps {
@@ -31,19 +32,29 @@ const ProfileSettings = () => {
   } = useForm<ProfileValues>({
     mode: "onSubmit",
   });
+
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { isLoggedIn, user } = useAuthStore();
+  const userEmail = user?.email;
+  const userUrl = userEmail ? userEmail.split("@")[0] : "";
 
   const createdProfile = async (data: ProfileValues) => {
-      const res = await postProfile({
+    const res= await postProfile({
       securityAnswer: data.securityAnswer,
       securityQuestion: data.securityQuestion,
-    
     });
-    router.push(`/wiki/${res.code}`); //user에서 가져오는 건 비동기로 늦음
+    if (res) {
+      const code = res.code;
+      router.push(`/wiki/${code}`)
+    }
   };
-  
-  
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    } 
+  }, [isLoggedIn]);
+
   return (
     <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-background">
       <div className="w-full max-w-md">
@@ -68,6 +79,7 @@ const ProfileSettings = () => {
               <input
                 id="url"
                 className="w-full rounded-[10px] px-5 py-[10.5px] mb-[10px] br-gray-100 bg-gray-100 placeholder:text-md placeholder:text-gray-400 focus:outline-green-200"
+                placeholder={`${userUrl}`}
               ></input>
             </div>
             <span className="text-md text-gray-400 font-semibold absolute top-[28px] -left-10 rounded-full border-[1px] w-6 text-center">
@@ -92,11 +104,15 @@ const ProfileSettings = () => {
             <label htmlFor="securityQuestion"></label>
             <input
               id="securityQuestion"
-              className="rounded-[10px] px-5 py-[10.5px] mb-[10px] bg-gray-100 placeholder:text-md placeholder:text-gray-400 focus:outline-green-200"
+              className={`rounded-[10px] px-5 py-[10.5px] mb-[10px] bg-gray-100 placeholder:text-md placeholder:text-gray-40 ${
+                errors.securityQuestion
+                  ? "outline-red-200"
+                  : "outline-green-200"
+              }`}
               type="text"
               placeholder="질문을 입력해 주세요"
-              {...register("securityQuestion",{
-                required:true,
+              {...register("securityQuestion", {
+                required: "질문을 입력해 주세요",
               })}
             ></input>
             {errors.securityQuestion && (
@@ -109,11 +125,13 @@ const ProfileSettings = () => {
             <label htmlFor="securityAnswer"></label>
             <input
               id="securityAnswer"
-              className="rounded-[10px] px-5 py-[10.5px] mb-[10px]gray100 bg-gray-100 placeholder:text-md placeholder:text-gray-400 focus:outline-green-200"
+              className={`rounded-[10px] px-5 py-[10.5px] mb-[10px] bg-gray-100 placeholder:text-md placeholder:text-gray-400 ${
+                errors.securityAnswer ? "outline-red-200" : "outline-green-200"
+              }`}
               type="text"
               placeholder="답을 입력해주세요"
-              {...register("securityAnswer",{
-                required:true,
+              {...register("securityAnswer", {
+                required: "답을 입력해주세요",
               })}
             ></input>
             {errors.securityAnswer && (
