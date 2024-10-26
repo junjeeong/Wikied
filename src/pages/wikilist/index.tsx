@@ -39,7 +39,9 @@ const WikiList = ({ initialList }: WikiListProps) => {
   const loadMoreProfiles = useCallback(async () => {
     const newProfiles = await getProfiles({ page: page + 1 });
 
+
     if (newProfiles.length === 0) {
+      // 새로 갱신된 리스트가 없을 경우 hasMore = false
       setHasMore(false);
     } else {
       setList((prev) => [...prev, ...newProfiles]);
@@ -51,15 +53,18 @@ const WikiList = ({ initialList }: WikiListProps) => {
     const currentRef = loadingRef.current;
 
     const observer = new IntersectionObserver((entries) => {
+      // entries[0] === loadingRef, indicator DOM이 화면에 노출된다면 loadMoreProfile() 호출
       if (entries[0].isIntersecting && hasMore) {
         loadMoreProfiles();
       }
     });
 
+    // currentRef에 해당하는 DOM을 관찰대상으로 추가
     if (currentRef) {
       observer.observe(currentRef);
     }
 
+    // 컴포넌트가 unmout 되면 관찰대상 삭제
     return () => {
       if (currentRef) {
         observer.unobserve(currentRef);
@@ -79,6 +84,7 @@ const WikiList = ({ initialList }: WikiListProps) => {
           </Link>
         ))}
       </div>
+      {/* 불러올 데이터가 있을 경우에만 무한스크롤 기능 on */}
       {hasMore && (
         <div
           ref={loadingRef}
