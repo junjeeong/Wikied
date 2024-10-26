@@ -81,7 +81,7 @@ export const Header = () => {
 
       {isLoggedIn ? (
         <div className="flex items-center">
-          <Alarm className="cursor-pointer text-gray-400 hover:text-gray-500" />
+          <Alarm className="cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden" />
           <div className="ml-[20px]">
             <LoginDropdown />
           </div>
