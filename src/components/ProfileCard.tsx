@@ -56,7 +56,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
 
   return (
     <div
-      className={`${
+      className={`transition-all ease-in-out ${
         isMe && isEditing
           ? "w-[400px] h-[828px] p-10 gap-10 pb-9 Tablet:flex-col Tablet:h-[388px] Tablet:px-4 Tablet:pb-[37px] Tablet:gap-8 Mobile:flex-col Mobile:h-[511px] Mobile:pt-6 Mobile:px-[34px] Mobile:pb-[17px] Mobile:gap-6"
           : `w-80 h-[671px] p-[30px] gap-[30px] Tablet:gap-10 Mobile:pt-[15px] Mobile:px-5 Mobile:pb-[41px] Mobile:gap-5 ${
