@@ -16,30 +16,24 @@ interface PostProfilePingQuery {
 }
 
 // 프로필 목록 조회
-export const getProfiles = async (query: GetProfilesQuery = {}) => {
-  if (query) {
-    const { page = 1, pageSize = 10, name = "" } = query;
-    try {
-      const res = await instance.get(
-        `/profiles?page=${page}&pageSize=${pageSize}&name=${name}`
-      );
-      if (res.status === 200) {
-        return res.data.list;
-      }
-    } catch (err) {
-      console.error("프로필 정보들을 불러오지 못했습니다.", err);
-      return [];
-    }
+export const getProfiles = async (query: GetProfilesQuery) => {
+  const baseUrl = "/profiles";
+  let queryString = "";
+
+  // name 쿼리가 있을 경우에는 전체를 불러옴
+  if (query.name) {
+    queryString = `?name=${query.name}`;
   } else {
-    try {
-      const res = await instance.get("/profiles");
-      if (res.status === 200) {
-        return res.data.list;
-      }
-    } catch (err) {
-      console.error("프로필 정보들을 불러오지 못했습니다.", err);
-      return [];
-    }
+    queryString = `?page=${query.page || 1}&pageSize=${query.pageSize || 10}`;
+  }
+
+  try {
+    const res = await instance.get(`${baseUrl}${queryString}`);
+    // name 쿼리가 있을 경우에는 totalCount를 뽑아야 하기 떄문에 data까지만 return
+    return query.name ? res.data : res.data.list;
+  } catch (err) {
+    console.error("프로필 정보들을 불러오지 못했습니다.", err);
+    return [];
   }
 };
 
