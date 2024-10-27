@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { getProfiles } from "@/api/profile";
 import { SearchInput } from "@/components/SearchInput";
 import PaginationBar from "@/components/PaginationBar";
+import SearchedWikiCard from "@/containers/SearchedWikiCard";
 
 // 프로필 항목의 타입 정의
 interface Profile {
@@ -26,12 +27,19 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { q } = context.query;
-  const res: GetProfilesResponse = await getProfiles({ name: q as string });
+  let res: GetProfilesResponse;
+  if (q) {
+    res = await getProfiles({ name: q as string });
+  } else {
+    res = await getProfiles();
+  }
+  console.log(res);
 
   return {
     props: {
       totalCount: res.totalCount,
       list: res.list,
+      q,
     },
   };
 };
@@ -43,18 +51,18 @@ interface SearchPageProps extends GetProfilesResponse {
 
 const SearchPage: React.FC<SearchPageProps> = ({ list, totalCount, q }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="max-w-[860px] flex flex-col items-center mt-[80px] mx-auto">
       <SearchInput size="large" value={q} />
-      <div className="mt-[16px] text-lg text-gray-50">
-        "{q}"님을 총<span className="text-green-100">{totalCount}</span>명
-        찾았습니다.
+      <div className="mt-[16px] text-lg text-gray-400 mr-auto ">
+        &ldquo;{q}&ldquo;님을 총 &nbsp;
+        <span className="text-green-200">{totalCount}</span>명 찾았습니다.
       </div>
-      <div className="flex felx-col gap-[24px]">
+      <div className="flex flex-col gap-[24px] mt-[57px]">
         {list.map((el) => (
-          <SearchedWikiCard />
+          <SearchedWikiCard key={el.id} info={el} />
         ))}
       </div>
-      <PaginationBar />
+      {/* <PaginationBar /> */}
     </div>
   );
 };
