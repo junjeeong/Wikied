@@ -1,9 +1,9 @@
 import instance from "@/api/axios";
 
 interface GetProfilesQuery {
-  page: number;
-  pageSize: number;
-  name: string;
+  page?: number;
+  pageSize?: number;
+  name?: string;
 }
 
 interface PostProfileQuery {
@@ -16,16 +16,18 @@ interface PostProfilePingQuery {
 }
 
 // 프로필 목록 조회
+
 export const getProfiles = async (query: GetProfilesQuery) => {
-  const { page = 1, pageSize = 10, name = "" } = query;
+  const baseUrl = "/profiles";
+  const queryString = query
+    ? `?page=${query.page || 1}&pageSize=${query.pageSize || 10}&name=${
+        query.name || ""
+      }`
+    : "";
 
   try {
-    const res = await instance.get(
-      `/profiles?page=${page}&pageSize=${pageSize}&name=${name}`
-    );
-    if (res.status === 200) {
-      return res.data.list;
-    }
+    const res = await instance.get(`${baseUrl}${queryString}`);
+    return res.data.list;
   } catch (err) {
     console.error("프로필 정보들을 불러오지 못했습니다.", err);
     return [];
@@ -36,9 +38,7 @@ export const getProfiles = async (query: GetProfilesQuery) => {
 export const getUserProfile = async (code: string) => {
   try {
     const res = await instance.get(`/profiles/${code}`);
-    if (res.status === 200) {
-      return res;
-    }
+    return res;
   } catch (err) {
     console.error("프로필 정보들을 불러오지 못했습니다.", err);
     return;
@@ -48,16 +48,13 @@ export const getUserProfile = async (code: string) => {
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
   const token = localStorage.getItem("accessToken");
-
   try {
     const res = await instance.post(`/profiles`, body, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("프로필 등록에 실패했습니다.", err);
     return {};

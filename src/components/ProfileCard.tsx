@@ -5,26 +5,7 @@ import ProfileImg from "/public/icons/ic_profile.svg";
 import CameraImg from "/public/icons/ic_camera.svg";
 import ArrowBottom from "/public/icons/ic_arrow_bottom2.svg";
 import { postImage } from "@/api/image";
-
-interface UserProfile {
-  id: number;
-  code: string;
-  image: string;
-  city: string;
-  mbti: string;
-  job: string;
-  sns: string;
-  birthday: string;
-  nickname: string;
-  bloodType: string;
-  family: string;
-  nationality: string;
-  content: string;
-  teamId: string;
-  securityQuestion: string;
-  updatedAt: string;
-  name: string;
-}
+import { UserProfile } from "@/types/types";
 
 interface ProfileCardProps {
   userProfile: UserProfile;
@@ -33,24 +14,43 @@ interface ProfileCardProps {
 }
 
 const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
-  const defaultURL = "https://example.com/...";
-  // userProfile.image = defaultURL;
-
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const defaultURL = "https://example.com/...";
+
   // 클릭 시 유저 프로필의 영역이 확장됨
   const expandContent = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const convertFileName = (fileName: string) => {
+    return fileName.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+  };
+
+  // 프로필 이미지 파일 업로드
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
       const maxSizeInMB = 5;
       if (file.size / 1024 / 1024 > maxSizeInMB) {
         alert("파일 크기가 너무 큽니다. 5MB 이하의 파일을 선택해주세요!");
         return;
       }
-      postImage(file);
+
+      const newFileName = convertFileName(file.name);
+      const newFile = new File([file], newFileName, { type: file.type });
+      const formData = new FormData();
+      formData.append("image", newFile); // 이미지 파일을 FormData에 추가
+      try {
+        // postImage 함수 호출 및 반환된 URL을 상태에 저장
+        const result = await postImage(formData);
+        if (result && result.url) {
+          setImageUrl(result.url);
+        }
+      } catch (err) {
+        console.error("이미지 업로드 중 에러 발생:", err);
+      }
     }
   };
 
@@ -64,7 +64,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
                 ? "Tablet:h-[270px] Mobile:h-64"
                 : "Tablet:h-[130px] Mobile:h-[126px]"
             }`
-      } flex relative text-md rounded-[10px] shadow-[0_4px_20px_#00000014] PC:flex-col Tablet:w-[624px] Tablet:pt-5 Mobile:text-xs Mobile:w-[335px]`}
+      } flex relative text-md rounded-[10px] shadow-[0_4px_20px_#00000014] PC:flex-col Tablet:w-[624px] Tablet:pt-5 Mobile:text-xs Mobile:w-[335px] mx-auto`}
     >
       <div
         className={`${
@@ -77,7 +77,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
           <ProfileImg className="w-full h-full text-gray-400" />
         ) : (
           <Image
-            src={userProfile.image}
+            src={imageUrl ?? userProfile.image}
             fill
             className="rounded-full"
             style={{ objectFit: "cover" }}
@@ -107,6 +107,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
       </div>
 
       <button
+        type="button"
         onClick={expandContent}
         className="absolute left-1/2 -translate-x-1/2 bottom-[5px]"
       >
