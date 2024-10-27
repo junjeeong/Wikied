@@ -65,7 +65,7 @@ const LogoutDropdown = () => {
         />
       </button>
       {isOpen && (
-        <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-custom absolute top-[37px] right-0 z-10">
+        <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[37px] right-0 z-10">
           {currentPath !== "/mypage" && (
             <MenuItem href={"/wikilist"} onClick={handleToggle}>
               모든위키
