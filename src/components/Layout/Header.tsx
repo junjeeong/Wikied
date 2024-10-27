@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import Alarm from "/public/icons/ic_alarm.svg";
-import FilledButton from "../ui/Button/FilledButton";
 import LoginDropdown from "../ui/Dropdown/LoginDropdown";
 import LogoutDropdown from "../ui/Dropdown/LogoutDropdown";
 
