@@ -34,9 +34,7 @@ type deleteArticleLikeProps = getArticleProps;
 export const postArticle = async (body: postArticleProps) => {
   try {
     const res = await instance.post(`/articles`, body);
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 등록에 조회하는데 실패했습니다.", err);
     return {};
@@ -51,9 +49,7 @@ export const getArticles = async (query: getArticlesProps) => {
 
   try {
     const res = await instance.get(`/articles${queryString}`);
-    if (res.status === 200) {
-      return res.data.list;
-    }
+    return res.data.list;
   } catch (err) {
     console.error("게시글 목록을 조회하는데 실패했습니다.", err);
     return [];
@@ -70,12 +66,7 @@ export const getArticle = async (articleId: number) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 404) {
-      return {};
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 상세 조회에 실패했습니다.", err);
     return {};
@@ -93,12 +84,7 @@ export const patchArticle = async (query: patchArticleProps) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 404) {
-      return {};
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 수정에 실패했습니다.", err);
     return {};
@@ -115,12 +101,7 @@ export const deleteArticle = async (articleId: deleteArticleProps) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 403 || res.status === 404) {
-      return {};
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 삭제에 실패했습니다.", err);
     return {};
@@ -131,9 +112,7 @@ export const deleteArticle = async (articleId: deleteArticleProps) => {
 export const postArticleLike = async (articleId: postArticleLikeProps) => {
   try {
     const res = await instance.post(`/articles/${articleId}/like`);
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 좋아요 추가에 실패했습니다.", err);
     return {};
@@ -150,12 +129,7 @@ export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 404) {
-      return {};
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 좋아요 취소에 실패했습니다.", err);
     return {};

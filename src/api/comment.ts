@@ -27,9 +27,7 @@ export const getComment = async (query: GetCommentQuery) => {
     const res = await instance.get(
       `/articles/${articleId}/comments?limit=${limit}`
     );
-    if (res.status === 200) {
-      return res.data.list;
-    }
+    return res.data.list;
   } catch (err) {
     console.error("댓글 목록을 불러오지 못했습니다.", err);
     return [];
@@ -47,9 +45,7 @@ export const postComment = async (query: PostCommentQuery) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("댓글을 등록하는데 실패했습니다.", err);
     return {};
@@ -67,9 +63,7 @@ export const patchComment = async (query: PatchCommentQuery) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("댓글을 수정하는데 실패했습니다.", err);
     return {};
@@ -86,12 +80,7 @@ export const deleteComment = async (commentId: number) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 403 || res.status === 404) {
-      return {}; // undefined를 반환하는 것이 아닌 빈 객체를 반환하게 함.
-    }
+    return res.data;
   } catch (err) {
     console.error("댓글을 삭제하는데 실패했습니다.", err);
     return {};
