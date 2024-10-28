@@ -49,10 +49,10 @@ export const getArticles = async (query: getArticlesProps) => {
 
   try {
     const res = await instance.get(`/articles${queryString}`);
-    return res.data.list;
+    return res.data;
   } catch (err) {
     console.error("게시글 목록을 조회하는데 실패했습니다.", err);
-    return [];
+    return {};
   }
 };
 
