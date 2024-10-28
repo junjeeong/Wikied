@@ -24,7 +24,7 @@ const PaginationBar = ({
 
   const pageArr = Array.from(
     {
-      length: Math.min(maxPage, totalPage),
+      length: Math.min(maxPage, totalPage - startPage + 1),
     },
     (_, i) => startPage + i
   );
