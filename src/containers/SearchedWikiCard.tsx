@@ -38,7 +38,7 @@ const SearchedWikiCard = ({ info }: SearchedWikiCardProps) => {
         </div>
       </div>
       <div className="absolute bottom-[24px] right-[36px]">
-        <CustomLink link={`https://www.wikied.kr/${info.id}`} />
+        {/* <CustomLink link={`https://www.wikied.kr/${info.id}`} /> */}
       </div>
     </div>
   );
