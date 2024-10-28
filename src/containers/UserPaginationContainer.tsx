@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import PaginationBar from "@/components/PaginationBar";
 import { getProfiles } from "@/api/profile";
+import PaginationBar from "@/components/PaginationBar";
 // import ProfileList from "@/components/ProfileList";
 
 interface Data {
@@ -25,10 +25,10 @@ const UserPaginationContainer = () => {
   let userName = "김진"; // 스토어에서 가져오기
 
   useEffect(() => {
-    const fetchData = async (query:Query) => {
-      const {list, totalCount} = await getProfiles(query);
+    const fetchData = async (query: Query) => {
+      const { list, totalCount } = await getProfiles(query);
       setData(list);
-      setTotalPage(Math.ceil(totalCount /query.pageSize))
+      setTotalPage(Math.ceil(totalCount / query.pageSize));
     };
     fetchData({
       page: currentPage,

@@ -34,9 +34,7 @@ type deleteArticleLikeProps = getArticleProps;
 export const postArticle = async (body: postArticleProps) => {
   try {
     const res = await instance.post(`/articles`, body);
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 등록에 조회하는데 실패했습니다.", err);
     return {};
@@ -51,9 +49,7 @@ export const getArticles = async (query: getArticlesProps) => {
 
   try {
     const res = await instance.get(`/articles${queryString}`);
-    if (res.status === 200) {
-      return res.data.list;
-    }
+    return res.data.list;
   } catch (err) {
     console.error("게시글 목록을 조회하는데 실패했습니다.", err);
     return [];
@@ -62,14 +58,15 @@ export const getArticles = async (query: getArticlesProps) => {
 
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    const res = await instance.get(`/articles/${articleId}`);
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 404) {
-      return {};
-    }
+    const res = await instance.get(`/articles/${articleId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
   } catch (err) {
     console.error("게시글 상세 조회에 실패했습니다.", err);
     return {};
@@ -79,15 +76,15 @@ export const getArticle = async (articleId: number) => {
 // 게시글 수정
 export const patchArticle = async (query: patchArticleProps) => {
   const { articleId, body } = query;
+  const token = localStorage.getItem("accessToken");
 
   try {
-    const res = await instance.patch(`/articles/${articleId}`, body);
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 404) {
-      return {};
-    }
+    const res = await instance.patch(`/articles/${articleId}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
   } catch (err) {
     console.error("게시글 수정에 실패했습니다.", err);
     return {};
@@ -96,14 +93,15 @@ export const patchArticle = async (query: patchArticleProps) => {
 
 // 게시글 삭제
 export const deleteArticle = async (articleId: deleteArticleProps) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    const res = await instance.delete(`/articles/${articleId}`);
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 403 || res.status === 404) {
-      return {};
-    }
+    const res = await instance.delete(`/articles/${articleId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
   } catch (err) {
     console.error("게시글 삭제에 실패했습니다.", err);
     return {};
@@ -114,9 +112,7 @@ export const deleteArticle = async (articleId: deleteArticleProps) => {
 export const postArticleLike = async (articleId: postArticleLikeProps) => {
   try {
     const res = await instance.post(`/articles/${articleId}/like`);
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("게시글 좋아요 추가에 실패했습니다.", err);
     return {};
@@ -125,14 +121,15 @@ export const postArticleLike = async (articleId: postArticleLikeProps) => {
 
 // 게시글 좋아요 취소
 export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    const res = await instance.delete(`/articles/${articleId}/like`);
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 404) {
-      return {};
-    }
+    const res = await instance.delete(`/articles/${articleId}/like`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
   } catch (err) {
     console.error("게시글 좋아요 취소에 실패했습니다.", err);
     return {};
