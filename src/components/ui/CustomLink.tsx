@@ -1,30 +1,25 @@
-import Image from "next/image";
-import Link from "next/link";
-import linkIcon from "@/assets/icon/ic_link.svg";
+import LinkIcon from "/public/icons/ic_link.svg";
 
 interface CustomLinkProps {
   link: string;
   size?: "small" | "medium";
+  handleClick: () => void;
 }
 
-const CustomLink = ({ link, size = "medium" }: CustomLinkProps) => {
-  const imageSize = {
-    small: { width: 16, height: 16 },
-    medium: { width: 20, height: 20 },
-  };
-
+const CustomLink = ({
+  link,
+  size = "medium",
+  handleClick,
+}: CustomLinkProps) => {
   return (
-    <div className="flex items-center gap-[5px] w-fit px-[10px] py-[3px] rounded-[10px] bg-green-50 text-green-200">
-      <Image
-        src={linkIcon}
-        width={imageSize[size].width}
-        height={imageSize[size].height}
-        alt="링크 아이콘"
-      />
-      <Link className={size === "medium" ? "text-md" : "text-xs"} href={link}>
-        {link}
-      </Link>
-    </div>
+    <button
+      type="button"
+      onClick={handleClick}
+      className="flex items-center gap-[5px] w-fit px-[10px] py-[3px] rounded-[10px] bg-green-50 text-green-200 hover:bg-[#d1f0e7]"
+    >
+      <LinkIcon className={`${size === "medium" ? "w-5 h-5" : "w-4 h-4"}`} />
+      <p className={`${size === "medium" ? "text-md" : "text-xs"}`}>{link}</p>
+    </button>
   );
 };
 
