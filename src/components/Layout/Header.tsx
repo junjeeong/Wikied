@@ -6,7 +6,6 @@ import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import Alarm from "/public/icons/ic_alarm.svg";
 import LoginDropdown from "../ui/Dropdown/LoginDropdown";
-import FilledButton from "../ui/Button/FilledButton";
 import LogoutDropdown from "../ui/Dropdown/LogoutDropdown";
 
 export const Header = () => {

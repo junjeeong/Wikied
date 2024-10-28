@@ -13,12 +13,12 @@ export interface Article {
 
 export interface BoardsProps {
   bestArticles: Article[];
-  recentArticles: Article[];
+  totalArticles: Article[];
   totalCount: number;
 }
 
 export interface TotalBoardsProps {
-  recentArticles: Article[];
+  totalArticles: Article[];
   totalCount: number;
 }
 
