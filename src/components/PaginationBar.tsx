@@ -24,7 +24,7 @@ const PaginationBar = ({
 
   const pageArr = Array.from(
     {
-      length: Math.min(maxPage, totalPage),
+      length: Math.min(maxPage, totalPage - startPage + 1),
     },
     (_, i) => startPage + i
   );
@@ -35,14 +35,14 @@ const PaginationBar = ({
         type="button"
         disabled={currentPage === 1 || isLoading}
         onClick={() => handlePageChange(currentPage - 1)}
-        className="rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-gray-50 shadow-[0_4px_20px_rgba(0,0,0,0.008)] bg-[url('/icons/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform rotate-90"
+        className="rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-gray-50 shadow-[0_4px_20px_#00000014] bg-[url('/icons/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform rotate-90"
       ></button>
       {pageArr.map((page) => (
         <button
           type="button"
           disabled={isLoading}
           key={page}
-          className={`rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-gray-50 shadow-[0_4px_20px_rgba(0,0,0,0.008)] 
+          className={`rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-gray-50 shadow-[0_4px_20px_#00000014] 
 ${currentPage === page ? "text-green-200" : ""}`}
           onClick={() => handlePageChange(page)}
         >
@@ -53,7 +53,7 @@ ${currentPage === page ? "text-green-200" : ""}`}
         type="button"
         disabled={currentPage === totalPage || isLoading}
         onClick={() => handlePageChange(currentPage + 1)}
-        className="rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-gray-50 shadow-[0_4px_20px_rgba(0,0,0,0.008)] bg-[url('/icons/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform -rotate-90"
+        className="rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-gray-50 shadow-[0_4px_20px_#00000014] bg-[url('/icons/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform -rotate-90"
       ></button>
     </div>
   );

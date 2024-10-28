@@ -38,7 +38,6 @@ const MainPage = () => {
           />
         </div>
       </section>
-
       {/* write section */}
       <section className="relative bg-gray-500 w-full Mobile:px-5 Tablet:px-12 mt-[268px] Tablet:mt-[493.71px] PC:mt-[507px]">
         <div className="rounded-t-[50%] bg-gray-500 absolute top-[-90px] Tablet:top-[-117px] PC:top-[-200px] left-1/2 -translate-x-1/2 z-10 w-[calc(100%+118px)] Tablet:w-[calc(100%+40px)] PC:w-[calc(100%+80px)] h-[180px] Tablet:h-[234px] PC:h-[400px]"></div>
@@ -76,7 +75,6 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-
       {/* share section */}
       <section className="max-w-[924px] w-full Mobile:px-5 Tablet:px-12 section-padding">
         <div className="text-right">
@@ -109,7 +107,6 @@ const MainPage = () => {
           <div className="w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0 rounded-[10px] bg-[#DEE5F5]"></div>
         </div>
       </section>
-
       {/* view section */}
       <section className="bg-landing-bold w-full Mobile:px-5 Tablet:px-12 section-padding">
         <div className="w-full max-w-[924px] mx-auto">
@@ -152,7 +149,6 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-
       {/* bottom section */}
       <section className="bg-gray-500 w-full flex flex-col items-center gap-10 section-padding">
         <h3 className="text-background font-bold Mobile:text-[30px] Mobile:leading-[34.5px] text-[60px] leading-[69px] ">
@@ -162,7 +158,6 @@ const MainPage = () => {
           <LandingButton mode="Bottom">지금 시작하기</LandingButton>
         </Link>
       </section>
-
       {/* footer section */}
       <footer className="bg-gray-600 text-background font-pretendard w-full Mobile:text-[8px] Mobile:leading-[9.55px] text-[14px] leading-[16.71px] px-5 py-10 Tablet:px-12 Tablet:py-[60px] PC:p-20">
         <p className="font-bold Mobile:text-[10px] Mobile:leading-[11.93px] text-[16px] leading-[19.09px]">
