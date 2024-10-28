@@ -34,22 +34,6 @@ export const getProfiles = async (query: GetProfilesQuery) => {
   }
 };
 
-// 특정 프로필 조회
-export const getProfilesByName = async (query: GetProfilesQuery) => {
-  const baseUrl = "/profiles";
-  const queryString = query
-    ? `?page=${query.page || 1}&pageSize=${query.pageSize || 10}&name=${query.name || ""}`
-    : "";
-
-  try {
-    const res = await instance.get(`${baseUrl}${queryString}`);
-    return res.data.list;
-  } catch (err) {
-    console.error("프로필 정보들을 불러오지 못했습니다.", err);
-    return [];
-  }
-};
-
 //사용자 프로필 조회
 export const getUserProfile = async (code: string) => {
   try {
