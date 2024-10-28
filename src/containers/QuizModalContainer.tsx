@@ -16,7 +16,7 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
   const { user } = useAuthStore();
 
-  const code = user?.profile.code;
+  const code = user?.profile?.code;
 
   useEffect(() => {
     if (code) {
