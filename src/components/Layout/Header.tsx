@@ -29,6 +29,7 @@ export const Header = () => {
       pathname: "/search",
       query: { q: searchedName },
     });
+    setSearchedName("");
   };
 
   useEffect(() => {
@@ -74,6 +75,7 @@ export const Header = () => {
             size="small"
             onChange={handleChange}
             onSubmit={handleSubmit}
+            value={searchedName}
           />
         </li>
       </ul>
