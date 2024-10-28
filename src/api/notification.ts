@@ -8,14 +8,18 @@ interface GetNotificationsQuery {
 // 알림 목록 조회
 export const getNotifications = async (query: GetNotificationsQuery) => {
   const { page = 1, pageSize = 10 } = query;
+  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.get(
-      `/notifications?page=${page}&pageSize=${pageSize}`
+      `/notifications?page=${page}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
-    if (res.status === 200) {
-      return res.data.list;
-    }
+    return res.data.list;
   } catch (err) {
     console.error("알림 목록을 불러오지 못했습니다.", err);
     return [];
@@ -24,11 +28,15 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
 
 // 알림 삭제
 export const deleteNotifications = async (id: number) => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    const res = await instance.delete(`/notifications/${id}`);
-    if (res.status === 200) {
-      return res.data;
-    }
+    const res = await instance.delete(`/notifications/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
   } catch (err) {
     console.error("알림 목록을 삭제하는데 실패하였습니다.", err);
     return {};
