@@ -14,21 +14,21 @@ interface NotificationModalProps {
   createdAt: string;
   content: string;
   id: number;
-  // onDelete: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const NotificationModal = ({
   createdAt,
   content,
   id,
-  // onDelete,
+  onDelete,
 }: NotificationModalProps) => {
   const timeText = useMemo(() => timeDiff(createdAt), [createdAt]);
   const dotColor = useMemo(() => getDotColor(timeText), [timeText]);
 
   const handleDelete = async () => {
     await deleteNotifications(id);
-    // onDelete(id);
+    onDelete(id);
   };
 
   return (
@@ -49,71 +49,48 @@ const NotificationModal = ({
   );
 };
 
-const NotificatonModalList = () => {
-  // const [totalCount, setTotalCount] = useState<number>(0);
-  // const [notifications, setNotifications] = useState<Notification[]>([]);
+const NotificatonModalContainer = () => {
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const test = [
-    {
-      id: 1,
-      content: "내 위키가 수정되었습니다.",
-      createdAt: "2024-10-20T15:30:00",
-    },
-    {
-      id: 2,
-      content: "새로운 댓글이 달렸습니다.",
-      createdAt: "2024-10-21T12:00:00",
-    },
-    {
-      id: 3,
-      content: "좋아요를 받았습니다.",
-      createdAt: "2024-10-22T18:15:00",
-    },
-    {
-      id: 4,
-      content: "새로운 팔로워가 생겼습니다.",
-      createdAt: "2024-10-28T08:45:00",
-    },
-    {
-      id: 5,
-      content: "프로필이 업데이트되었습니다.",
-      createdAt: "2024-10-28T20:00:00",
-    },
-  ];
 
-  // useEffect(() => {
-  //   const fetchNotifications = async () => {
-  //     const res = await getNotifications({ page: 1, pageSize: 10 });
-  //     console.log(res)
-  //     setTotalCount(res.totalCount);
-  //     setNotifications(res.list);
-  //   };
-  //   fetchNotifications();
-  // }, []);
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const res = await getNotifications({ page: 1, pageSize: 10 });
+      console.log(res)
+      setTotalCount(res.totalCount);
+      setNotifications(res.list);
+    };
+    fetchNotifications();
+  }, []);
 
-  // const handleDelete = (id: number) => {
-  //   setNotifications((prev) =>
-  //     prev.filter((notification) => notification.id !== id)
-  //   );
-  // };
+  const handleDelete = (id: number) => {
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
+    );
+  };
 
-  // if (totalCount === 0) {
-  //   return <div className="w-[328px]">새로운 알림이 없습니다.</div>;
-  // }
+  if (totalCount === 0) {
+    return (
+      <div className="w-[328px] mt-10 px-3 py-4 font-semibold bg-background border border-green-50 rounded-[5px]">
+        새로운 알림이 없습니다.
+      </div>
+    );
+  }
 
   return (
     <>
       <div>
         <div className="mt-1 text-[25px] leading-[25.04px] font-bold text-notice-text mb-4">
-          {`알림${test.length}개`}
+          {`알림${totalCount}개`}
         </div>
-        {test.map((notification) => (
+        {notifications.map((notification) => (
           <NotificationModal
             key={notification.id}
             id={notification.id}
             createdAt={notification.createdAt}
             content={notification.content}
-            // onDelete={handleDelete}
+            onDelete={handleDelete}
           />
         ))}
       </div>
@@ -121,4 +98,4 @@ const NotificatonModalList = () => {
   );
 };
 
-export default NotificatonModalList;
+export default NotificatonModalContainer;
