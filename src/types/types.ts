@@ -17,12 +17,16 @@ export interface BoardsProps {
   totalCount: number;
 }
 
-export interface TotalBoardsProps {
+export interface TotalArticlesContainerProps {
   totalArticles: Article[];
   totalCount: number;
 }
 
-export interface BestBoardsProps {
+export interface TotalArticlesProps {
+  totalArticles: Article[];
+}
+
+export interface BestArticlesProps {
   bestArticles: Article[];
 }
 

@@ -1,7 +1,7 @@
 import { getArticles } from "@/api/article";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
-import BestBoards from "@/components/BestBoards";
-import TotalBoards from "@/containers/TotalBoards";
+import BestArticles from "@/components/ui/BestArticles";
+import TotalArticlesContainer from "@/containers/TotalArticlesContainer";
 import { BoardsProps } from "@/types/types";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
@@ -18,19 +18,19 @@ export const getServerSideProps: GetServerSideProps = async (
       pageSize: 4,
       orderBy: "like",
     });
-    bestArticles = bestResponse;
+    bestArticles = bestResponse.list;
   } catch (error) {
     console.error("Error fetching best articles:", error);
   }
 
   try {
-    const recentResponse = await getArticles({
+    const response = await getArticles({
       page: 1,
       pageSize: 10,
       orderBy: "recent",
     });
-    totalArticles = recentResponse;
-    totalCount = recentResponse.data.totalCount;
+    totalArticles = response.list;
+    totalCount = response.totalCount;
   } catch (error) {
     console.error("Error fetching total articles:", error);
   }
@@ -51,8 +51,11 @@ const BoardsPage = ({
 }: BoardsProps) => {
   return (
     <BoardsLayout>
-      <BestBoards bestArticles={bestArticles} />
-      <TotalBoards totalArticles={totalArticles} totalCount={totalCount} />
+      <BestArticles bestArticles={bestArticles} />
+      <TotalArticlesContainer
+        totalArticles={totalArticles}
+        totalCount={totalCount}
+      />
     </BoardsLayout>
   );
 };
