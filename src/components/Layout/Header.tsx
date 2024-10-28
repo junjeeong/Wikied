@@ -74,7 +74,6 @@ export const Header = () => {
             size="small"
             onChange={handleChange}
             onSubmit={handleSubmit}
-            value={searchedName}
           />
         </li>
       </ul>
