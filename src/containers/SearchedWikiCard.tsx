@@ -1,6 +1,6 @@
+import { useRouter } from "next/router";
 import Profile from "/public/icons/ic_profile.svg";
 import CustomLink from "../components/ui/CustomLink";
-import { useRouter } from "next/router";
 
 interface SearchedWikiCardProps {
   info: {
