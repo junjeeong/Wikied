@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import CloseBtn from "../../../../public/icons/ic_close.svg";
+import CloseBtn from "/public/icons/ic_close.svg";
 
 interface ModalProps {
   isOpen: boolean;
