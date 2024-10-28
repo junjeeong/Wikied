@@ -20,7 +20,9 @@ interface PostProfilePingQuery {
 export const getProfiles = async (query: GetProfilesQuery) => {
   const baseUrl = "/profiles";
   const queryString = query
-    ? `?page=${query.page || 1}&pageSize=${query.pageSize || 10}&name=${query.name || ""}`
+    ? `?page=${query.page || 1}&pageSize=${query.pageSize || 10}&name=${
+        query.name || ""
+      }`
     : "";
 
   try {
