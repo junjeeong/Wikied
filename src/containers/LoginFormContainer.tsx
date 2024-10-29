@@ -13,11 +13,11 @@ export interface InputValues {
   passwordConfirmation?: string;
 }
 
-interface LoginFormProps {
+interface LoginFormContainerProps {
   setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LoginForm = ({ setShowSettings }: LoginFormProps) => {
+const LoginFormContainer = ({ setShowSettings }: LoginFormContainerProps) => {
   const {
     register,
     handleSubmit,
@@ -34,9 +34,9 @@ const LoginForm = ({ setShowSettings }: LoginFormProps) => {
       await login(data.email, data.password);
 
       if (user && user.profile) {
-        router.push(`/wiki/${user.profile.code}`)
+        router.push(`/wiki/${user.profile.code}`);
       } else {
-        setShowSettings(true)
+        setShowSettings(true);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -118,10 +118,7 @@ const LoginForm = ({ setShowSettings }: LoginFormProps) => {
               </span>
             )}
           </div>
-          <FilledButton
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <FilledButton type="submit" disabled={isSubmitting}>
             로그인
           </FilledButton>
         </form>
@@ -135,4 +132,4 @@ const LoginForm = ({ setShowSettings }: LoginFormProps) => {
   );
 };
 
-export default LoginForm;
+export default LoginFormContainer;

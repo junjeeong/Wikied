@@ -1,4 +1,4 @@
-import LoginForm from "@/containers/LoginForm";
+import LoginFormContainer from "@/containers/LoginFormContainer";
 import ProfileSettings from "@/containers/ProfileSettings";
 import useAuthStore from "@/store/AuthStore";
 
@@ -23,7 +23,7 @@ const Login = () => {
   return (
     <>
       {!showSettings ? (
-        <LoginForm setShowSettings={setShowSettings} />
+        <LoginFormContainer setShowSettings={setShowSettings} />
       ) : (
         <ProfileSettings setShowSettings={setShowSettings} />
       )}

@@ -1,9 +1,9 @@
-import SignUpForm from "@/containers/SignUpForm";
+import SignUpFormContainer from "@/containers/SignUpFormContainer";
 
 const Login = () => {
   return (
     <>
-      <SignUpForm />
+      <SignUpFormContainer />
     </>
   );
 };
