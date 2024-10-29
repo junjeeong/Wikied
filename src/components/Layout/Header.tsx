@@ -29,6 +29,7 @@ export const Header = () => {
       pathname: "/search",
       query: { q: searchedName },
     });
+    setSearchedName("");
   };
 
   useEffect(() => {
