@@ -50,6 +50,7 @@ const QuizSettings = () => {
             <FormInput
               id="securityQuestion"
               placeholder="질문을 입력해 주세요"
+              type="text"
               register={register("securityQuestion", {
                 required: "질문을 입력해 주세요",
               })}
@@ -58,6 +59,7 @@ const QuizSettings = () => {
             <FormInput
               id="securityAnswer"
               placeholder="답을 입력해주세요"
+              type="text"
               register={register("securityAnswer", {
                 required: "답을 입력해주세요",
               })}
