@@ -1,0 +1,60 @@
+/* @tailwind base : reset CSS 포함 */
+@tailwind base;
+/* @tailwind components : 재사용할 CSS 규칙 */
+@tailwind components;
+/* @tailwind utilities : 유틸리티 클래스 로드 */
+@tailwind utilities;
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NEXON";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+
+  html,
+  body {
+    @apply max-w-full overflow-x-hidden;
+  }
+
+  body {
+    @apply text-gray-500 bg-background font-pretendard antialiased;
+  }
+
+  html,
+  body {
+    -ms-overflow-style: none;
+    /* IE와 Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-[100px] Tablet:py-[160px] PC:py-[200px];
+  }
+
+  .section-title {
+    @apply font-bold text-green-200 text-[10px] leading-[11.5px] Tablet:text-[20px] Tablet:leading-[23px] PC:text-[30px] PC:leading-[34.5px];
+  }
+
+  .section-subtitle {
+    @apply text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px];
+  }
+}

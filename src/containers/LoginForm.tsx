@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import useAuthStore from "@/store/AuthStore";
 import { AxiosError } from "axios";
+import Link from "next/link";
+import useAuthStore from "@/store/AuthStore";
 import FilledButton from "@/components/ui/Button/FilledButton";
 
 export interface InputValues {
@@ -13,7 +13,11 @@ export interface InputValues {
   passwordConfirmation?: string;
 }
 
-const LoginForm = () => {
+interface LoginFormProps {
+  setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoginForm = ({ setShowSettings }: LoginFormProps) => {
   const {
     register,
     handleSubmit,
@@ -23,12 +27,17 @@ const LoginForm = () => {
   });
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
-  const { login } = useAuthStore();
+  const { login, user } = useAuthStore();
 
   const onSubmit = async (data: InputValues) => {
     try {
       await login(data.email, data.password);
-      router.push("/");
+
+      if (user && user.profile) {
+        router.push(`/wiki/${user.profile.code}`)
+      } else {
+        setShowSettings(true)
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         setSubmitError(error.response?.data.message);
@@ -39,6 +48,7 @@ const LoginForm = () => {
   const handleChange = () => {
     setSubmitError("");
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-background">
       <div className="w-full max-w-md">
