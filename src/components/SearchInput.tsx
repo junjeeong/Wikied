@@ -5,7 +5,7 @@ interface SearchInputProps {
   size: "large" | "medium" | "small";
   value: string;
   onSubmit: FormEventHandler;
-  onChange: ChangeEventHandler;
+  onChange?: ChangeEventHandler;
 }
 
 export const SearchInput = ({

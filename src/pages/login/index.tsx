@@ -12,6 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
+      console.log(user?.profile);
       if (user?.profile === null) {
         setShowSettings(true);
       } else {
