@@ -1,6 +1,6 @@
 import { BestBoardsProps } from "@/types/types";
 import Image from "next/image";
-import FilledButton from "./ui/Button/FilledButton";
+import FilledButton from "./Button/FilledButton";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -64,7 +64,15 @@ const BestBoards = ({ bestArticles }: BestBoardsProps) => {
                     {new Date(article.createdAt).toLocaleDateString()}
                   </small>
                 </div>
-                <small>{article.likeCount}</small>
+                <small className="flex gap-[4px]">
+                  <Image
+                    src={"/icons/ic_heart.svg"}
+                    width={18}
+                    height={18}
+                    alt="좋아요"
+                  />
+                  {article.likeCount}
+                </small>
               </div>
             </div>
           </li>
