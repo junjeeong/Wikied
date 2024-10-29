@@ -1,5 +1,5 @@
 import FilledButton from "@/components/ui/Button/FilledButton";
-import Lock from "../../../../public/icons/ic_lock.svg";
+import Lock from "/public/icons/ic_lock.svg";
 
 interface QuizModalProps {
   question: string;

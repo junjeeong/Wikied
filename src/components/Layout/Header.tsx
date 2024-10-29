@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
 import Alarm from "/public/icons/ic_alarm.svg";
-import FilledButton from "../ui/Button/FilledButton";
 import LoginDropdown from "../ui/Dropdown/LoginDropdown";
 import LogoutDropdown from "../ui/Dropdown/LogoutDropdown";
+import FilledButton from "../ui/Button/FilledButton";
 
 export const Header = () => {
   const router = useRouter();
@@ -29,6 +29,7 @@ export const Header = () => {
       pathname: "/search",
       query: { q: searchedName },
     });
+    setSearchedName("");
   };
 
   useEffect(() => {
