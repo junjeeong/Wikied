@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import Link from "next/link";
 import useAuthStore from "@/store/AuthStore";
@@ -13,11 +13,7 @@ export interface InputValues {
   passwordConfirmation?: string;
 }
 
-interface LoginFormContainerProps {
-  setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const LoginFormContainer = ({ setShowSettings }: LoginFormContainerProps) => {
+const LoginFormContainer = () => {
   const {
     register,
     handleSubmit,
@@ -27,23 +23,34 @@ const LoginFormContainer = ({ setShowSettings }: LoginFormContainerProps) => {
   });
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
-  const { login, user } = useAuthStore();
+  const { login, isLoggedIn } = useAuthStore();
 
   const onSubmit = async (data: InputValues) => {
-    try {
-      await login(data.email, data.password);
+    const errorMsg = await login(data.email, data.password);
 
-      if (user && user.profile) {
-        router.push(`/wiki/${user.profile.code}`);
+    if (errorMsg) {
+      setSubmitError(errorMsg);
+      return;
+    } else {
+      const user = useAuthStore.getState().user;
+      if (user?.profile) {
+        router.push(`/wiki/${user.profile.id}`); //id로 이동 하는 거 맞나요?
       } else {
-        setShowSettings(true);
-      }
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        setSubmitError(error.response?.data.message);
+        router.push('/quiz-settings')
       }
     }
   };
+
+  useEffect(()=> {
+    if (isLoggedIn) {
+      const user = useAuthStore.getState().user;
+      if (user?.profile) {
+        router.push(`/wiki/${user.profile.id}`)
+      } else {
+        router.push("/quiz-settings");
+      }
+    }
+  })
 
   const handleChange = () => {
     setSubmitError("");
