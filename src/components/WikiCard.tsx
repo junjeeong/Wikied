@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LinkSVG from "/public/icons/ic_link.svg";
+import Profile from "/public/icons/ic_profile.svg";
 
 interface Profile {
   id: number;
@@ -37,12 +38,7 @@ const WikiCard = ({ info }: WikiCardProps) => {
                 alt="profile image"
               />
             ) : (
-              <Image
-                src="/icons/ic_profile.svg"
-                layout="fill"
-                objectFit="cover"
-                alt="proflie image"
-              />
+              <Profile className="text-gray-300" />
             )}
           </div>
         </div>
