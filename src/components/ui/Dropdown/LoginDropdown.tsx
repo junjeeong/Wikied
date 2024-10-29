@@ -69,11 +69,19 @@ const LoginDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       {!isMobile ? (
         <button className="align-top" onClick={handleToggle} type="button">
-          <Profile className="text-gray-400 hover:text-gray-500" />
+          <Profile
+            className="text-gray-400 hover:text-gray-500"
+            width={32}
+            height={32}
+          />
         </button>
       ) : (
         <button className="align-top" onClick={handleToggle} type="button">
-          <Menu className="text-gray-400 hover:text-gray-500" />
+          <Menu
+            className="text-gray-400 hover:text-gray-500"
+            width={24}
+            height={24}
+          />
         </button>
       )}
       {isOpen && (
