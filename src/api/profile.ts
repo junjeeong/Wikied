@@ -16,7 +16,7 @@ interface PostProfilePingQuery {
 }
 
 // 프로필 목록 조회
-export const getProfiles = async (query: GetProfilesQuery) => {
+export const getProfiles = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
   const pageSize = query?.pageSize || 10;
