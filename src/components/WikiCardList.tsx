@@ -1,6 +1,16 @@
 import Link from "next/link";
-import WikiCard from "@/containers/WikiCard";
-import { Profile } from "@/types/Profile"; // Profile 타입을 정의한 파일을 import
+import WikiCard from "@/components/WikiCard";
+
+interface Profile {
+  updatedAt: string;
+  job: string;
+  nationality: string;
+  city: string;
+  image: string;
+  code: string;
+  name: string;
+  id: number;
+}
 
 interface WikiCardListProps {
   list: Profile[];
