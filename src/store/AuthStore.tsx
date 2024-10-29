@@ -41,7 +41,7 @@ interface AuthStore {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   setAccessToken: (token: string) => void; // Access Token을 업데이트하는 함수 추가
-  updateProfile: (
+  createProfile: (
     securityAnswer: string,
     securityQuestion: string
   ) => Promise<void>; // 프로필 업데이트 함수 추가
@@ -49,7 +49,7 @@ interface AuthStore {
 
 const useAuthStore = create(
   persist<AuthStore>(
-    (set,get) => ({
+    (set, get) => ({
       user: null,
       accessToken: null,
       refreshToken: null,
@@ -81,11 +81,11 @@ const useAuthStore = create(
         set({ accessToken: token });
         localStorage.setItem("accessToken", token);
       },
-      updateProfile: async (securityAnswer, securityQuestion) => {
+      createProfile: async (securityAnswer, securityQuestion) => {
         const { user } = get();
         if (user) {
           // API를 통해 프로필 업데이트
-          const updatedProfileData = await postProfile({
+          const createddProfileData = await postProfile({
             securityAnswer,
             securityQuestion,
           });
@@ -96,7 +96,7 @@ const useAuthStore = create(
               ...user,
               profile: {
                 ...user.profile,
-                ...updatedProfileData,
+                ...createddProfileData,
               },
             },
           });

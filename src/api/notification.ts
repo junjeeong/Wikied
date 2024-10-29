@@ -19,10 +19,10 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
         },
       }
     );
-    return res.data.list;
+    return res.data; //totalCount 필요
   } catch (err) {
     console.error("알림 목록을 불러오지 못했습니다.", err);
-    return [];
+    return []
   }
 };
 
