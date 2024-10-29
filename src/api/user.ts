@@ -16,14 +16,8 @@ export const getUser = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
-    if (res.status === 400) {
-      return {}; // undefined를 반환하는 것이 아닌 빈 객체를 반환하게 함.
-    }
+    return res.data;
   } catch (err) {
-    // 오류가 발생한 경우에도 빈 객체를 반환
     console.error("유저 정보를 불러오지 못했습니다.", err);
     return {};
   }
@@ -39,11 +33,8 @@ export const patchUser = async (data: PatchUserQuery) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
-    // 오류가 발생한 경우에도 빈 객체를 반환
     console.error("비밀번호 변경에 실패하였습니다.", err);
     return {};
   }

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Profile from "/public/icons/ic_profile.svg";
 import CustomLink from "../components/ui/CustomLink";
+import useAuthStore from "@/store/AuthStore";
 
 interface SearchedWikiCardProps {
   info: {
@@ -19,7 +20,7 @@ const SearchedWikiCard = ({ info }: SearchedWikiCardProps) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/${info.code}`);
+    router.push(`/${info.id}`);
   };
 
   return (
