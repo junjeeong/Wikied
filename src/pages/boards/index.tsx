@@ -1,6 +1,6 @@
 import { getArticles } from "@/api/article";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
-import BestBoards from "@/components/BestBoards";
+import BestBoards from "@/components/ui/BestBoards";
 import TotalBoards from "@/containers/TotalBoards";
 import { BoardsProps } from "@/types/types";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
