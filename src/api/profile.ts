@@ -21,7 +21,9 @@ export const getProfiles = async (query: GetProfilesQuery = {}) => {
   const page = query?.page || 1;
   const pageSize = query?.pageSize || 10;
 
-  const queryString = `?page=${page}&pageSize=${pageSize}&name=${query?.name || ""}`;
+  const queryString = `?page=${page}&pageSize=${pageSize}&name=${
+    query?.name || ""
+  }`;
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);
 
