@@ -3,7 +3,6 @@ interface PaginationBarProps {
   currentPage: number;
   handlePageChange: (page: number) => void;
   isLoading: boolean;
-  maxPage: number;
 }
 
 const PaginationBar = ({
@@ -11,10 +10,11 @@ const PaginationBar = ({
   currentPage,
   handlePageChange,
   isLoading,
-  maxPage = 5,
 }: PaginationBarProps) => {
   let startPage;
   let calNum;
+
+  const maxPage = 5;
 
   if (totalPage <= maxPage) startPage = 1;
   else {
