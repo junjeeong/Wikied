@@ -8,6 +8,8 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { keyword = "", order = "recent", page = 1 } = context.query;
+
   let bestArticles = [];
   let totalArticles = [];
   let totalCount = 0;
@@ -17,6 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (
       page: 1,
       pageSize: 4,
       orderBy: "like",
+      keyword: "",
     });
     bestArticles = bestResponse.list;
   } catch (error) {
@@ -25,9 +28,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
   try {
     const response = await getArticles({
-      page: 1,
+      page: Number(page),
       pageSize: 10,
-      orderBy: "recent",
+      orderBy: String(order),
+      keyword: String(keyword),
     });
     totalArticles = response.list;
     totalCount = response.totalCount;
