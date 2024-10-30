@@ -1,3 +1,5 @@
+import Arrow from "../../public/icons/ic_arrow_bottom2.svg"
+
 interface PaginationBarProps {
   totalPage: number;
   currentPage: number;
@@ -35,14 +37,16 @@ const PaginationBar = ({
         type="button"
         disabled={currentPage === 1 || isLoading}
         onClick={() => handlePageChange(currentPage - 1)}
-        className="rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-background shadow-[0_4px_20px_#00000014] bg-[url('/icons/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform rotate-90"
-      ></button>
+        className="flex justify-center items-center rounded-[10px] w-[45px] h-[45px] text-2lg bg-background shadow-[0_4px_20px_#00000014] Mobile:w-[40px] Mobile:h-[40px]"
+      >
+        <Arrow className="w-6 h-6 text-gray-400 rotate-90 Mobile:w-[18px] Mobile:h-[18px]" />
+      </button>
       {pageArr.map((page) => (
         <button
           type="button"
           disabled={isLoading}
           key={page}
-          className={`rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-background shadow-[0_4px_20px_#00000014] 
+          className={`rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-background shadow-[0_4px_20px_#00000014] Mobile:w-[40px] Mobile:h-[40px] Mobile:text-xs
 ${currentPage === page ? "text-green-200" : ""}`}
           onClick={() => handlePageChange(page)}
         >
@@ -53,8 +57,10 @@ ${currentPage === page ? "text-green-200" : ""}`}
         type="button"
         disabled={currentPage === totalPage || isLoading}
         onClick={() => handlePageChange(currentPage + 1)}
-        className="rounded-[10px] w-[45px] h-[45px] text-2lg text-gray-400 bg-background shadow-[0_4px_20px_#00000014] bg-[url('/icons/ic_arrow_bottom2.svg')] bg-no-repeat bg-center transform -rotate-90"
-      ></button>
+        className="flex justify-center items-center rounded-[10px] w-[45px] h-[45px] text-2lg bg-background shadow-[0_4px_20px_#00000014] Mobile:w-[40px] Mobile:h-[40px]"
+      >
+        <Arrow className="w-6 h-6 text-gray-400 -rotate-90 Mobile:w-[18px] Mobile:h-[18px]" />
+      </button>
     </div>
   );
 };
