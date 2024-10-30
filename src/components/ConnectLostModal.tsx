@@ -1,19 +1,26 @@
 import useAuthStore from "@/store/AuthStore";
-import FilledButton from "../Button/FilledButton";
+import FilledButton from "./ui/Button/FilledButton";
 import { useRouter } from "next/router";
+import ModalOverlay from "./ModalOverlay";
 
 //위키 참여하기 버튼을 누르고 5분 후에 ConnectLostModal 띄우기
 
-const ConnectLostModal = () => {
+interface ConnectLostModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ConnectLostModal = ({ isOpen, onClose }: ConnectLostModalProps) => {
   const router = useRouter();
   const { user } = useAuthStore();
-  const code = user?.profile.code;
+  const name = user?.profile?.name;
 
   const handelConfirmClick = () => {
-    router.push(`/wiki/${code}`);
+    router.push(`/wiki/${name}`);
   };
+
   return (
-    <>
+    <ModalOverlay isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col justify-center gap-[10px] pl-[10px] pr-[38px] pt-10 pb-[33px] Mobile:pl-0 Mobile:pr-[22px]">
         <span className="text-2lg text-gray-500 font-semibold Mobile:text-lg">
           5분 이상 글을 쓰지 않아 접속이 끊어졌어요.
@@ -27,7 +34,7 @@ const ConnectLostModal = () => {
           확인
         </FilledButton>
       </div>
-    </>
+    </ModalOverlay>
   );
 };
 

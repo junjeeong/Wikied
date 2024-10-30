@@ -18,9 +18,9 @@ interface WikiCardListProps {
 
 const WikiCardList = ({ list }: WikiCardListProps) => {
   return (
-    <div className="grid grid-cols-3 auto-rows-auto gap-[24px]">
+    <div className="grid grid-cols-3 auto-rows-auto gap-[24px] Tablet:grid-cols-2 Mobile:grid-cols-1">
       {list.map((el) => (
-        <Link key={el.id} href={`/${el.code}`}>
+        <Link key={el.id} href={`/${el.name}`}>
           <WikiCard info={el} />
         </Link>
       ))}
