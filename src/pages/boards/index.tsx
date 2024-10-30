@@ -1,7 +1,12 @@
 import { getArticles } from "@/api/article";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
+<<<<<<< HEAD
 import BestArticles from "@/components/ui/BestArticles";
 import TotalArticlesContainer from "@/containers/TotalArticlesContainer";
+=======
+import BestBoards from "@/components/ui/BestBoards";
+import TotalBoards from "@/containers/TotalBoards";
+>>>>>>> b650dee849b14b71edf8f40e264f111b185c14bb
 import { BoardsProps } from "@/types/types";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 

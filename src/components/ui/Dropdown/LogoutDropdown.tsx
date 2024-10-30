@@ -73,7 +73,7 @@ const LogoutDropdown = () => {
           )}
           {currentPath !== "/login" && (
             <MenuItem
-              className="hover:text-green-500"
+              className="text-green-500"
               href={"/login"}
               onClick={handleToggle}
             >

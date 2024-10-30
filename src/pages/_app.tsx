@@ -9,13 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Header />
       <Component {...pageProps} />
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        pauseOnHover={false}
-        closeButton={false}
-        limit={1}
-      />
+      <ToastContainer limit={1} />
     </>
   );
 }

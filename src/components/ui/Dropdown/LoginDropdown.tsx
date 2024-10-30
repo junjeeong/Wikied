@@ -72,7 +72,11 @@ const LoginDropdown = () => {
           <Profile
             className="text-gray-400 hover:text-gray-500"
             width={32}
+<<<<<<< HEAD
             heigth={32}
+=======
+            height={32}
+>>>>>>> b650dee849b14b71edf8f40e264f111b185c14bb
           />
         </button>
       ) : (
@@ -80,7 +84,11 @@ const LoginDropdown = () => {
           <Menu
             className="text-gray-400 hover:text-gray-500"
             width={24}
+<<<<<<< HEAD
             heigth={24}
+=======
+            height={24}
+>>>>>>> b650dee849b14b71edf8f40e264f111b185c14bb
           />
         </button>
       )}
