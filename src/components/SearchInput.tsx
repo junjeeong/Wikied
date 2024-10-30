@@ -3,11 +3,17 @@ import Image from "next/image";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
-  onSubmit?: FormEventHandler;
-  onChange?: ChangeEventHandler;
+  onSubmit: FormEventHandler;
+  onChange: ChangeEventHandler;
+  value: string;
 }
 
-export const SearchInput = ({ size, onSubmit, onChange }: SearchInputProps) => {
+export const SearchInput = ({
+  size,
+  onSubmit,
+  onChange,
+  value,
+}: SearchInputProps) => {
   const sizes = {
     large: "w-[860px] h-[45px]",
     medium: "w-[704px] h-[45px]",
