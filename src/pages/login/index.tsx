@@ -40,7 +40,7 @@ const Login = () => {
     if (isLoggedIn) {
       const user = useAuthStore.getState().user;
       if (user?.profile) {
-        router.push(`/wiki/${user.profile.id}`);
+        router.push(`/wiki/${user.profile.name}`);
       } else {
         router.push("/quiz-settings");
       }
