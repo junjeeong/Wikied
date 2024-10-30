@@ -91,8 +91,8 @@ const LoginDropdown = () => {
               계정설정
             </MenuItem>
           )}
-          {currentPath !== `/wikilist/12` && (
-            <MenuItem href={`/wikilist/12`} onClick={handleToggle}>
+          {currentPath !== `/wikilist/${user?.name}` && (
+            <MenuItem href={`/wikilist/${user?.name}`} onClick={handleToggle}>
               내위키
             </MenuItem>
           )}
