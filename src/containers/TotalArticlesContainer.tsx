@@ -7,6 +7,7 @@ import { getArticles } from "@/api/article";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { TotalArticlesContainerProps } from "@/types/types";
+import useViewport from "@/hooks/useViewport";
 
 const PAGE_SIZE = 10;
 
@@ -16,12 +17,14 @@ const TotalArticlesContainer = ({
 }: TotalArticlesContainerProps) => {
   const [articles, setArticles] = useState(initialTotalArticles);
   const [inputValue, setInputValue] = useState("");
-  const [isPC, setIsPC] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const totalPage = Math.ceil(totalCount / PAGE_SIZE);
 
   const router = useRouter();
   const { q = "", order = "recent", page = 1 } = router.query;
+
+  const { isPC } = useViewport();
+  const size = isPC ? "medium" : "small";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -83,22 +86,6 @@ const TotalArticlesContainer = ({
 
     fetchData();
   }, [page, order, q]);
-
-  const handleResize = () => {
-    if (window.innerWidth > 1200) {
-      setIsPC(true);
-    } else {
-      setIsPC(false);
-    }
-  };
-
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const size = isPC ? "medium" : "small";
 
   return (
     <div className="my-[60px]">
