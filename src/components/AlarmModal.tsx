@@ -5,9 +5,16 @@ import NotificationModalContainer from "../containers/NotificationModalContainer
 interface AlarmModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  newAlarmExist: boolean;
+  setNewAlarmExist: (isExist: boolean) => void;
 }
 
-const AlarmModal = ({ isOpen, setIsOpen }: AlarmModalProps) => {
+const AlarmModal = ({
+  isOpen,
+  setIsOpen,
+  newAlarmExist,
+  setNewAlarmExist,
+}: AlarmModalProps) => {
   return (
     <>
       <Alarm

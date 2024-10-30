@@ -13,10 +13,16 @@ interface HeaderMenuContainerProps {
 const HeaderMenuContainer = ({ isMobile }: HeaderMenuContainerProps) => {
   const { isLoggedIn } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
+  const [newAlarmExist, setNewAlarmExist] = useState(false);
 
   return isLoggedIn ? (
     <div className="flex items-center">
-      <AlarmModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <AlarmModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        newAlarmExist={newAlarmExist}
+        setNewAlarmExist={setNewAlarmExist}
+      />
       <div className="ml-[20px]">
         <LoginDropdown />
       </div>
