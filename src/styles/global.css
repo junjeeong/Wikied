@@ -1,3 +1,4 @@
+@import "react-quill/dist/quill.snow.css";
 /* @tailwind base : reset CSS 포함 */
 @tailwind base;
 /* @tailwind components : 재사용할 CSS 규칙 */
