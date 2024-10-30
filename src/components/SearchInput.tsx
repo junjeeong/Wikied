@@ -4,7 +4,7 @@ import Image from "next/image";
 interface SearchInputProps {
   size: "large" | "medium" | "small";
   onSubmit: FormEventHandler;
-  onChange: ChangeEventHandler;
+  onChange?: ChangeEventHandler;
   value: string;
 }
 
