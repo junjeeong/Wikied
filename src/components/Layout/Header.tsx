@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Logo from "../Logo";
 import Navigation from "../Navigation";
-import UserMenu from "../UserMenu";
+import HeaderMenuContainer from "../../containers/HeaderMenuContainer";
 
 export const Header = () => {
   const router = useRouter();
@@ -49,7 +49,7 @@ export const Header = () => {
       <div className="mx-10">
         <Navigation />
       </div>
-      <UserMenu isMobile={isMobile} />
+      <HeaderMenuContainer isMobile={isMobile} />
     </div>
   );
 };
