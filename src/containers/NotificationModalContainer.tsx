@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from "react";
-import { getNotifications, deleteNotifications } from "@/api/notification";
+import { useEffect, useState} from "react";
+import { getNotifications } from "@/api/notification";
 import NotificationModal from "@/components/NotificationModal";
 import NotificationModalOverlay from "@/components/NotifiCationModalOverlay";
 
