@@ -5,7 +5,6 @@ import Link from "next/link";
 
 const MainPage = () => {
   const { isLoggedIn, user } = useAuthStore();
-  console.log(user?.name);
   const linkURL = isLoggedIn ? `/wiki/${user?.name}` : "/login";
 
   const shareItems = [

@@ -16,7 +16,6 @@ interface ProfileCardProps {
 const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const defaultURL = "https://example.com/...";
 
   // 클릭 시 유저 프로필의 영역이 확장됨
   const expandContent = () => {
@@ -73,7 +72,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
             : "m-[30px] Mobile:m-0"
         } relative PC:self-center w-[200px] h-[200px] Tablet:w-[71px] Tablet:h-[71px] Tablet:m-0 Mobile:w-[62px] Mobile:h-[62px]`}
       >
-        {userProfile.image === defaultURL ? (
+        {userProfile.image === null ? (
           <ProfileImg className="w-full h-full text-gray-400" />
         ) : (
           <Image

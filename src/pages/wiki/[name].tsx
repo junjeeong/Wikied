@@ -18,7 +18,6 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 ) => {
   // URL 경로에서 'name' 파라미터 추출
   const { name } = context.params!;
-  console.log("name ", name);
   if (typeof name !== "string") {
     return { notFound: true };
   }
@@ -29,7 +28,6 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 
   // 가져온 'code'로 유저의 상세 프로필 데이터를 가져옴 (SSR)
   const res = await getUserProfile(currentCode);
-
   if (!res?.data) {
     return { notFound: true };
   }
