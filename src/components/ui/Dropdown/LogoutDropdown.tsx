@@ -57,12 +57,7 @@ const LogoutDropdown = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <button onClick={handleToggle} type="button">
-        <Image
-          src={"/icons/ic_hamburger.svg"}
-          width={24}
-          height={24}
-          alt="메뉴"
-        />
+        <Image src={"/icons/ic_menu.svg"} width={24} height={24} alt="메뉴" />
       </button>
       {isOpen && (
         <div className="flex flex-col whitespace-nowrap rounded-[10px] bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[37px] right-0 z-10">
