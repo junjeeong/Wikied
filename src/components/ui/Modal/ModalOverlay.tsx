@@ -5,9 +5,6 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  bgColor?: string;
-  closeButtonSize?: string;
-  closeButtonColor?: string;
 }
 
 const ModalOverlay = ({

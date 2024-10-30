@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { getNotifications, deleteNotifications } from "@/api/notification";
 import NotificationModal from "@/components/NotificationModal";
-import NotificationModalOverlay from "@/components/ui/Modal/NotifiCationModalOverlay";
+import NotificationModalOverlay from "@/components/NotifiCationModalOverlay";
 
 interface Notification {
   createdAt: string;
