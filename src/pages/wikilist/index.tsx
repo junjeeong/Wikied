@@ -24,7 +24,7 @@ interface WikiListProps {
 export const getServerSideProps: GetServerSideProps<
   WikiListProps
 > = async () => {
-  const res = await getProfiles();
+  const res = await getProfiles({ pageSize: 12 });
   return {
     props: {
       initialList: res,
@@ -70,7 +70,7 @@ const WikiList = ({ initialList }: WikiListProps) => {
   }, [loadMoreProfiles, hasMore]);
 
   return (
-    <div className="max-w-[840px] w-full mx-auto my-[40px] h-full px-[20px]">
+    <div className="max-w-[840px] w-full mx-auto h-full px-[20px] Tablet:px-[60px] Mobile:px-[100px]">
       <WikiListTitle />
       <WikiCardList list={list} />
       {hasMore && (

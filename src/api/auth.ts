@@ -20,6 +20,8 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
+  const res = await instance.post(`/auth/signIn`, body);
+  try {
     const res = await instance.post(`/auth/signIn`, body);
     return res.data;
 }; // 예외처리를 AuthStore에서 하고, login page에서 메세지를 돌려받음
