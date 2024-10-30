@@ -9,7 +9,6 @@ interface FormInputProps {
   submitError?: string;
   register: UseFormRegisterReturn;
   onChange?:() => void;
-  
 }
 
 const FormInput = ({
