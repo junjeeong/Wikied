@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import FormInput from "@/components/FormInput";
 import FilledButton from "@/components/ui/Button/FilledButton";
+import { postProfile } from "@/api/profile";
 
 
 export interface QuizSettingsValues {
@@ -20,21 +21,22 @@ const QuizSettings = () => {
     mode: "onSubmit",
   });
 
-  const { createProfile,isLoggedIn,user } = useAuthStore();
+  const { isLoggedIn,user } = useAuthStore();
   const router = useRouter();
 
   const handleProfileCreation = async (data: QuizSettingsValues) => {
-    await createProfile(data.securityAnswer, data.securityQuestion);
+    await postProfile({
+      securityAnswer:data.securityAnswer, 
+      securityQuestion:data.securityQuestion});
     const user = useAuthStore.getState().user;
-    router.push(`/wiki/${user?.profile?.name}`);
+    router.push(`/wiki/${user?.name}`);
   };
 
   useEffect(() => {
-
     if (!isLoggedIn) {
       router.push("/login");
-    } else if (user?.profile) {
-      router.push(`/wiki/${user.profile.name}`);
+    } else  {
+      router.push(`/wiki/${user?.name}`);
     }
   }, [isLoggedIn, user, router]);
 
