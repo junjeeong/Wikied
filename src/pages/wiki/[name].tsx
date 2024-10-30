@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 ) => {
   // URL 경로에서 'name' 파라미터 추출
   const { name } = context.params!;
-
+  console.log("name ", name);
   if (typeof name !== "string") {
     return { notFound: true };
   }
@@ -60,7 +60,6 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
 
   const onSubmit = (data: any) => {
     // PATCH profile/{code} 로 유저 프로필 정보 수정
-    console.log("Form data: ", data);
   };
 
   const fetchUserProfile = useCallback(async () => {
@@ -70,8 +69,10 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   }, []);
 
   useEffect(() => {
-    fetchUserProfile();
-  }, []);
+    if (!initialProfile) {
+      fetchUserProfile();
+    }
+  }, [initialProfile, fetchUserProfile]);
 
   return (
     <FormProvider {...methods}>

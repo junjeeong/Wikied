@@ -5,7 +5,6 @@ import useAuthStore from "@/store/AuthStore";
 import LoginForm from "@/components/LoginForm";
 import { InputValues } from "@/components/SignUpForm";
 
-
 const Login = () => {
   const {
     register,
@@ -38,7 +37,7 @@ const Login = () => {
     if (isLoggedIn) {
       const user = useAuthStore.getState().user;
       if (user?.profile) {
-        router.push(`/wiki/${user.profile.id}`);
+        router.push(`/wiki/${user.name}`);
       } else {
         router.push("/quiz-settings");
       }
