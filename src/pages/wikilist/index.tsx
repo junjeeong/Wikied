@@ -1,18 +1,20 @@
+// pages/WikiList.tsx
 import { useEffect, useCallback, useState, useRef } from "react";
 import { getProfiles } from "@/api/profile";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
-import WikiCard from "@/containers/WikiCard";
+import WikiListTitle from "@/components/WikiListTitle";
+import WikiCardList from "@/components/WikiCardList";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface Profile {
-  id: number;
+  updatedAt: string;
+  job: string;
+  nationality: string;
+  city: string;
+  image: string;
   code: string;
   name: string;
-  image: string;
-  job: string;
-  city: string;
-  updatedAt: string;
-  nationality: string;
+  id: number;
 }
 
 interface WikiListProps {
@@ -69,22 +71,11 @@ const WikiList = ({ initialList }: WikiListProps) => {
 
   return (
     <div className="max-w-[840px] w-full mx-auto my-[40px] h-full px-[20px]">
-      <div className="mt-[24px] mb-[24px] text-3xl text-gray-400">
-        모든 위키
-      </div>
-      <div className="grid grid-cols-3 auto-rows-auto gap-[24px]">
-        {list.map((el) => (
-          <Link key={el.id} href={`/${el.code}`}>
-            <WikiCard info={el} />
-          </Link>
-        ))}
-      </div>
+      <WikiListTitle />
+      <WikiCardList list={list} />
       {hasMore && (
-        <div
-          ref={loadingRef}
-          className="mt-[20px] flex justify-center items-center h-10"
-        >
-          <div className="w-[30px] h-[30px] border-4 border-transparent border-t-green-200 rounded-full animate-spin"></div>
+        <div ref={loadingRef}>
+          <LoadingSpinner />
         </div>
       )}
     </div>
