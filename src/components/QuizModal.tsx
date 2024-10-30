@@ -1,5 +1,5 @@
 import FilledButton from "@/components/ui/Button/FilledButton";
-import Lock from "../../../../public/icons/ic_lock.svg";
+import Lock from "/public/icons/ic_lock.svg";
 
 interface QuizModalProps {
   question: string;
@@ -20,7 +20,7 @@ const QuizModal = ({
     <div className="flex flex-col gap-9 pt-10 pb-[2px]">
       <div className="flex flex-col justify-center items-center gap-[10px]">
         <div className="flex justify-center items-center rounded-full bg-gray-100 w-[42px] h-[42px]">
-          <Lock className="w-5 h-5 text-gray-400"/>
+          <Lock className="w-5 h-5 text-gray-400" />
         </div>
         <div className="text-md text-gray-400">
           다음 퀴즈를 맞추고 <br /> 위키를 작성해보세요.

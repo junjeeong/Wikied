@@ -19,12 +19,10 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
         },
       }
     );
-    if (res.status === 200) {
-      return res.data.list;
-    }
+    return res.data; //totalCount 필요
   } catch (err) {
     console.error("알림 목록을 불러오지 못했습니다.", err);
-    return [];
+    return []
   }
 };
 
@@ -38,9 +36,7 @@ export const deleteNotifications = async (id: number) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res.data;
   } catch (err) {
     console.error("알림 목록을 삭제하는데 실패하였습니다.", err);
     return {};

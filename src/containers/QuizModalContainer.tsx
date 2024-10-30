@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { getUserProfile, postProfilePing } from "@/api/profile";
 import { AxiosError } from "axios";
-import QuizModal from "@/components/QuizModal";
-import ModalOverlay from "@/components/ui/Modal/ModalOverlay";
+import QuizModal from "@/components/ui/Modal/QuizModal";
+import ModalOverlay from "@/components/ModalOverlay";
 import useAuthStore from "@/store/AuthStore";
 
 interface QuizModalContainerProps {
@@ -16,7 +16,7 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
   const { user } = useAuthStore();
 
-  const code = user?.profile.code;
+  const code = user?.profile?.code;
 
   useEffect(() => {
     if (code) {
