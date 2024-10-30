@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { getUserProfile, postProfilePing } from "@/api/profile";
 import { AxiosError } from "axios";
 import QuizModal from "@/components/ui/Modal/QuizModal";
-import ModalOverlay from "@/components/ui/Modal/ModalOverlay";
+import ModalOverlay from "@/components/ModalOverlay";
 import useAuthStore from "@/store/AuthStore";
 
 interface QuizModalContainerProps {

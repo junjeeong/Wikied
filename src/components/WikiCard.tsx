@@ -45,9 +45,9 @@ const WikiCard = ({ info }: WikiCardProps) => {
       </section>
       <section className="flex justify-between align-middle w-full px-[24px] py-[24px] bg-gray-100">
         <span className="text-gray-400 text-md font-semibold truncate max-w-xs">
-          wikied.kr/{info.code}
+          wikied.kr/{info.name}
         </span>
-        <LinkSVG className="text-gray-400 font-semibold w-[40px]" />
+        <LinkSVG className="text-gray-400 w-[30px]" />
       </section>
     </div>
   );
