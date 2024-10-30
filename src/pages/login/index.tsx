@@ -13,7 +13,7 @@
 import ConnectLostModal from "@/components/ConnectLostModal";
 import ModalOverlay from "@/components/ModalOverlay";
 import LoginForm from "@/containers/LoginForm";
-import ProfileSettings from "@/containers/ProfileSettings";
+import ProfileSettings from "@/containers/ProfileSettingsContainer";
 import useAuthStore from "@/store/AuthStore";
 
 import { useEffect, useState } from "react";
