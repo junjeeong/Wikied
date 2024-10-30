@@ -10,8 +10,8 @@
 
 // export default Login;
 
-import ConnectLostModal from "@/components/ui/Modal/ConnectLostModal";
-import ModalOverlay from "@/components/ui/Modal/ModalOverlay";
+import ConnectLostModal from "@/components/ConnectLostModal";
+import ModalOverlay from "@/components/ModalOverlay";
 import LoginForm from "@/containers/LoginForm";
 import ProfileSettings from "@/containers/ProfileSettings";
 import useAuthStore from "@/store/AuthStore";
