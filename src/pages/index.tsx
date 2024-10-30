@@ -5,7 +5,8 @@ import Link from "next/link";
 
 const MainPage = () => {
   const { isLoggedIn, user } = useAuthStore();
-  const linkURL = isLoggedIn ? `/wiki/${user?.id}` : "/login";
+  console.log(user?.name);
+  const linkURL = isLoggedIn ? `/wiki/${user?.name}` : "/login";
 
   const shareItems = [
     { src: "/images/img_item1.png", bgColor: "#B2A5FD" },
@@ -15,7 +16,7 @@ const MainPage = () => {
   ];
 
   return (
-    <div className="bg-landing-light flex flex-col font-nexon items-center">
+    <div className="flex flex-col items-center bg-landing-light font-nexon">
       {/* title section */}
       <section className="relative w-full">
         <div className="flex flex-col items-center Mobile:pt-[100px] pt-[120px]">
@@ -108,7 +109,7 @@ const MainPage = () => {
         </div>
       </section>
       {/* view section */}
-      <section className="bg-landing-bold w-full Mobile:px-5 Tablet:px-12 section-padding">
+      <section className="w-full bg-landing-bold Mobile:px-5 Tablet:px-12 section-padding">
         <div className="w-full max-w-[924px] mx-auto">
           <div className="text-left">
             <p className="section-title">VIEW</p>
@@ -150,7 +151,7 @@ const MainPage = () => {
         </div>
       </section>
       {/* bottom section */}
-      <section className="bg-gray-500 w-full flex flex-col items-center gap-10 section-padding">
+      <section className="flex flex-col items-center w-full gap-10 bg-gray-500 section-padding">
         <h3 className="text-background font-bold Mobile:text-[30px] Mobile:leading-[34.5px] text-[60px] leading-[69px] ">
           나만의 위키 만들어 보기
         </h3>

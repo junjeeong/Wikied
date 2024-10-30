@@ -3,9 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import useAuthStore from "@/store/AuthStore";
 import { UserProfile } from "@/types/types";
-import { getUserProfile } from "@/api/profile";
+import { getProfiles, getUserProfile } from "@/api/profile";
 import ProfileCard from "@/components/ProfileCard";
 import FilledButton from "@/components/ui/Button/FilledButton";
+import WikiProfileTitle from "@/components/WikiProfileTitle";
 
 interface WikiPageProps {
   initialProfile: UserProfile;
@@ -15,13 +16,19 @@ interface WikiPageProps {
 export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
   context
 ) => {
-  const { code } = context.params!;
+  // URL 경로에서 'name' 파라미터 추출
+  const { name } = context.params!;
 
-  if (typeof code !== "string") {
+  if (typeof name !== "string") {
     return { notFound: true };
   }
 
-  const res = await getUserProfile(code);
+  // 'name'으로 'code'가 포함된 해당 유저의 프로필 데이터를 가져옴
+  const [profileByName] = await getProfiles({ name });
+  const currentCode = profileByName.code;
+
+  // 가져온 'code'로 유저의 상세 프로필 데이터를 가져옴 (SSR)
+  const res = await getUserProfile(currentCode);
 
   if (!res?.data) {
     return { notFound: true };
@@ -29,7 +36,7 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
   return {
     props: {
       initialProfile: res.data,
-      code,
+      code: currentCode,
     },
   };
 };
@@ -70,17 +77,39 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="relative w-full h-full"
+        className="relative flex justify-center w-full h-full my-20"
       >
-        <div className="">
-          <ProfileCard
-            userProfile={userProfile}
-            isMe={isMe}
-            isEditing={isEditing}
-          />
-          <FilledButton onClick={handleEdit} editing={isEditing} type="button">
-            위키 참여하기
-          </FilledButton>
+        <div
+          className={`${
+            isEditing ? "pr-[520px] w-[1640px]" : "pr-[400px] w-[1260px]"
+          } relative flex flex-col gap-[15px] Mobile:gap-3 Tablet:px-[60px] Mobile:px-5 PC:mx-10`}
+        >
+          {/* Profile title : 편집중에는 이름 + MD 에디터 */}
+          <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
+            <WikiProfileTitle name={userProfile.name} />
+            <div className="absolute top-0 right-0">
+              <FilledButton
+                onClick={handleEdit}
+                editing={isEditing}
+                type="button"
+                // size="small"  // 모바일에서만 small ※padding값이..?
+              >
+                위키 참여하기
+              </FilledButton>
+            </div>
+          </div>
+
+          {/* Profile  Card */}
+          <div className="PC:absolute PC:top-[38px] PC:right-0">
+            <ProfileCard
+              userProfile={userProfile}
+              isMe={isMe}
+              isEditing={isEditing}
+            />
+          </div>
+
+          {/* Profile Content */}
+          <div className="h-[1000px] mt-[41px] Tablet:mt-[45px] Mobile:mt-7 border border-red-500"></div>
         </div>
 
         <div className="absolute bottom-[50px] right-[50px]">
