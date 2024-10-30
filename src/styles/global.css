@@ -23,13 +23,11 @@
 
   html,
   body {
-    @apply max-w-full overflow-x-hidden;
+    @apply max-w-full;
     -ms-overflow-style: none;
     /* IE와 Edge */
     scrollbar-width: none;
     /* Firefox */
-    margin-top: 80px;
-    /* 헤더 길이 */
   }
 
   body {
