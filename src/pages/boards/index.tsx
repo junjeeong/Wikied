@@ -1,7 +1,7 @@
 import { getArticles } from "@/api/article";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
 <<<<<<< HEAD
-import BestArticles from "@/components/ui/BestArticles";
+import BestArticles from "@/components/BestArticles";
 import TotalArticlesContainer from "@/containers/TotalArticlesContainer";
 =======
 import BestBoards from "@/components/ui/BestBoards";

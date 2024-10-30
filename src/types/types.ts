@@ -11,6 +11,22 @@ export interface Article {
   likeCount: number;
 }
 
+export interface Profile {
+  id: number;
+  code: string;
+  name: string;
+  job: string;
+  city: string;
+  image: string;
+  nationality: string;
+  updatedAt: string;
+}
+
+export interface GetProfilesResponse {
+  list: Profile[];
+  totalCount: number;
+}
+
 export interface BoardsProps {
   bestArticles: Article[];
   totalArticles: Article[];

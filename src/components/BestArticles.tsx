@@ -1,6 +1,6 @@
 import { BestArticlesProps } from "@/types/types";
 import Image from "next/image";
-import FilledButton from "./Button/FilledButton";
+import FilledButton from "./ui/Button/FilledButton";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 

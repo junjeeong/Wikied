@@ -8,7 +8,7 @@ const CustomLinkContainer = () => {
   const [fullUrl, setFullUrl] = useState("");
 
   useEffect(() => {
-    const url = `${window.location.origin}${router.asPath}`;
+    const url = `${window.location.origin}${decodeURIComponent(router.asPath)}`;
     setFullUrl(url);
   }, [router.asPath]);
 
