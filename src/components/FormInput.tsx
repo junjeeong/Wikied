@@ -8,7 +8,7 @@ interface FormInputProps {
   error?: FieldError;
   submitError?: string;
   register: UseFormRegisterReturn;
-  onChange?: () => void;
+  onChange?:() => void;
 }
 
 const FormInput = ({
