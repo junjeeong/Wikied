@@ -39,7 +39,7 @@ interface AuthStore {
   accessToken: string | null;
   refreshToken: string | null;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => Promise<string | undefined> //반환 타입 수정
+  login: (email: string, password: string) => Promise<string | undefined>; //반환 타입 수정
   logout: () => void;
   setAccessToken: (token: string) => void; // Access Token을 업데이트하는 함수 추가
   createProfile: (
@@ -69,7 +69,7 @@ const useAuthStore = create(
             localStorage.setItem("refreshToken", userData.refreshToken);
           }
         } catch (error) {
-          if (error instanceof AxiosError){
+          if (error instanceof AxiosError) {
             return error.response?.data.message;
           }
         }
