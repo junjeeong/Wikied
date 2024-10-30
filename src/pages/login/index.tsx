@@ -2,10 +2,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useAuthStore from "@/store/AuthStore";
-import { InputValues } from "@/pages/signup/index";
-import FilledButton from "@/components/ui/Button/FilledButton";
-import FormInput from "@/components/FormInput";
-import Link from "next/link";
+import LoginForm from "@/components/LoginForm";
+import { InputValues } from "@/components/SignUpForm";
 
 const Login = () => {
   const {
@@ -40,6 +38,7 @@ const Login = () => {
     if (isLoggedIn) {
       const user = useAuthStore.getState().user;
       if (user?.profile) {
+        router.push(`/wiki/${user.name}`);
         router.push(`/wiki/${user.name}`);
       } else {
         router.push("/quiz-settings");
