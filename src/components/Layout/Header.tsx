@@ -36,9 +36,9 @@ export const Header = () => {
   }, []);
 
   return (
-    <div className="w-screen p-6 h-20 bg-background flex justify-between items-center fixed z-[999]">
+    <div className="w-screen p-6 h-20 bg-background flex justify-between items-center fixed top-0 z-[999] shadow-[0_4px_20px_#00000014]">
       <Logo />
-      <div className="Mobile:hidden ml-auto">
+      <div className="ml-auto Mobile:hidden">
         <SearchInput
           size="small"
           onChange={handleChange}
