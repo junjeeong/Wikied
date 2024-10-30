@@ -29,7 +29,7 @@ const Login = () => {
     } else {
       const user = useAuthStore.getState().user;
       if (user?.profile) {
-        router.push(`/wiki/${user.profile.name}`);
+        router.push(`/wiki/${user.name}`);
       } else {
         router.push("/quiz-settings");
       }
@@ -40,7 +40,7 @@ const Login = () => {
     if (isLoggedIn) {
       const user = useAuthStore.getState().user;
       if (user?.profile) {
-        router.push(`/wiki/${user.profile.name}`);
+        router.push(`/wiki/${user.name}`);
       } else {
         router.push("/quiz-settings");
       }
