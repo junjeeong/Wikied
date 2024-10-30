@@ -25,6 +25,7 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
+  const res = await instance.post(`/auth/signIn`, body);
   try {
     const res = await instance.post(`/auth/signIn`, body);
     return res.data;
