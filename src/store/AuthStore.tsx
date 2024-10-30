@@ -3,6 +3,11 @@ import { persist } from "zustand/middleware";
 import { postSignIn } from "@/api/auth";
 import { AxiosError } from "axios"; // AxiosError import
 
+interface Profile {
+  id: number;
+  code: string;
+}
+
 interface User {
   id: number;
   email: string;
@@ -10,7 +15,7 @@ interface User {
   teamId: string;
   updatedAt: string;
   createdAt: string;
-  profile: null;
+  profile: Profile | null;
 }
 
 interface AuthStore {
