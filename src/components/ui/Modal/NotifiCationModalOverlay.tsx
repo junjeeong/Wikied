@@ -10,7 +10,7 @@ interface ModalProps {
   closeButtonColor?: string;
 }
 
-const ModalOverlay = ({
+const NotificationModalOverlay = ({
   isOpen,
   onClose,
   children,
@@ -21,16 +21,16 @@ const ModalOverlay = ({
     <>
       <div
         className={
-          "flex justify-center items-center fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-30"
+          "flex justify-center items-center absolute top-16 right-20 z-50"
         }
       >
-        <div className="bg-background rounded-[10px] px-5 py-5 relative z-10">
+        <div className="bg-notice-bg rounded-[10px] px-5 py-5 relative z-10">
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-5 right-5 bg-cover w-5 h-5"
+            className="absolute top-5 right-5 bg-cover w-6 h-6"
           >
-            <CloseBtn className="text-gray-400" />
+            <CloseBtn className="text-notice-text"/>
           </button>
           {children}
         </div>
@@ -39,4 +39,4 @@ const ModalOverlay = ({
   );
 };
 
-export default ModalOverlay;
+export default NotificationModalOverlay;

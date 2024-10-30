@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { getNotifications, deleteNotifications } from "@/api/notification";
-import ModalOverlay from "@/components/ui/Modal/ModalOverlay";
 import NotificationModal from "@/components/NotificationModal";
+import NotificationModalOverlay from "@/components/ui/Modal/NotifiCationModalOverlay";
 
 interface Notification {
   createdAt: string;
@@ -37,25 +37,13 @@ const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
   };
 
   return totalCount === 0 ? (
-    <ModalOverlay
-      isOpen={isOpen}
-      onClose={onClose}
-      bgColor="bg-notice-bg"
-      closeButtonSize="w-6 h-6"
-      closeButtonColor="text-notice-text"
-    >
+    <NotificationModalOverlay isOpen={isOpen} onClose={onClose}>
       <div className="w-[328px] mt-10 px-3 py-4 font-semibold bg-background border border-green-50 rounded-[5px]">
         새로운 알림이 없습니다.
       </div>
-    </ModalOverlay>
+    </NotificationModalOverlay>
   ) : (
-    <ModalOverlay
-      isOpen={isOpen}
-      onClose={onClose}
-      bgColor="bg-notice-bg"
-      closeButtonSize="w-6 h-6"
-      closeButtonColor="text-notice-text"
-    >
+    <NotificationModalOverlay isOpen={isOpen} onClose={onClose}>
       <div>
         <div className="mt-1 text-[25px] leading-[25.04px] font-bold text-notice-text mb-4">
           {`알림${totalCount}개`}
@@ -72,7 +60,7 @@ const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
           ))}
         </ul>
       </div>
-    </ModalOverlay>
+    </NotificationModalOverlay>
   );
 };
 
