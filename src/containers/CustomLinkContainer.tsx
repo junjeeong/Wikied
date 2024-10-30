@@ -10,7 +10,7 @@ const CustomLinkContainer = () => {
   const [isToastVisible, setIsToastVisible] = useState(false);
 
   useEffect(() => {
-    const url = `${window.location.origin}${router.asPath}`;
+    const url = `${window.location.origin}${decodeURIComponent(router.asPath)}`;
     setFullUrl(url);
   }, [router.asPath]);
 
