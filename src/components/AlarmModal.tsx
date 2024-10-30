@@ -1,5 +1,6 @@
+import ModalOverlay from "./ModalOverlay";
 import Alarm from "/public/icons/ic_alarm.svg";
-import NotificatonModalContainer from "@/containers/NotificationModalContainer";
+import NotificationModalContainer from "../containers/NotificationModalContainer";
 
 interface AlarmModalProps {
   isOpen: boolean;
@@ -13,11 +14,12 @@ const AlarmModal = ({ isOpen, setIsOpen }: AlarmModalProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="relative cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden"
       />
-      {isOpen && (
-        <div className="absolute -bottom-[50%] right-[80px]">
-          <NotificatonModalContainer />
-        </div>
-      )}
+      <div>
+        <NotificationModalContainer
+          isOpen={isOpen}
+          onClose={() => setIsOpen(!isOpen)}
+        />
+      </div>
     </>
   );
 };
