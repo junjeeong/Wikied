@@ -65,13 +65,13 @@
   border: 0 !important;
 }
 
-.ql-editor {
-  padding-left: 0 !important;
+.ql-container.ql-snow .ql-editor {
+  padding-left: 0 
 }
 
-.ql-editor.ql-blank::before {
-  color: #c8cada !important;
-  font-style: normal !important;
+.ql-container.ql-snow .ql-editor.ql-blank::before {
+  color: #c8cada;
+  font-style: normal;
   left: 0 !important;
   font-size: 20px;
   font-weight: 400;

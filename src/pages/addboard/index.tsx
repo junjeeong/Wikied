@@ -23,14 +23,14 @@ const AddBoard = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-[23px] min-h-screen Mobile:px-5 bg-background">
+      <div className="flex flex-col items-center justify-center gap-[23px] min-h-screen bg-background Tablet:px-[60px] Mobile:px-5 ">
         <Editor
           initialTitle={title}
           initialContent={content}
           onTitleChange={handleTitleChange}
           onContentChange={handleContentChange}
         />
-        <CustomToolbar/>
+        <CustomToolbar />
         <OutlineButton onClick={handleClick}>목록으로</OutlineButton>
       </div>
     </>
