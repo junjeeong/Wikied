@@ -2,25 +2,25 @@ import { useForm } from "react-hook-form";
 import FormInput from "@/components/FormInput";
 import FilledButton from "@/components/ui/Button/FilledButton";
 
-export interface QuizSettingsValues {
+export interface QuizSettingsFormValues {
   securityAnswer: string;
   securityQuestion: string;
 }
 
 interface QuizSettingsFormProps {
-  onSubmit: (data: QuizSettingsValues) => Promise<void>;
+  onSubmit: (data: QuizSettingsFormValues) => Promise<void>;
 }
 
-const QuizSettingsForm = ({ onSubmit }: QuizSettingsFormProps) => {
+const QuizSettingsFormContainer = ({ onSubmit }: QuizSettingsFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<QuizSettingsValues>({
+  } = useForm<QuizSettingsFormValues>({
     mode: "onSubmit",
   });
 
- const handleFormSubmit = async (data: QuizSettingsValues) => {
+ const handleFormSubmit = async (data: QuizSettingsFormValues) => {
    await onSubmit(data);
  };
   return (
@@ -78,4 +78,4 @@ const QuizSettingsForm = ({ onSubmit }: QuizSettingsFormProps) => {
   );
 };
 
-export default QuizSettingsForm;
+export default QuizSettingsFormContainer;

@@ -1,9 +1,7 @@
-import { useForm } from "react-hook-form";
 import useAuthStore from "@/store/AuthStore";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import QuizSettingsForm from "@/containers/QuizSettingsForm";
-import {QuizSettingsValues} from "@/containers/QuizSettingsForm";
+import QuizSettingsFormContainer, {QuizSettingsFormValues} from "@/containers/QuizSettingsFormContainer";
 
 
 const QuizSettings = () => {
@@ -11,7 +9,7 @@ const QuizSettings = () => {
   const { isLoggedIn, user, updateProfile } = useAuthStore();
   const router = useRouter();
 
-  const onSubmit = async (data: QuizSettingsValues) => {
+  const onSubmit = async (data: QuizSettingsFormValues) => {
     await updateProfile(data.securityAnswer, data.securityQuestion);
     const user = useAuthStore.getState().user;
     router.push(`/wiki/${user?.name}`);
@@ -25,7 +23,7 @@ const QuizSettings = () => {
     }
   }, [isLoggedIn, user, router]);
 
-  return <QuizSettingsForm onSubmit={onSubmit} />;
+  return <QuizSettingsFormContainer onSubmit={onSubmit} />;
 };
 
 export default QuizSettings;
