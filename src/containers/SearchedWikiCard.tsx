@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import Profile from "/public/icons/ic_profile.svg";
 import CustomLink from "../components/ui/CustomLink";
-import useAuthStore from "@/store/AuthStore";
 
 interface SearchedWikiCardProps {
   info: {
@@ -39,7 +38,7 @@ const SearchedWikiCard = ({ info }: SearchedWikiCardProps) => {
         </div>
       </div>
       <div className="absolute bottom-[24px] right-[36px]">
-        {/* <CustomLink link={`https://www.wikied.kr/${info.id}`} /> */}
+        <CustomLink link={`https://www.wikied.kr/${info.name}`} />
       </div>
     </div>
   );

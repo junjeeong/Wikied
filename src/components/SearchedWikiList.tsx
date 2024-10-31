@@ -3,6 +3,7 @@ import { Profile } from "@/types/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import SearchedWikiCard from "@/containers/SearchedWikiCard";
 import { useRouter } from "next/router";
+import value from "../../global.d";
 
 interface SearchedWikiListProps {
   list: Profile[];
