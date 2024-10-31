@@ -21,7 +21,7 @@ interface ChangeWikiType {
 const MyPage = () => {
   const router = useRouter();
   const notify = useNotify();
-  const { user, logout, isLoggedIn } = useAuthStore();
+  const { user, logout, isLoggedIn } = useAuthStore.getState();
 
   const {
     register: registerPassword,
@@ -62,8 +62,6 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    console.log(isLoggedIn);
-
     if (!isLoggedIn) {
       router.push("/login");
     }
