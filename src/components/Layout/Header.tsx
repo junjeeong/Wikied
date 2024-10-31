@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Logo from "../Logo";
 import Navigation from "../Navigation";
-import UserMenu from "../UserMenu";
+import HeaderMenuContainer from "../../containers/HeaderMenuContainer";
 
 export const Header = () => {
   const router = useRouter();
@@ -36,9 +36,9 @@ export const Header = () => {
   }, []);
 
   return (
-    <div className="w-screen p-6 h-20 bg-background flex justify-between items-center fixed z-[999]">
+    <div className="w-screen p-[24px] h-[80px] bg-background flex justify-between items-center shadow-sm sticky top-0 z-[90]">
       <Logo />
-      <div className="Mobile:hidden ml-auto">
+      <div className="ml-auto Mobile:hidden">
         <SearchInput
           size="small"
           onChange={handleChange}
@@ -49,7 +49,7 @@ export const Header = () => {
       <div className="mx-10">
         <Navigation />
       </div>
-      <UserMenu isMobile={isMobile} />
+      <HeaderMenuContainer isMobile={isMobile} />
     </div>
   );
 };

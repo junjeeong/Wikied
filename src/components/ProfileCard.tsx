@@ -16,7 +16,6 @@ interface ProfileCardProps {
 const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const defaultURL = "https://example.com/...";
 
   // 클릭 시 유저 프로필의 영역이 확장됨
   const expandContent = () => {
@@ -59,12 +58,12 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
       className={`transition-all ease-in-out ${
         isMe && isEditing
           ? "w-[400px] h-[828px] p-10 gap-10 pb-9 Tablet:flex-col Tablet:h-[388px] Tablet:px-4 Tablet:pb-[37px] Tablet:gap-8 Mobile:flex-col Mobile:h-[511px] Mobile:pt-6 Mobile:px-[34px] Mobile:pb-[17px] Mobile:gap-6"
-          : `w-80 h-[671px] p-[30px] gap-[30px] Tablet:gap-10 Mobile:pt-[15px] Mobile:px-5 Mobile:pb-[41px] Mobile:gap-5 ${
+          : `PC:w-80 h-[671px] p-[30px] gap-[30px] Tablet:gap-10 Mobile:pt-[15px] Mobile:px-5 Mobile:pb-[41px] Mobile:gap-5 ${
               isExpanded
                 ? "Tablet:h-[270px] Mobile:h-64"
                 : "Tablet:h-[130px] Mobile:h-[126px]"
             }`
-      } flex relative text-md rounded-[10px] shadow-[0_4px_20px_#00000014] PC:flex-col Tablet:w-[624px] Tablet:pt-5 Mobile:text-xs Mobile:w-[335px] mx-auto`}
+      } flex relative text-md rounded-[10px] shadow-[0_4px_20px_#00000014] w-full PC:flex-col  Tablet:pt-5 Mobile:text-xs  mx-auto`}
     >
       <div
         className={`${
@@ -73,7 +72,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
             : "m-[30px] Mobile:m-0"
         } relative PC:self-center w-[200px] h-[200px] Tablet:w-[71px] Tablet:h-[71px] Tablet:m-0 Mobile:w-[62px] Mobile:h-[62px]`}
       >
-        {userProfile.image === defaultURL ? (
+        {userProfile.image === null ? (
           <ProfileImg className="w-full h-full text-gray-400" />
         ) : (
           <Image
@@ -97,7 +96,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
             />
             <label
               htmlFor="image"
-              className="relative block w-full h-full cursor-pointer transform transition-transform duration-300 hover:scale-105"
+              className="relative block w-full h-full transition-transform duration-300 transform cursor-pointer hover:scale-105"
             >
               <div className="absolute top-0 left-0 rounded-full w-full h-full bg-[#00000080]"></div>
               <CameraImg className="absolute w-9 h-9 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 right-0 text-gray-200 Tablet:w-5 Tablet:h-5 Mobile:w-[17px] Mobile:h-[17px] " />
@@ -114,7 +113,7 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
         <ArrowBottom
           className={`${isMe && isEditing ? "hidden" : ""} ${
             isExpanded ? "scale-y-[-1]" : ""
-          } text-gray-300 PC:hidden`}
+          } w-6 h-6 text-gray-300 PC:hidden`}
         />
       </button>
 
@@ -122,8 +121,10 @@ const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
         className={`${
           isMe && isEditing
             ? "Tablet:h-[228px] Tablet:flex-wrap Mobile:flex-wrap"
-            : "Tablet:gap-1 Mobile:w-[213px] Mobile:gap-2"
-        } ${isExpanded ? "" : "overflow-hidden"} flex flex-col gap-4 `}
+            : "Tablet:gap-1 Mobile:gap-2"
+        } ${
+          isExpanded ? "" : "overflow-hidden"
+        } flex flex-col content-between gap-4 w-full`}
       >
         <ProfileInput
           isMe={isMe}

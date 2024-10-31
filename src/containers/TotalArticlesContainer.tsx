@@ -81,7 +81,6 @@ const TotalArticlesContainer = ({
           currentPage={Number(router.query.page)}
           handlePageChange={handlePageChange}
           isLoading={false}
-          maxPage={5}
         />
       </div>
     </div>
