@@ -7,20 +7,21 @@
 
 @font-face {
   font-family: "Pretendard";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NEXON";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @layer base {
-
   html,
   body {
     @apply max-w-full overflow-x-hidden;
@@ -57,4 +58,23 @@
   .section-subtitle {
     @apply text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px];
   }
+}
+
+.ql-container.ql-snow {
+  min-height: 540px;
+  border: 0 !important;
+}
+
+.ql-editor {
+  padding-left: 0 !important;
+}
+
+.ql-editor.ql-blank::before {
+  color: #c8cada !important;
+  font-style: normal !important;
+  left: 0 !important;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  
 }
