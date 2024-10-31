@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useAuthStore from "@/store/AuthStore";
-import { InputValues } from "@/containers/SignUpForm";
-import LoginForm from "@/containers/LoginForm";
+import { InputValues } from "@/containers/SignUpFormContainer";
+import LoginFormContainer from "@/containers/LoginFormContainer";
 
 const Login = () => {
   const [submitError, setSubmitError] = useState("");
@@ -41,7 +41,7 @@ const Login = () => {
   };
 
   return (
-    <LoginForm
+    <LoginFormContainer
       onSubmit={onSubmit}
       submitError={submitError}
       onChange={handleChange}

@@ -1,17 +1,20 @@
 import { useForm } from "react-hook-form";
-import { InputValues } from "@/containers/SignUpForm";
+import { InputValues } from "@/containers/SignUpFormContainer";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import FormInput from "@/components/FormInput";
 import Link from "next/link";
 
-
-interface LoginFormProps {
+interface LoginFormContainerProps {
   onSubmit: (data: InputValues) => Promise<void>;
   submitError: string;
   onChange: () => void;
 }
 
-const LoginForm = ({ onSubmit,submitError,onChange }: LoginFormProps) => {
+const LoginFormContainer = ({
+  onSubmit,
+  submitError,
+  onChange,
+}: LoginFormContainerProps) => {
   const {
     register,
     handleSubmit,
@@ -21,7 +24,6 @@ const LoginForm = ({ onSubmit,submitError,onChange }: LoginFormProps) => {
   });
 
   const handleFormSubmit = async (data: InputValues) => {
-    
     await onSubmit(data);
   };
 
@@ -78,4 +80,4 @@ const LoginForm = ({ onSubmit,submitError,onChange }: LoginFormProps) => {
   );
 };
 
-export default LoginForm;
+export default LoginFormContainer;

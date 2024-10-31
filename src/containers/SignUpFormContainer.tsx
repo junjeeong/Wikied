@@ -9,11 +9,11 @@ export interface InputValues {
   password: string;
   passwordConfirmation?: string;
 }
-interface SignUpFormProps {
+interface SignUpFormContainerProps {
   onSubmit: (data: InputValues) => Promise<void>;
 }
 
-const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
+const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
   const {
     register,
     handleSubmit,
@@ -24,7 +24,7 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
   });
 
   const password = watch("password");
- 
+
   const handleFormSubmit = async (data: InputValues) => {
     await onSubmit(data);
   };
@@ -110,4 +110,4 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps) => {
   );
 };
 
-export default SignUpForm;
+export default SignUpFormContainer;
