@@ -1,12 +1,11 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
 import Image from "next/image";
-import value from "../../global.d";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
   onSubmit: FormEventHandler;
   onChange?: ChangeEventHandler;
-  value: string;
+  value?: string;
 }
 
 export const SearchInput = ({
