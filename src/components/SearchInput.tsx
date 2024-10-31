@@ -1,5 +1,6 @@
 import { ChangeEventHandler, FormEventHandler } from "react";
 import Image from "next/image";
+import value from "../../global.d";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
@@ -30,6 +31,7 @@ export const SearchInput = ({
           type="text"
           placeholder="이름으로 위키 찾기"
           onChange={onChange}
+          value={value}
         />
         <button
           className={`absolute top-[10px] left-[16px] border-transparent bg-gray-100 cursor-pointer focus:outline-green-100`}
