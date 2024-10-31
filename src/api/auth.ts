@@ -20,7 +20,7 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
-  const res = await instance.post(`/pages/api/auth.ts`, body);
+  const res = await instance.post(`/api/auth.ts`, body);
   return res.data;
 };
 

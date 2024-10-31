@@ -34,6 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json({
         message: "로그인 성공",
         user: data.user,
+        accessToken: data.accessToken,
       });
     } catch (error) {
       const errorMessage =

@@ -34,7 +34,7 @@ const LoginDropdown = () => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const { user, logout } = useAuthStore();
   const router = useRouter();
-  const currentPath = router.pathname;
+  const currentPath = decodeURIComponent(router.asPath);
   const [isMobile, setIsMobile] = useState(false);
 
   const handleResize = () => {
@@ -91,8 +91,8 @@ const LoginDropdown = () => {
               계정설정
             </MenuItem>
           )}
-          {currentPath !== `/wikilist/12` && (
-            <MenuItem href={`/wikilist/12`} onClick={handleToggle}>
+          {currentPath !== `/wiki/${user?.name}` && (
+            <MenuItem href={`/wiki/${user?.name}`} onClick={handleToggle}>
               내위키
             </MenuItem>
           )}
