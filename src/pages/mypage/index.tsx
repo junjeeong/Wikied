@@ -21,8 +21,7 @@ interface ChangeWikiType {
 const MyPage = () => {
   const router = useRouter();
   const notify = useNotify();
-  const { isLoggedIn } = useAuthStore();
-  const { user, logout } = useAuthStore();
+  const { user, logout, isLoggedIn } = useAuthStore();
 
   const {
     register: registerPassword,
@@ -41,7 +40,7 @@ const MyPage = () => {
   const onSubmitPasswordChange: SubmitHandler<ChangePasswordType> = async (
     data
   ) => {
-    const res = await patchUser(data);
+    await patchUser(data);
     notify("비밀번호 변경에 성공했습니다. 다시 로그인 해주세요.", "success");
     logout();
     // 2초 후에 로그인 페이지로 이동
@@ -52,9 +51,9 @@ const MyPage = () => {
 
   // 위키 퀴즈 생성 요청
   const onSubmitWiki: SubmitHandler<ChangeWikiType> = async (data) => {
-    const res = await postProfile(data);
+    await postProfile(data);
     notify(
-      "질문 등록에 성공했습니다.  나의 위키 페이지로 이동합니다.",
+      "퀴즈 등록에 성공했습니다.  나의 위키 페이지로 이동합니다.",
       "success"
     );
     setTimeout(() => {
@@ -63,6 +62,8 @@ const MyPage = () => {
   };
 
   useEffect(() => {
+    console.log(isLoggedIn);
+
     if (!isLoggedIn) {
       router.push("/login");
     }
