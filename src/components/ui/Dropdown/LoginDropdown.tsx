@@ -34,7 +34,7 @@ const LoginDropdown = () => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const { user, logout } = useAuthStore();
   const router = useRouter();
-  const currentPath = router.pathname;
+  const currentPath = decodeURIComponent(router.asPath);
   const [isMobile, setIsMobile] = useState(false);
 
   const handleResize = () => {
@@ -69,11 +69,19 @@ const LoginDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       {!isMobile ? (
         <button className="align-top" onClick={handleToggle} type="button">
-          <Profile className="text-gray-400 hover:text-gray-500" />
+          <Profile
+            className="text-gray-400 hover:text-gray-500"
+            width={32}
+            height={32}
+          />
         </button>
       ) : (
         <button className="align-top" onClick={handleToggle} type="button">
-          <Menu className="text-gray-400 hover:text-gray-500" />
+          <Menu
+            className="text-gray-400 hover:text-gray-500"
+            width={24}
+            height={24}
+          />
         </button>
       )}
       {isOpen && (
@@ -83,8 +91,8 @@ const LoginDropdown = () => {
               계정설정
             </MenuItem>
           )}
-          {currentPath !== `/wikilist/12` && (
-            <MenuItem href={`/wikilist/12`} onClick={handleToggle}>
+          {currentPath !== `/wiki/${user?.name}` && (
+            <MenuItem href={`/wiki/${user?.name}`} onClick={handleToggle}>
               내위키
             </MenuItem>
           )}

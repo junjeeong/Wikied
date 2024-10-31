@@ -6,9 +6,11 @@ interface GetNotificationsQuery {
 }
 
 // 알림 목록 조회
-export const getNotifications = async (query: GetNotificationsQuery) => {
+export const getNotifications = async (
+  query: GetNotificationsQuery,
+  token: string
+) => {
   const { page = 1, pageSize = 10 } = query;
-  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.get(
@@ -19,7 +21,7 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
         },
       }
     );
-    return res.data.list;
+    return res.data; //totalCount 필요
   } catch (err) {
     console.error("알림 목록을 불러오지 못했습니다.", err);
     return [];
@@ -27,9 +29,7 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
 };
 
 // 알림 삭제
-export const deleteNotifications = async (id: number) => {
-  const token = localStorage.getItem("accessToken");
-
+export const deleteNotifications = async (id: number, token: string) => {
   try {
     const res = await instance.delete(`/notifications/${id}`, {
       headers: {

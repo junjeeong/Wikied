@@ -49,17 +49,15 @@ export const getArticles = async (query: getArticlesProps) => {
 
   try {
     const res = await instance.get(`/articles${queryString}`);
-    return res.data.list;
+    return res.data;
   } catch (err) {
     console.error("게시글 목록을 조회하는데 실패했습니다.", err);
-    return [];
+    return {};
   }
 };
 
 // 게시글 상세 조회
-export const getArticle = async (articleId: number) => {
-  const token = localStorage.getItem("accessToken");
-
+export const getArticle = async (articleId: number, token: string) => {
   try {
     const res = await instance.get(`/articles/${articleId}`, {
       headers: {
@@ -74,9 +72,8 @@ export const getArticle = async (articleId: number) => {
 };
 
 // 게시글 수정
-export const patchArticle = async (query: patchArticleProps) => {
+export const patchArticle = async (query: patchArticleProps, token: string) => {
   const { articleId, body } = query;
-  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.patch(`/articles/${articleId}`, body, {
@@ -92,9 +89,10 @@ export const patchArticle = async (query: patchArticleProps) => {
 };
 
 // 게시글 삭제
-export const deleteArticle = async (articleId: deleteArticleProps) => {
-  const token = localStorage.getItem("accessToken");
-
+export const deleteArticle = async (
+  articleId: deleteArticleProps,
+  token: string
+) => {
   try {
     const res = await instance.delete(`/articles/${articleId}`, {
       headers: {
@@ -120,9 +118,10 @@ export const postArticleLike = async (articleId: postArticleLikeProps) => {
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
-  const token = localStorage.getItem("accessToken");
-
+export const deleteArticleLike = async (
+  articleId: deleteArticleLikeProps,
+  token: string
+) => {
   try {
     const res = await instance.delete(`/articles/${articleId}/like`, {
       headers: {

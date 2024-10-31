@@ -16,14 +16,14 @@ interface PostProfilePingQuery {
 }
 
 // 프로필 목록 조회
-export const getProfiles = async (query: GetProfilesQuery) => {
+export const getProfiles = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
   const pageSize = query?.pageSize || 10;
 
-  const queryString = query
-    ? `?page=${page}&pageSize=${pageSize}&name=${query?.name || ""}`
-    : "";
+  const queryString = `?page=${page}&pageSize=${pageSize}&name=${
+    query?.name || ""
+  }`;
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);
 
@@ -39,9 +39,7 @@ export const getProfilesByName = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
 
-  const queryString = query
-    ? `?page=${page}&pageSize=3&name=${query?.name || ""}`
-    : "";
+  const queryString = `?page=${page}&pageSize=3&name=${query?.name || ""}`;
 
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);
@@ -66,8 +64,7 @@ export const getUserProfile = async (code: string) => {
 };
 
 // 프로필 생성
-export const postProfile = async (body: PostProfileQuery) => {
-  const token = localStorage.getItem("accessToken");
+export const postProfile = async (body: PostProfileQuery, token: string) => {
   try {
     const res = await instance.post(`/profiles`, body, {
       headers: {
@@ -84,10 +81,9 @@ export const postProfile = async (body: PostProfileQuery) => {
 // 프로필 수정 중 체크
 export const postProfilePing = async (
   body: PostProfilePingQuery,
-  code: string
+  code: string,
+  token: string
 ) => {
-  const token = localStorage.getItem("accessToken");
-
   const res = await instance.post(`/profiles/${code}/ping`, body, {
     headers: {
       Authorization: `Bearer ${token}`,

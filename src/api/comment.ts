@@ -35,9 +35,8 @@ export const getComment = async (query: GetCommentQuery) => {
 };
 
 // 댓글 등록
-export const postComment = async (query: PostCommentQuery) => {
+export const postComment = async (query: PostCommentQuery, token: string) => {
   const { articleId, body } = query;
-  const token = localStorage.getItem("accesToken");
 
   try {
     const res = await instance.post(`/articles/${articleId}/comments`, body, {
@@ -53,9 +52,8 @@ export const postComment = async (query: PostCommentQuery) => {
 };
 
 // 댓글 수정
-export const patchComment = async (query: PatchCommentQuery) => {
+export const patchComment = async (query: PatchCommentQuery, token: string) => {
   const { commentId, body } = query;
-  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.patch(`/comments/${commentId}`, body, {
@@ -71,9 +69,7 @@ export const patchComment = async (query: PatchCommentQuery) => {
 };
 
 // 댓글 삭제
-export const deleteComment = async (commentId: number) => {
-  const token = localStorage.getItem("accessToken");
-
+export const deleteComment = async (commentId: number, token: string) => {
   try {
     const res = await instance.delete(`/comments/${commentId}`, {
       headers: {

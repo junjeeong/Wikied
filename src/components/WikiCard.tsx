@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LinkSVG from "/public/icons/ic_link.svg";
+import Profile from "/public/icons/ic_profile.svg";
 
 interface Profile {
   id: number;
@@ -37,21 +38,16 @@ const WikiCard = ({ info }: WikiCardProps) => {
                 alt="profile image"
               />
             ) : (
-              <Image
-                src="/icons/ic_profile.svg"
-                layout="fill"
-                objectFit="cover"
-                alt="proflie image"
-              />
+              <Profile className="text-gray-300" />
             )}
           </div>
         </div>
       </section>
       <section className="flex justify-between align-middle w-full px-[24px] py-[24px] bg-gray-100">
         <span className="text-gray-400 text-md font-semibold truncate max-w-xs">
-          wikied.kr/{info.code}
+          wikied.kr/{info.name}
         </span>
-        <LinkSVG className="text-gray-400 font-semibold w-[40px]" />
+        <LinkSVG className="text-gray-400 w-[30px]" />
       </section>
     </div>
   );

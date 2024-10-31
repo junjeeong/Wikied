@@ -23,25 +23,30 @@
 
   html,
   body {
-    @apply max-w-full overflow-x-hidden;
-  }
-
-  body {
-    @apply text-gray-500 bg-background font-pretendard antialiased;
-  }
-
-  html,
-  body {
+    @apply max-w-full;
     -ms-overflow-style: none;
     /* IE와 Edge */
     scrollbar-width: none;
     /* Firefox */
   }
 
+  body {
+    @apply antialiased text-gray-500 bg-background font-pretendard;
+  }
+
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
     /* Chrome, Safari, Opera */
+  }
+
+  :root {
+    --toastify-color-info: #3498db;
+    --toastify-color-success: #4cbfa4;
+    --toastify-color-warning: #f1c40f;
+    --toastify-color-error: #d14343;
+    --toastify-toast-min-height: 50px;
+    --toastify-toast-offset: 0px;
   }
 }
 
