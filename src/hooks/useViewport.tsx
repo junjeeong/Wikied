@@ -19,13 +19,13 @@ function useViewport(initialWidth = 0) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isPc = width >= breakpoints.PC.min;
+  const isPC = width >= breakpoints.PC.min;
   const isTablet =
     width >= breakpoints.Tablet.min && width <= breakpoints.Tablet.max;
   const isMobile =
     width >= breakpoints.Mobile.min && width <= breakpoints.Mobile.max;
 
-  return { width, isPc, isTablet, isMobile };
+  return { width, isPC, isTablet, isMobile };
 }
 
 export default useViewport;
