@@ -1,13 +1,15 @@
 import { getArticles } from "@/api/article";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
-import BestBoards from "@/components/BestBoards";
-import TotalBoards from "@/containers/TotalBoards";
+import BestArticles from "@/components/BestArticles";
+import TotalArticlesContainer from "@/containers/TotalArticlesContainer";
 import { BoardsProps } from "@/types/types";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { keyword = "", order = "recent", page = 1 } = context.query;
+
   let bestArticles = [];
   let totalArticles = [];
   let totalCount = 0;
@@ -17,20 +19,22 @@ export const getServerSideProps: GetServerSideProps = async (
       page: 1,
       pageSize: 4,
       orderBy: "like",
+      keyword: "",
     });
-    bestArticles = bestResponse;
+    bestArticles = bestResponse.list;
   } catch (error) {
     console.error("Error fetching best articles:", error);
   }
 
   try {
-    const recentResponse = await getArticles({
-      page: 1,
+    const response = await getArticles({
+      page: Number(page),
       pageSize: 10,
-      orderBy: "recent",
+      orderBy: String(order),
+      keyword: String(keyword),
     });
-    totalArticles = recentResponse;
-    totalCount = recentResponse.data.totalCount;
+    totalArticles = response.list;
+    totalCount = response.totalCount;
   } catch (error) {
     console.error("Error fetching total articles:", error);
   }
@@ -51,8 +55,11 @@ const BoardsPage = ({
 }: BoardsProps) => {
   return (
     <BoardsLayout>
-      <BestBoards bestArticles={bestArticles} />
-      <TotalBoards totalArticles={totalArticles} totalCount={totalCount} />
+      <BestArticles bestArticles={bestArticles} />
+      <TotalArticlesContainer
+        totalArticles={totalArticles}
+        totalCount={totalCount}
+      />
     </BoardsLayout>
   );
 };
