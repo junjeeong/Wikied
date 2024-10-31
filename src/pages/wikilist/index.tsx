@@ -5,17 +5,7 @@ import { GetServerSideProps } from "next";
 import WikiListTitle from "@/components/WikiListTitle";
 import WikiCardList from "@/components/WikiCardList";
 import LoadingSpinner from "@/components/LoadingSpinner";
-
-interface Profile {
-  updatedAt: string;
-  job: string;
-  nationality: string;
-  city: string;
-  image: string;
-  code: string;
-  name: string;
-  id: number;
-}
+import { Profile } from "@/types/types";
 
 interface WikiListProps {
   initialList: Profile[];
@@ -24,7 +14,7 @@ interface WikiListProps {
 export const getServerSideProps: GetServerSideProps<
   WikiListProps
 > = async () => {
-  const res = await getProfiles({ pageSize: 12 });
+  const res = await getProfiles();
   return {
     props: {
       initialList: res,
