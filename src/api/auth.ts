@@ -22,7 +22,7 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 export const postSignIn = async (body: PostSignInQuery) => {
   const res = await instance.post(`/auth/signIn`, body);
   return res.data;
-}; // 예외처리를 AuthStore에서 하고, login page에서 메세지를 돌려받음
+}; 
 
 // 토큰 재갱신
 export const postRefreshToken = async (refreshToken: string) => {
