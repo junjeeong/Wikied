@@ -9,6 +9,7 @@ import ReactQuill, { ReactQuillProps } from "react-quill";
 import CountSpace from "@/components/AddBoardsCountSpace";
 import AddBordsTitle from "@/components/AddBoardsTitle";
 import AddBoardsRegisterSection from "@/components/AddBoardsRegisterSection";
+import { useRouter } from "next/router";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -26,17 +27,16 @@ const QuillNoSSRWrapper = dynamic(
   { ssr: false }
 );
 
-const AddBoardsEditor = ({
-}) => {
-  const [title, setTitle] = useState<string>(""); 
-  const [content, setContent] = useState<string>(""); 
+const AddBoardsEditor = ({}) => {
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [charCountWithSpaces, setCharCountWithSpaces] = useState<number>(0);
   const [charCountWithoutSpaces, setCharCountWithoutSpaces] =
     useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null); // 이미지 URL 상태
   const quillRef = useRef<ReactQuill | null>(null); // ReactQuill ref 타입 지정
-
+  const router = useRouter();
   const imageHandler = () => {
     setIsOpen(true);
   };
@@ -89,17 +89,26 @@ const AddBoardsEditor = ({
     return imgElement ? imgElement.getAttribute("src") : null;
   };
 
+  const stripContentHTML = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
+
   const defaultUrl = "https://example.com/...";
 
   const onSubmit = async () => {
     const extractedImageUrl = extractImageUrl(content) || defaultUrl;
     setImageUrl(extractedImageUrl);
+
+    const plainTextContent = stripContentHTML(content);
+
     const res = await postArticle({
       image: imageUrl || defaultUrl,
-      content: content,
+      content: plainTextContent,
       title: title,
     });
     console.log(res);
+    router.push("/boards");
   };
 
   const onClose = () => {

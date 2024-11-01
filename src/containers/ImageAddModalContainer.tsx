@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import Camera from "/public/icons/ic_camera.svg";
 import Image from "next/image";
 import { postImage } from "@/api/image";
-import ModalOverlay from "@/components/ui/Modal/ModalOverlay";
+import ModalOverlay from "@/components/ModalOverlay";
 
 interface ImageAddModalProps {
   isOpen:boolean;

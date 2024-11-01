@@ -1,3 +1,4 @@
+import useViewport from "@/hooks/useViewport";
 import FilledButton from "./ui/Button/FilledButton";
 import formatCurrentDate from "@/utils/formatCurrentDate";
 
@@ -11,6 +12,11 @@ const AddBoardsRegisterSection = ({
   onSubmit,
   isButtonDisabled,
 }: AddBonSubmitoardsRegisterSectionProps) => {
+
+const { isMobile } = useViewport();
+
+const buttonSize = isMobile ? "small" : "medium";
+
   return (
     <div className="flex flex-col gap-6 mb-[33px]">
       <div className="flex justify-between items-center">
@@ -21,6 +27,7 @@ const AddBoardsRegisterSection = ({
           type="button"
           onClick={onSubmit}
           disabled={isButtonDisabled}
+          size={buttonSize}
         >
           등록하기
         </FilledButton>

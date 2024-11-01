@@ -70,14 +70,17 @@
   border: 0 !important;
 }
 
+
+
 .ql-container.ql-snow .ql-editor {
-  padding-left: 0 
+  padding-left: 0;
+  max-height: 540px;
 }
 
 .ql-container.ql-snow .ql-editor.ql-blank::before {
   color: #c8cada;
   font-style: normal;
-  left: 0 !important;
+  left: 0;
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
