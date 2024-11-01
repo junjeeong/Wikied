@@ -3,23 +3,22 @@ import { getArticle } from "@/api/article";
 import { Article } from "@/types/types";
 import { useEffect, useState } from "react";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
-import ArticleComment from "@/components/ArticleComment";
-import ArticleDetail from "@/components/ArticleDetail";
+import ArticleDetailContainer from "@/containers/ArticleDetailContainer";
+import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
 
 const BoardsDetailPage = () => {
   const [article, setArticle] = useState<Article | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { id } = router.query;
+  const articleId = Number(id);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (typeof id !== "string") {
-        return { notFound: true };
-      }
+    if (!router.isReady) return;
 
+    const fetchData = async () => {
       try {
-        const res = await getArticle(Number(id));
+        const res = await getArticle(articleId);
         setArticle(res);
       } catch (error) {
         console.error("Failed to fetch article:", error);
@@ -29,7 +28,7 @@ const BoardsDetailPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [articleId, router.isReady]);
 
   if (isLoading) {
     return <div>로딩 중...</div>;
@@ -41,8 +40,8 @@ const BoardsDetailPage = () => {
 
   return (
     <BoardsLayout>
-      <ArticleDetail article={article} />
-      <ArticleComment />
+      <ArticleDetailContainer article={article} articleId={articleId} />
+      <ArticleCommentContainer articleId={articleId} />
     </BoardsLayout>
   );
 };

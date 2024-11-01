@@ -36,7 +36,7 @@ const OrderDropdown = ({ order, onChange }: OrderDropdownProps) => {
     };
   }, []);
 
-  const buttonText = order === "recent" ? "최신순" : "좋아요순";
+  const buttonText = order === "like" ? "좋아요순" : "최신순";
 
   return (
     <div className="relative w-fit" ref={dropdownRef}>
