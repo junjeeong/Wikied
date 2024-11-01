@@ -70,11 +70,9 @@
   border: 0 !important;
 }
 
-
-
 .ql-container.ql-snow .ql-editor {
   padding-left: 0;
-  max-height: 540px;
+  /* max-height: 540px; */
 }
 
 .ql-container.ql-snow .ql-editor.ql-blank::before {
