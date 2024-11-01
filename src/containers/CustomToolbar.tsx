@@ -1,5 +1,3 @@
-
-
 const CustomToolbar = () => (
   <div id="toolbar">
     <button type="button" className="ql-bold" aria-label="Bold"></button>
@@ -27,9 +25,13 @@ const CustomToolbar = () => (
       value="right"
       aria-label="Align Right"
     ></button>
-    <button type="button" className="ql-color"></button>
-    <button type="button" className="ql-background"></button>
-    <button type="button" className="ql-image" aria-label="Image"></button>
+    <button type="button" className="ql-color" aria-label="color"></button>
+    <button
+      type="button"
+      className="ql-background"
+      aria-label="background"
+    ></button>
+    <button type="button" className="ql-image" aria-label="image"></button>
   </div>
 );
 
