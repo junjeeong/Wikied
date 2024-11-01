@@ -1,6 +1,6 @@
 import OutlineButton from "@/components/ui/Button/OutlineButton";
 import { useRouter } from "next/router";
-import Editor from "@/containers/AddBoardsEditor";
+import AddBoardsEditor from "@/containers/AddBoardsEditor";
 
 const AddBoard = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const AddBoard = () => {
 
   return (
     <>
-      <Editor />
+      <AddBoardsEditor />
       <OutlineButton onClick={handleClick}>목록으로</OutlineButton>
     </>
   );

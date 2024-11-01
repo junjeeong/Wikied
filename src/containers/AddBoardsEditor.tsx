@@ -27,7 +27,7 @@ const QuillNoSSRWrapper = dynamic(
   { ssr: false }
 );
 
-const AddBoardsEditor = ({}) => {
+const AddBoardsEditor = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [charCountWithSpaces, setCharCountWithSpaces] = useState<number>(0);
