@@ -8,7 +8,9 @@ export interface Article {
     id: number;
     name: string;
   };
+  isLiked: boolean;
   likeCount: number;
+  content: string;
 }
 
 export interface Profile {
