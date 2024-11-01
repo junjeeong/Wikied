@@ -1,7 +1,7 @@
 import PaginationBar from "@/components/PaginationBar";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import OrderDropdown from "@/components/ui/Dropdown/OrderDropdown";
-import TotalArticles from "@/components/ui/TotalArticles";
+import TotalArticles from "@/components/TotalArticles";
 import { SearchInput } from "@/components/SearchInput";
 import { useRouter } from "next/router";
 import { useState } from "react";

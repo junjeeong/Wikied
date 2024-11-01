@@ -13,6 +13,8 @@ const PaginationBar = ({
   handlePageChange,
   isLoading,
 }: PaginationBarProps) => {
+
+  if (totalPage <=1) return null
   let startPage;
   let calNum;
 
