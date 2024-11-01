@@ -67,4 +67,20 @@
   .section-subtitle {
     @apply text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px];
   }
+
+  .ql-container {
+    box-sizing: border-box;
+    font-family: "Pretendard", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    height: 100%;
+    margin: 0px;
+    position: relative;
+  }
+  .ql-container.ql-snow {
+    border-style: none;
+    height: 500px;
+  }
+  .ql-editor {
+    font-size: 16px;
+  }
 }

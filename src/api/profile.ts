@@ -80,6 +80,17 @@ export const postProfile = async (body: PostProfileQuery) => {
 };
 
 // 프로필 수정 중 체크
+export const getProfilePing = async (code: string) => {
+  try {
+    const res = await instance.get(`/profiles/${code}/ping`);
+    return res;
+  } catch (err) {
+    console.error("프로필 핑 요청 중 에러 발생: ", err);
+    return;
+  }
+};
+
+// 프로필 수정 중 갱신
 export const postProfilePing = async (
   body: PostProfilePingQuery,
   code: string
