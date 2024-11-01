@@ -16,12 +16,14 @@ interface PostProfilePingQuery {
 }
 
 // 프로필 목록 조회
-export const getProfiles = async (query: GetProfilesQuery) => {
+export const getProfiles = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
   const pageSize = query?.pageSize || 10;
 
-  const queryString = `?page=${page}&pageSize=${pageSize}&name=${query?.name || ""}`;
+  const queryString = `?page=${page}&pageSize=${pageSize}&name=${
+    query?.name || ""
+  }`;
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);
 
@@ -37,7 +39,7 @@ export const getProfilesByName = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
 
-  const queryString = `?page=${page}&pageSize=3name=${query?.name || ""}`;
+  const queryString = `?page=${page}&pageSize=3&name=${query?.name || ""}`;
 
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);

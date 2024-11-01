@@ -8,7 +8,25 @@ export interface Article {
     id: number;
     name: string;
   };
+  isLiked: boolean;
   likeCount: number;
+  content: string;
+}
+
+export interface Profile {
+  id: number;
+  code: string;
+  name: string;
+  job: string;
+  city: string;
+  image: string;
+  nationality: string;
+  updatedAt: string;
+}
+
+export interface GetProfilesResponse {
+  list: Profile[];
+  totalCount: number;
 }
 
 export interface BoardsProps {
@@ -17,12 +35,16 @@ export interface BoardsProps {
   totalCount: number;
 }
 
-export interface TotalBoardsProps {
+export interface TotalArticlesContainerProps {
   totalArticles: Article[];
   totalCount: number;
 }
 
-export interface BestBoardsProps {
+export interface TotalArticlesProps {
+  totalArticles: Article[];
+}
+
+export interface BestArticlesProps {
   bestArticles: Article[];
 }
 

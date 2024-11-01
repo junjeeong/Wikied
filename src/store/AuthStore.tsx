@@ -49,7 +49,7 @@ interface AuthStore {
 
 const useAuthStore = create(
   persist<AuthStore>(
-    (set,get) => ({
+    (set, get) => ({
       user: null,
       accessToken: null,
       refreshToken: null,

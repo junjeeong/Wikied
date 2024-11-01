@@ -26,10 +26,6 @@ interface patchArticleProps {
   };
 }
 
-type deleteArticleProps = getArticleProps;
-type postArticleLikeProps = getArticleProps;
-type deleteArticleLikeProps = getArticleProps;
-
 // 게시글 등록
 export const postArticle = async (body: postArticleProps) => {
   try {
@@ -49,10 +45,10 @@ export const getArticles = async (query: getArticlesProps) => {
 
   try {
     const res = await instance.get(`/articles${queryString}`);
-    return res.data.list;
+    return res.data;
   } catch (err) {
     console.error("게시글 목록을 조회하는데 실패했습니다.", err);
-    return [];
+    return {};
   }
 };
 
@@ -92,7 +88,7 @@ export const patchArticle = async (query: patchArticleProps) => {
 };
 
 // 게시글 삭제
-export const deleteArticle = async (articleId: deleteArticleProps) => {
+export const deleteArticle = async (articleId: number) => {
   const token = localStorage.getItem("accessToken");
 
   try {
@@ -109,7 +105,7 @@ export const deleteArticle = async (articleId: deleteArticleProps) => {
 };
 
 // 게시글 좋아요 추가
-export const postArticleLike = async (articleId: postArticleLikeProps) => {
+export const postArticleLike = async (articleId: number) => {
   try {
     const res = await instance.post(`/articles/${articleId}/like`);
     return res.data;
@@ -120,7 +116,7 @@ export const postArticleLike = async (articleId: postArticleLikeProps) => {
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
+export const deleteArticleLike = async (articleId: number) => {
   const token = localStorage.getItem("accessToken");
 
   try {
