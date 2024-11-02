@@ -3,10 +3,17 @@ import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import useAuthStore from "@/store/AuthStore";
 import { UserProfile } from "@/types/types";
-import { getProfiles, getUserProfile } from "@/api/profile";
+import { getProfilePing, getProfiles, getUserProfile } from "@/api/profile";
 import ProfileCard from "@/components/ProfileCard";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import WikiProfileTitle from "@/components/WikiProfileTitle";
+import TextEditor from "@/components/TextEditor";
+import useViewport from "@/hooks/useViewport";
+import useNotify from "@/hooks/useNotify";
+import InfoIcon from "/public/icons/ic_info.svg";
+import QuizModalContainer from "@/containers/QuizModalContainer";
+import WikiContent from "@/components/WikiContent";
+import OutlineButton from "@/components/ui/Button/OutlineButton";
 
 interface WikiPageProps {
   initialProfile: UserProfile;
@@ -41,23 +48,66 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 
 const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user, isLoggedIn } = useAuthStore();
+  const { isMobile } = useViewport();
   const methods = useForm();
+  const notify = useNotify();
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [quizModalOpen, setQuizModalOpen] = useState<boolean>(false);
+  const [editStatus, setEditStatus] = useState<string>("idle");
+  const [registeredAt, setRegisteredAt] = useState<string>("");
 
   const myCode = user?.profile?.code;
   const isMe = isLoggedIn && myCode === userProfile.code;
 
-  const handleEdit = () => {
+  const closeQuizModal = () => {
+    setQuizModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleEdit = async () => {
     // 해당 위키 페이지가 수정 중인지 확인
+    const getPingData = await getProfilePing(code);
+    // status = 200 -> 누군가 편집 중
+    if (getPingData?.status === 200) {
+      // 누군가 수정중이라고 토스트와 함께 해당시간동안 위키참여하기 버튼 비활성화.
+      setEditStatus("buttonDisabled");
+      notify(
+        "다른 친구가 편집하고 있어요. 나중에 다시 시도해 주세요.",
+        "error"
+      );
+      setTimeout(() => {
+        setEditStatus("textVisible");
+      }, 2000);
+      setTimeout(() => {
+        setEditStatus("idle");
+      }, 5 * 60 * 1000); // 시간 계산 정확히 안한 상태
+    }
+    // status = 204 -> 편집 가능한 상태
+    else {
+      // 퀴즈 모달 띄우고 registeredAt을 리턴받는다.
+      setQuizModalOpen(true);
+      // 이후 5분(4분30초?) 간격으로 퀴즈 모달 계속 띄우면서 갱신
+      setIsEditing(true);
+    }
+    // console.log(getPingData);
+    // console.log(getPingData?.data);
+    // console.log(getPingData?.data.registeredAt);
+    // console.log(getPingData?.status);
     // getProfilePing(code);
 
     // postProfilePing(code);
-    setIsEditing(!isEditing);
   };
 
   const onSubmit = (data: any) => {
     // PATCH profile/{code} 로 유저 프로필 정보 수정
+    console.log(data);
+    setUserProfile(data);
+    console.log(userProfile);
   };
 
   const fetchUserProfile = useCallback(async () => {
@@ -76,45 +126,83 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="relative flex justify-center w-full h-full my-20"
+        className="relative flex justify-center w-full h-full mb-20"
       >
         <div
           className={`${
             isEditing ? "pr-[520px] w-[1640px]" : "pr-[400px] w-[1260px]"
           } relative flex flex-col gap-[15px] Mobile:gap-3 Tablet:px-[60px] Mobile:px-5 PC:mx-10`}
         >
-          {/* Profile title : 편집중에는 이름 + MD 에디터 */}
-          <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
-            <WikiProfileTitle name={userProfile.name} />
-            <div className="absolute top-0 right-0">
-              <FilledButton
-                onClick={handleEdit}
-                editing={isEditing}
-                type="button"
-                // size="small"  // 모바일에서만 small ※padding값이..?
-              >
-                위키 참여하기
-              </FilledButton>
+          {/* Profile title */}
+          {!isEditing && (
+            <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
+              <WikiProfileTitle name={userProfile.name} />
+              <div className="absolute top-0 right-0">
+                <FilledButton
+                  onClick={handleEdit}
+                  editing={isEditing}
+                  type="button"
+                  size={`${isMobile ? "small" : "medium"}`}
+                  disabled={editStatus === "buttonDisabled"}
+                >
+                  위키 참여하기
+                </FilledButton>
+              </div>
+
+              {editStatus !== "idle" && (
+                <div className="flex items-center gap-[15px] mt-4 px-[20px] py-[15px] text-gray-400">
+                  <InfoIcon className="w-5 h-5" />
+                  <p>앞 사람의 편집이 끝나면 위키참여가 가능합니다.</p>
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
           {/* Profile  Card */}
-          <div className="PC:absolute PC:top-[38px] PC:right-0">
+          {/* <div className="PC:absolute PC:top-[38px] PC:right-0 Tablet:mt-[107px] Mobile:mt-[70px]"> */}
+          <div className="PC:absolute PC:top-[38px] PC:right-0 Tablet:mt-[107px] Mobile:mt-[70px]">
             <ProfileCard
               userProfile={userProfile}
               isMe={isMe}
               isEditing={isEditing}
             />
+            {isEditing && (
+              <div className="PC:relative absolute Tablet:top-[35px] Mobile:top-[10px] Mobile:right-[20px] Tablet:right-[60px] flex gap-[10px] justify-end PC:mt-[33px]">
+                <OutlineButton
+                  type="button"
+                  size="small"
+                  onClick={handleCancel}
+                >
+                  취소
+                </OutlineButton>
+                <FilledButton type="submit" size="small">
+                  제출
+                </FilledButton>
+              </div>
+            )}
           </div>
 
           {/* Profile Content */}
-          <div className="h-[1000px] mt-[41px] Tablet:mt-[45px] Mobile:mt-7 border border-red-500"></div>
-        </div>
-
-        <div className="absolute bottom-[50px] right-[50px]">
-          {isEditing && <FilledButton type="submit">제출</FilledButton>}
+          {isEditing && (
+            <div className="mt-[40px] Tablet:mt-[10px] Mobile:mt-[15px]">
+              <TextEditor />
+            </div>
+          )}
+          {!isEditing && (
+            <div className="mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
+              <WikiContent content={userProfile.content} />
+            </div>
+          )}
         </div>
       </form>
+
+      <QuizModalContainer
+        isOpen={quizModalOpen}
+        onClose={closeQuizModal}
+        code={code}
+        isMe={isMe}
+        onSubmitSuccess={setRegisteredAt}
+      />
     </FormProvider>
   );
 };

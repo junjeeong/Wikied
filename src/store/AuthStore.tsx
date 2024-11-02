@@ -1,11 +1,27 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { postSignIn } from "@/api/auth";
-import { AxiosError } from "axios"; // AxiosError import
+import { postProfile } from "@/api/profile";
+import { AxiosError } from "axios";
 
 interface Profile {
-  id: number;
+  updatedAt: string;
+  securityQuestion: string;
+  teamId: string;
+  content: string;
+  nationality: string;
+  family: string;
+  bloodType: string;
+  nickname: string;
+  birthday: string;
+  sns: string;
+  job: string;
+  mbti: string;
+  city: string;
+  image: string;
   code: string;
+  name: string;
+  id: number;
 }
 
 interface User {
@@ -26,11 +42,15 @@ interface AuthStore {
   login: (email: string, password: string) => Promise<string | undefined>; //반환 타입 수정
   logout: () => void;
   setAccessToken: (token: string) => void; // Access Token을 업데이트하는 함수 추가
+  updateProfile: (
+    securityAnswer: string,
+    securityQuestion: string
+  ) => Promise<void>; // 프로필 업데이트 함수 추가
 }
 
 const useAuthStore = create(
   persist<AuthStore>(
-    (set) => ({
+    (set, get) => ({
       user: null,
       accessToken: null,
       refreshToken: null,
@@ -68,7 +88,29 @@ const useAuthStore = create(
         set({ accessToken: token });
         localStorage.setItem("accessToken", token);
       },
+      updateProfile: async (securityAnswer, securityQuestion) => {
+        const { user } = get();
+        if (user) {
+          // API를 통해 프로필 업데이트
+          const updatedProfileData = await postProfile({
+            securityAnswer,
+            securityQuestion,
+          });
+
+          // 프로필 업데이트 후 상태에 반영
+          set({
+            user: {
+              ...user,
+              profile: {
+                ...user.profile,
+                ...updatedProfileData,
+              },
+            },
+          });
+        }
+      },
     }),
+
     {
       name: "auto-storage",
     }
