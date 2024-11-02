@@ -1,10 +1,5 @@
 import instance from "./axios";
 
-interface GetCommentQuery {
-  articleId: number;
-  limit?: number;
-}
-
 interface PostCommentQuery {
   articleId: number;
   body: {
@@ -20,13 +15,9 @@ interface PatchCommentQuery {
 }
 
 // 게시글의 댓글 목록 조회
-export const getComment = async (query: GetCommentQuery) => {
-  const { articleId, limit = 3 } = query;
-
+export const getComments = async (articleId: number) => {
   try {
-    const res = await instance.get(
-      `/articles/${articleId}/comments?limit=${limit}`
-    );
+    const res = await instance.get(`/articles/${articleId}/comments?limit=7`);
     return res.data.list;
   } catch (err) {
     console.error("댓글 목록을 불러오지 못했습니다.", err);
@@ -37,7 +28,7 @@ export const getComment = async (query: GetCommentQuery) => {
 // 댓글 등록
 export const postComment = async (query: PostCommentQuery) => {
   const { articleId, body } = query;
-  const token = localStorage.getItem("accesToken");
+  const token = localStorage.getItem("accessToken");
 
   try {
     const res = await instance.post(`/articles/${articleId}/comments`, body, {

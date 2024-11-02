@@ -3,7 +3,6 @@ import { getArticle } from "@/api/article";
 import { Article } from "@/types/types";
 import { useEffect, useState } from "react";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
-import ArticleDetailContainer from "@/containers/ArticleDetailContainer";
 import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
 
 const BoardsDetailPage = () => {
@@ -40,7 +39,7 @@ const BoardsDetailPage = () => {
 
   return (
     <BoardsLayout>
-      <ArticleDetailContainer article={article} articleId={articleId} />
+      {/* <ArticleDetailContainer article={article} articleId={articleId} /> */}
       <ArticleCommentContainer articleId={articleId} />
     </BoardsLayout>
   );
