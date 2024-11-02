@@ -23,6 +23,7 @@ const QuizModalContainer = ({
   const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
 
+
   useEffect(() => {
     if (code && !isMe) {
       const getQuestion = async () => {
