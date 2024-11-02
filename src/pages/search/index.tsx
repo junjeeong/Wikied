@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { GetProfilesResponse } from "@/types/types";
 import PaginationBar from "@/components/PaginationBar";
 import SearchedWikiList from "@/components/SearchedWikiList";
-import { Profile } from "@/types/types";
 
 interface SearchPageProps extends GetProfilesResponse {
   q: string;
