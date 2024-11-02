@@ -1,25 +1,30 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getUserProfile, postProfilePing } from "@/api/profile";
 import { AxiosError } from "axios";
 import QuizModal from "@/components/QuizModal";
 import ModalOverlay from "@/components/ModalOverlay";
-import useAuthStore from "@/store/AuthStore";
 
 interface QuizModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
+  code: string;
+  onSubmitSuccess?:(registeredAt:string) => void;
+  isMe:boolean;
 }
 
-const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
+const QuizModalContainer = ({
+  isOpen,
+  onClose,
+  code,
+  onSubmitSuccess, //시간을 돌려줌
+  isMe,
+}: QuizModalContainerProps) => {
   const [question, setQuestion] = useState(""); //사용자 질문
   const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
-  const { user } = useAuthStore();
-
-  const code = user?.profile?.code;
 
   useEffect(() => {
-    if (code) {
+    if (code && !isMe) {
       const getQuestion = async () => {
         const res = await getUserProfile(code);
         setQuestion(res?.data.securityQuestion);
@@ -36,14 +41,14 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
   const handleSubmit = async () => {
     try {
       if (code) {
-        await postProfilePing(
-          {
-            securityAnswer: quizAnswer,
-          },
-          code
-        );
+        const res = await postProfilePing({ securityAnswer: quizAnswer }, code);
+
+        if (onSubmitSuccess) {
+          onSubmitSuccess(res.data.registeredAt)
+        }
+          // API 호출이 성공적으로 완료되면 모달을 닫음
+          onClose();
       }
-      console.log("수정가능"); //수정 페이지로 이동
     } catch (error) {
       if (error instanceof AxiosError) {
         setErrorMessage("정답이 아닙니다. 다시 시도해 주세요.");
@@ -52,6 +57,10 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
       }
     }
   };
+
+  if (isMe || !isOpen) {
+    return null
+  }
 
   return (
     <ModalOverlay isOpen={isOpen} onClose={onClose}>

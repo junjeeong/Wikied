@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 import ReactModule from "./ReactModule";
 import { useFormContext } from "react-hook-form";
-import { useRouter } from "next/router";
 import LoadingSpinner from "./LoadingSpinner";
 
 const ReactQuill = dynamic(() => import("react-quill"), {
@@ -11,14 +10,7 @@ const ReactQuill = dynamic(() => import("react-quill"), {
 });
 
 const TextEditor: React.FC = () => {
-  const {
-    setValue,
-    formState: { errors },
-  } = useFormContext();
-
-  const router = useRouter();
-  const currentPath = router.pathname;
-  const isBoardsPage = currentPath === "/boards";
+  const { setValue } = useFormContext();
 
   const formats: string[] = [
     "bold",
@@ -44,32 +36,30 @@ const TextEditor: React.FC = () => {
     () => ({
       toolbar: {
         container: "#toolBar",
-        handlers: {
-          // bold:
-        },
+        // handlers: {
+        //   bold: handleBold,
+        // },
       },
     }),
     []
   );
 
   return (
-    <div className="ql-container">
-      {!isBoardsPage && (
-        <div id="toolBar" className="rounded-[10px]">
-          <ReactModule />
-        </div>
-      )}
+    <div id="Quill">
+      <div
+        id="toolBar"
+        className="flex justify-center rounded-[10px] bg-gray-100 mb-[60px] Tablet:mb-10 Mobile:mb-[15px]"
+      >
+        <ReactModule />
+      </div>
+
       <ReactQuill
         onChange={handleChange}
         formats={formats}
         modules={modules}
-        className=""
+        className="min-h-[800px]"
+        placeholder="내용을 입력해주세요."
       />
-      {isBoardsPage && (
-        <div id="toolBar" className="rounded-[20px] ">
-          <ReactModule />
-        </div>
-      )}
     </div>
   );
 };

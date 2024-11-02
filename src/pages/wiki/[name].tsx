@@ -48,14 +48,16 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 
 const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user, isLoggedIn } = useAuthStore();
-  const methods = useForm();
   const { isMobile } = useViewport();
+  const methods = useForm();
   const notify = useNotify();
-  const [registeredAt, setRegisteredAt] = useState("");
-  const [editStatus, setEditStatus] = useState("idle");
-  const [quizModalOpen, setQuizModalOpen] = useState(false);
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [quizModalOpen, setQuizModalOpen] = useState<boolean>(false);
+  const [editStatus, setEditStatus] = useState<string>("idle");
+  const [registeredAt, setRegisteredAt] = useState<string>("");
+
   const myCode = user?.profile?.code;
   const isMe = isLoggedIn && myCode === userProfile.code;
 
@@ -124,67 +126,83 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="relative flex justify-center w-full h-full my-20"
+        className="relative flex justify-center w-full h-full mb-20"
       >
         <div
           className={`${
             isEditing ? "pr-[520px] w-[1640px]" : "pr-[400px] w-[1260px]"
           } relative flex flex-col gap-[15px] Mobile:gap-3 Tablet:px-[60px] Mobile:px-5 PC:mx-10`}
         >
-          {/* Profile title : 편집중에는 이름 + MD 에디터 */}
-          <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
-            <WikiProfileTitle name={userProfile.name} />
-            <div className="absolute top-0 right-0">
-              <FilledButton
-                onClick={handleEdit}
-                editing={isEditing}
-                type="button"
-                size={`${isMobile ? "small" : "medium"}`}
-                disabled={editStatus === "buttonDisabled"}
-              >
-                위키 참여하기
-              </FilledButton>
-            </div>
-
-            {editStatus !== "idle" && (
-              <div className="flex items-center gap-[15px] mt-4 px-[20px] py-[15px] text-gray-400">
-                <InfoIcon className="w-5 h-5" />
-                <p>앞 사람의 편집이 끝나면 위키참여가 가능합니다.</p>
+          {/* Profile title */}
+          {!isEditing && (
+            <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
+              <WikiProfileTitle name={userProfile.name} />
+              <div className="absolute top-0 right-0">
+                <FilledButton
+                  onClick={handleEdit}
+                  editing={isEditing}
+                  type="button"
+                  size={`${isMobile ? "small" : "medium"}`}
+                  disabled={editStatus === "buttonDisabled"}
+                >
+                  위키 참여하기
+                </FilledButton>
               </div>
-            )}
-          </div>
+
+              {editStatus !== "idle" && (
+                <div className="flex items-center gap-[15px] mt-4 px-[20px] py-[15px] text-gray-400">
+                  <InfoIcon className="w-5 h-5" />
+                  <p>앞 사람의 편집이 끝나면 위키참여가 가능합니다.</p>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Profile  Card */}
-          <div className="PC:absolute PC:top-[38px] PC:right-0">
+          {/* <div className="PC:absolute PC:top-[38px] PC:right-0 Tablet:mt-[107px] Mobile:mt-[70px]"> */}
+          <div className="PC:absolute PC:top-[38px] PC:right-0 Tablet:mt-[107px] Mobile:mt-[70px]">
             <ProfileCard
               userProfile={userProfile}
               isMe={isMe}
               isEditing={isEditing}
             />
+            {isEditing && (
+              <div className="PC:relative absolute Tablet:top-[35px] Mobile:top-[10px] Mobile:right-[20px] Tablet:right-[60px] flex gap-[10px] justify-end PC:mt-[33px]">
+                <OutlineButton
+                  type="button"
+                  size="small"
+                  onClick={handleCancel}
+                >
+                  취소
+                </OutlineButton>
+                <FilledButton type="submit" size="small">
+                  제출
+                </FilledButton>
+              </div>
+            )}
           </div>
 
           {/* Profile Content */}
-          <div className="mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
-            {isEditing ? (
-              <TextEditor />
-            ) : (
-              <WikiContent content={userProfile.content} />
-            )}
-          </div>
-        </div>
-
-        <div className="absolute bottom-[50px] right-[50px]">
           {isEditing && (
-            <>
-              <OutlineButton type="button" onClick={handleCancel}>
-                취소
-              </OutlineButton>
-              <FilledButton type="submit">제출</FilledButton>
-            </>
+            <div className="mt-[40px] Tablet:mt-[10px] Mobile:mt-[15px]">
+              <TextEditor />
+            </div>
+          )}
+          {!isEditing && (
+            <div className="mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
+              <WikiContent content={userProfile.content} />
+            </div>
           )}
         </div>
       </form>
-      <QuizModalContainer isOpen={quizModalOpen} onClose={closeQuizModal} />
+
+      <QuizModalContainer
+        isOpen={quizModalOpen}
+        onClose={closeQuizModal}
+        code={code}
+        isMe={isMe}
+        onSubmitSuccess={setRegisteredAt}
+      />
     </FormProvider>
   );
 };
