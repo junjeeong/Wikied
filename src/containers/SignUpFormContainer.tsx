@@ -37,7 +37,7 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-background">
+      <div className="flex items-center justify-center min-h-screen -mt-[80px] Mobile:px-5 bg-background">
         <div className="w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-[50px] text-center">
             회원가입
