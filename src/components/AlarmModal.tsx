@@ -21,12 +21,12 @@ const AlarmModal = ({
         onClick={() => setIsOpen(!isOpen)}
         className="relative cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden"
       />
-      <div>
+      {/* <div>
         <NotificationModalContainer
           isOpen={isOpen}
           onClose={() => setIsOpen(!isOpen)}
         />
-      </div>
+      </div> */}
     </>
   );
 };

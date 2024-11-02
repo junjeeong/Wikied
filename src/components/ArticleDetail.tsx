@@ -1,5 +1,6 @@
 import { Article } from "@/types/types";
 import Image from "next/image";
+import Heart from "/public/icons/ic_heart.svg";
 
 interface ArticleDetailContainerProps {
   article: Article;
@@ -33,11 +34,10 @@ const ArticleDetail = ({
           aria-label={article.isLiked ? "좋아요 취소" : "좋아요"}
           className="flex items-center gap-[2px] text-md"
         >
-          <Image
-            src={"/icons/ic_heart.svg"}
+          <Heart
+            style={{ fill: article.isLiked ? "red" : "gray" }}
             width={18}
             height={18}
-            alt="좋아요"
           />
           {article.likeCount}
         </button>
