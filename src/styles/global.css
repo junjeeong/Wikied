@@ -111,3 +111,28 @@
     @apply text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px];
   }
 }
+
+.quill .ql-container.ql-snow {
+  border: 0;
+}
+
+.ql-container.ql-snow .ql-editor {
+  padding-left: 0;
+  min-height: 540px;
+  font-size: 16px;
+  font-family:"Pretendard","NEXON";
+}
+
+.ql-container.ql-snow .ql-editor.ql-blank::before {
+  color: #c8cada;
+  font-style: normal;
+  left: 0;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.ql-toolbar.ql-snow {
+  border-radius: 21.5px;
+}
+

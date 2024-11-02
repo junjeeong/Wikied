@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { SearchInput } from "@/components/SearchInput";
 import Logo from "../Logo";
 import Navigation from "../Navigation";
