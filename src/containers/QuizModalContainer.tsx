@@ -48,10 +48,13 @@ const QuizModalContainer = ({
           onSubmitSuccess(res.data.registeredAt)
         }
           // API 호출이 성공적으로 완료되면 모달을 닫음
+          setQuizAnswer("")
+          setErrorMessage("");
           onClose();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
+        setQuizAnswer("");
         setErrorMessage("정답이 아닙니다. 다시 시도해 주세요.");
       } else {
         console.error(error);
