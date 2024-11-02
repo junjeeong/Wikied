@@ -7,13 +7,13 @@ import Link from "next/link";
 interface LoginFormContainerProps {
   onSubmit: (data: InputValues) => Promise<void>;
   submitError: string;
-  onChange: () => void;
+  onClearSubmitError: () => void;
 }
 
 const LoginFormContainer = ({
   onSubmit,
   submitError,
-  onChange,
+  onClearSubmitError,
 }: LoginFormContainerProps) => {
   const {
     register,
@@ -25,6 +25,12 @@ const LoginFormContainer = ({
 
   const handleFormSubmit = async (data: InputValues) => {
     await onSubmit(data);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
+    }
   };
 
   return (
@@ -47,7 +53,8 @@ const LoginFormContainer = ({
                 message: "이메일 형식으로 작성해 주세요.",
               },
             })}
-            onChange={onChange}
+            onError={onClearSubmitError}
+            onKeyDown={handleKeyDown} // 엔터 키를 체크하는 이벤트 추가
             error={errors.email}
           />
           <FormInput
@@ -62,7 +69,8 @@ const LoginFormContainer = ({
                 message: "8자 이상 작성해 주세요",
               },
             })}
-            onChange={onChange}
+            onError={onClearSubmitError}
+            onKeyDown={handleKeyDown} // 엔터 키를 체크하는 이벤트 추가
             error={errors.password}
             submitError={submitError}
           />

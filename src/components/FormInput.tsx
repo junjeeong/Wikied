@@ -8,7 +8,8 @@ interface FormInputProps {
   error?: FieldError;
   submitError?: string;
   register: UseFormRegisterReturn;
-  onChange?:() => void;
+  onError?: () => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const FormInput = ({
@@ -18,7 +19,7 @@ const FormInput = ({
   type = "text",
   error,
   register,
-  onChange,
+  onError,
   submitError,
 }: FormInputProps) => {
   return (
@@ -36,7 +37,7 @@ const FormInput = ({
         className={`w-full rounded-[10px] px-5 py-[10.5px] mb-[10px] bg-gray-100 placeholder:text-md placeholder:text-gray-400 ${
           error ? "outline-red-200" : "outline-green-200"
         }`}
-        onChange={onChange}
+        onError={onError}
       ></input>
       {error && (
         <span className="text-xs text-red-200" role="alert">

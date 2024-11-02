@@ -23,6 +23,13 @@ const QuizSettingsFormContainer = ({ onSubmit }: QuizSettingsFormProps) => {
  const handleFormSubmit = async (data: QuizSettingsFormValues) => {
    await onSubmit(data);
  };
+
+const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  if (event.key === "Enter") {
+    handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
+  }
+};
+
   return (
     <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-background">
       <div className="w-full max-w-md">
@@ -52,6 +59,7 @@ const QuizSettingsFormContainer = ({ onSubmit }: QuizSettingsFormProps) => {
             register={register("securityQuestion", {
               required: "질문을 입력해 주세요",
             })}
+            onKeyDown={handleKeyDown}
             error={errors.securityQuestion}
           />
           <FormInput
@@ -61,6 +69,7 @@ const QuizSettingsFormContainer = ({ onSubmit }: QuizSettingsFormProps) => {
             register={register("securityAnswer", {
               required: "답을 입력해주세요",
             })}
+            onKeyDown={handleKeyDown}
             error={errors.securityAnswer}
           />
           <div className="border-t-2 py-6">
