@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
 import ArticleDetailContainer from "@/containers/ArticleDetailContainer";
 import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const BoardsDetailPage = () => {
   const [article, setArticle] = useState<Article | null>(null);
@@ -30,19 +31,19 @@ const BoardsDetailPage = () => {
     fetchData();
   }, [articleId, router.isReady]);
 
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
   if (!article) {
     return <div>게시글을 찾을 수 없습니다.</div>;
   }
 
   return (
-    <BoardsLayout>
-      <ArticleDetailContainer article={article} articleId={articleId} />
-      <ArticleCommentContainer articleId={articleId} />
-    </BoardsLayout>
+    <>
+      {isLoading && <LoadingSpinner />}
+
+      <BoardsLayout>
+        <ArticleDetailContainer article={article} articleId={articleId} />
+        <ArticleCommentContainer articleId={articleId} />
+      </BoardsLayout>
+    </>
   );
 };
 

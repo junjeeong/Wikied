@@ -83,7 +83,7 @@ const BestArticles = ({ bestArticles }: BestArticlesProps) => {
       </ul>
 
       <div className="absolute top-0 right-0">
-        <Link href={"/"}>
+        <Link href={"/addboard"}>
           <FilledButton size={size}>게시글 등록하기</FilledButton>
         </Link>
       </div>

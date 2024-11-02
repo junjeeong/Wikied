@@ -12,6 +12,8 @@ import Link from "next/link";
 import { Article } from "@/types/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import AddBoardsEditor from "./AddBoardsEditor";
+import EditArticleModalOverlay from "@/components/EditArticleModalOverlay";
 
 interface ArticleDetailContainerProps {
   article: Article;
@@ -25,29 +27,27 @@ const ArticleDetailContainer = ({
   const router = useRouter();
   const [article, setArticle] = useState(initailArticle);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { user, isLoggedIn } = useAuthStore();
 
-  const myCode = user?.profile?.code;
-  const isMe = isLoggedIn && myCode === user?.profile?.code;
+  const myCode = user?.id;
+  const isMe = isLoggedIn && myCode === article?.writer?.id;
 
-  const handlePatchArticle = async () => {
-    try {
-      setIsUpdating(true);
-      const res = await patchArticle({
-        articleId,
-        body: {
-          image: "",
-          content: "",
-          title: "",
-        },
-      });
+  // const handlePatchArticle = async ({ articleId, body }: any) => {
+  //   try {
+  //     setIsUpdating(true);
+  //     const res = await patchArticle({ articleId, body });
 
-      setArticle(res);
-    } catch (error) {
-      console.error("Failed to update article:", error);
-    } finally {
-      setIsUpdating(false);
-    }
+  //     setArticle(res);
+  //   } catch (error) {
+  //     console.error("Failed to update article:", error);
+  //   } finally {
+  //     setIsUpdating(false);
+  //   }
+  // };
+
+  const handleOpenModal = () => {
+    setIsOpen(!isOpen);
   };
 
   const handleDeleteArticle = async () => {
@@ -92,9 +92,7 @@ const ArticleDetailContainer = ({
 
       {isMe && (
         <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
-          <FilledButton onClick={handlePatchArticle} disabled={isUpdating}>
-            수정하기
-          </FilledButton>
+          <FilledButton onClick={handleOpenModal}>수정하기</FilledButton>
           <FilledButton onClick={handleDeleteArticle} disabled={isUpdating}>
             삭제하기
           </FilledButton>
@@ -106,6 +104,10 @@ const ArticleDetailContainer = ({
           <OutlineButton size="large">목록으로</OutlineButton>
         </Link>
       </div>
+
+      <EditArticleModalOverlay isOpen={isOpen} onClose={handleOpenModal}>
+        <AddBoardsEditor article={article} articleId={articleId} />
+      </EditArticleModalOverlay>
     </div>
   );
 };
