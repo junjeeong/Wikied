@@ -47,15 +47,15 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 };
 
 const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
-  const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile);
-  const { user, isLoggedIn } = useAuthStore();
+  const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile); // 현재 위키의 유저 프로필 정보
+  const { user, isLoggedIn } = useAuthStore(); // 로그인 유무 및 내 위키 확인에 필요한 정보
   const { isMobile } = useViewport();
-  const methods = useForm();
+  const methods = useForm(); // 자식 컴포넌트에서 사용할 폼 메서드와 상태를 생성
   const notify = useNotify();
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false); // 사용자의 위키 편집 유무
   const [quizModalOpen, setQuizModalOpen] = useState<boolean>(false);
-  const [editStatus, setEditStatus] = useState<string>("idle");
+  const [editStatus, setEditStatus] = useState<string>("idle"); // 위키 편집 가능 여부
   const [registeredAt, setRegisteredAt] = useState<string>("");
 
   const myCode = user?.profile?.code;
@@ -134,6 +134,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
           } relative flex flex-col gap-[15px] Mobile:gap-3 Tablet:px-[60px] Mobile:px-5 PC:mx-10`}
         >
           {/* Profile title */}
+          {/* 편집 상태에서는 렌더링 제외 */}
           {!isEditing && (
             <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
               <WikiProfileTitle name={userProfile.name} />
