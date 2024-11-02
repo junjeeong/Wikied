@@ -32,6 +32,11 @@ const CustomToolbar = () => (
       aria-label="background"
     ></button>
     <button type="button" className="ql-image" aria-label="image"></button>
+    <button
+      type="button"
+      className="ql-clean"
+      aria-label="Clear Formatting"
+    ></button>
   </div>
 );
 
