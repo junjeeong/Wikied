@@ -65,14 +65,15 @@
   }
 }
 
-.ql-container.ql-snow {
-  min-height: 540px;
-  border: 0 !important;
+.quill .ql-container.ql-snow {
+  border: 0;
 }
 
 .ql-container.ql-snow .ql-editor {
   padding-left: 0;
-  /* max-height: 540px; */
+  min-height: 540px;
+  font-size: 16px;
+  font-family:"Pretendard","NEXON";
 }
 
 .ql-container.ql-snow .ql-editor.ql-blank::before {
@@ -82,5 +83,8 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
-  
+}
+
+.ql-toolbar.ql-snow {
+  border-radius: 21.5px;
 }

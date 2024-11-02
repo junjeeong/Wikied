@@ -14,7 +14,6 @@ import { ImageActions } from "@xeger/quill-image-actions";
 import { ImageFormats } from "@xeger/quill-image-formats";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
 
-
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
 }
@@ -24,7 +23,7 @@ interface ForwardedQuillComponent extends ReactQuillProps {
 const QuillNoSSRWrapper = dynamic(
   async () => {
     const { default: QuillComponent } = await import("react-quill");
-    QuillComponent.Quill.register("modules/imageActions", ImageActions); 
+    QuillComponent.Quill.register("modules/imageActions", ImageActions);
     QuillComponent.Quill.register("modules/imageFormats", ImageFormats);
     const Quill = ({ forwardedRef, ...props }: ForwardedQuillComponent) => (
       <QuillComponent ref={forwardedRef} {...props} />
@@ -45,7 +44,6 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
   const [charCountWithoutSpaces, setCharCountWithoutSpaces] =
     useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null); // 이미지 URL 상태
   const quillRef = useRef<ReactQuill | null>(null); // ReactQuill ref 타입 지정
   const router = useRouter();
 
@@ -105,26 +103,19 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
   const extractImageUrl = (contentHtml: string): string | null => {
     const doc = new DOMParser().parseFromString(contentHtml, "text/html");
     const imgElement = doc.querySelector("img");
+    console.log(imgElement);
     return imgElement ? imgElement.getAttribute("src") : null;
   };
 
-  //html로 작성된 문서에서 태그 제거하고 텍스트만 추출
-  const stripContentHTML = (html: string) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent || "";
-  };
-
-  const defaultUrl = "https://example.com/...";
+  const defaultUrl =
+    "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wikied/user/1429/1730515529281/empty_png"; //이미지 첨부 안 할때 첨부할 빈 이미지
 
   const onSubmit = async () => {
-    const extractedImageUrl = extractImageUrl(content) || defaultUrl;
-    setImageUrl(extractedImageUrl);
+    const imageUrl = extractImageUrl(content)
 
-    const plainTextContent = stripContentHTML(content);
-
-    await postArticle({
+    const res = await postArticle({
       image: imageUrl || defaultUrl,
-      content: plainTextContent,
+      content: content,
       title: title,
     });
     router.push("/boards");
@@ -149,10 +140,10 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
       }
       quillRef.current.focus(); // 에디터에 포커스
     }
-    setImageUrl(url); // 이미지 URL 상태 업데이트
-    setContent(quillRef.current?.getEditor().root.innerHTML || ""); // 삽입 후 content 업데이트
     setIsOpen(false); // 모달 닫기
   };
+
+  //  dangerouslySetInnerHTML={{ __html: article.content }} 보여주는 곳에서 사용하면 에디터에 쓴 그대로 보여짐
 
   return (
     <div className="flex flex-col items-center justify-center gap-[23px] min-h-screen bg-background Tablet:px-[60px] Mobile:px-5">
