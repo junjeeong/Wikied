@@ -76,7 +76,7 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
           <span className="text-2lg font-semibold">이미지</span>
           <label
             htmlFor="image"
-            className="flex rounded-[10px] bg-gray-100 w-[354px] h-[160px] relative Mobile:w-[338px] Mobile:h-[278px]"
+            className="flex rounded-[10px] text-gray-300 bg-gray-100 w-[354px] h-[160px] relative Mobile:w-[240px] Mobile:h-[160px]"
           >
             {preview ? (
               <Image
@@ -90,7 +90,7 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
               <Camera
                 width={36}
                 height={36}
-                className="absolute top-[62px] left-[159px]"
+                className="absolute top-[62px] left-[159px] Mobile:left-[102px]"
               />
             )}
           </label>
