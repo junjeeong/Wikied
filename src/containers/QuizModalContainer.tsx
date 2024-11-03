@@ -8,7 +8,7 @@ interface QuizModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
   code: string;
-  onSubmitSueccess?: (quizAnswer: string, registerdAt: string) => void;
+  onSubmitSuccess?: (quizAnswer: string, registerdAt: string) => void;
 
 }
 
@@ -16,7 +16,7 @@ const QuizModalContainer = ({
   isOpen,
   onClose,
   code,
-  onSubmitSueccess,
+  onSubmitSuccess,
 }: QuizModalContainerProps) => {
   const [question, setQuestion] = useState(""); //사용자 질문
   const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
@@ -45,7 +45,7 @@ const QuizModalContainer = ({
         const registeredAt = res?.data?.registeredAt;
        
         if (onSubmitSueccess) {
-          onSubmitSueccess(quizAnswer, registeredAt);
+          onSubmitSuccess(quizAnswer, registeredAt);
         }
         setErrorMessage("");
         onClose();
