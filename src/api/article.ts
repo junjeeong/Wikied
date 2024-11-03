@@ -6,10 +6,6 @@ interface postArticleProps {
   title: string;
 }
 
-interface getArticleProps {
-  articleId: number;
-}
-
 interface getArticlesProps {
   page: number;
   pageSize: number;
@@ -54,14 +50,8 @@ export const getArticles = async (query: getArticlesProps) => {
 
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
-  const token = localStorage.getItem("accessToken");
-
   try {
-    const res = await instance.get(`/articles/${articleId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await instance.get("/api/article", articleId);
     return res.data;
   } catch (err) {
     console.error("게시글 상세 조회에 실패했습니다.", err);
