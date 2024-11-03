@@ -3,7 +3,7 @@ import "react-quill/dist/quill.snow.css";
 import CustomToolbar from "@/components/CustomToolbar";
 import { useState, useRef, useMemo } from "react";
 import { stripHTML, calculateCharCount } from "@/utils/calculatedCharCount";
-import { postArticle } from "@/api/article";
+import { patchArticle, postArticle } from "@/api/article";
 import ImageAddModalContainer from "./ImageAddModalContainer";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import CountSpace from "@/components/AddBoardsCountSpace";
@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { ImageActions } from "@xeger/quill-image-actions";
 import { ImageFormats } from "@xeger/quill-image-formats";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
+import { Article, PatchArticleProps } from "@/types/types";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -34,12 +35,18 @@ const QuillNoSSRWrapper = dynamic(
 );
 
 interface AddBoardsEditorProps {
-  addPage?: boolean;
+  article?: Article | null;
+  articleId?: number;
+  onUpdate?: ({ articleId, body }: PatchArticleProps) => void;
 }
 
-const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+const AddBoardsEditor = ({
+  article = null,
+  articleId = 0,
+  onUpdate,
+}: AddBoardsEditorProps) => {
+  const [title, setTitle] = useState<string>(article?.title || "");
+  const [content, setContent] = useState<string>(article?.content || "");
   const [charCountWithSpaces, setCharCountWithSpaces] = useState<number>(0);
   const [charCountWithoutSpaces, setCharCountWithoutSpaces] =
     useState<number>(0);
@@ -111,7 +118,7 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
     "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wikied/user/1429/1730515529281/empty_png"; //이미지 첨부 안 할때 첨부할 빈 이미지
 
   const onSubmit = async () => {
-    const imageUrl = extractImageUrl(content)
+    const imageUrl = extractImageUrl(content);
 
     const res = await postArticle({
       image: imageUrl || defaultUrl,
@@ -119,6 +126,21 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
       title: title,
     });
     router.push("/boards");
+  };
+
+  const handleUpdateArticle = () => {
+    const imageUrl = extractImageUrl(content);
+
+    if (onUpdate) {
+      onUpdate({
+        articleId,
+        body: {
+          image: imageUrl || defaultUrl,
+          content: content,
+          title: title,
+        },
+      });
+    }
   };
 
   const onClose = () => {
@@ -146,11 +168,17 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
   //  dangerouslySetInnerHTML={{ __html: article.content }} 보여주는 곳에서 사용하면 에디터에 쓴 그대로 보여짐
 
   return (
-    <div className="flex flex-col items-center justify-center gap-[23px] min-h-screen bg-background Tablet:px-[60px] Mobile:px-5">
+    <div
+      className={`flex flex-col items-center justify-center gap-[23px]  bg-background ${
+        articleId ? "" : "min-h-screen Tablet:px-[60px] Mobile:px-5"
+      }`}
+    >
       <div className="w-full max-w-[1060px] min-h-[846px] px-[30px] pt-[46px] pb-[40px] shadow-[0_4px_20px_#00000014]">
         <AddBoardsRegisterSection
           onSubmit={onSubmit}
+          onUpdateArticle={handleUpdateArticle}
           isButtonDisabled={isButtonDisabled}
+          articleId={articleId}
         />
         <AddBordsTitle title={title} onChange={handleTitleChange} />
         <CountSpace
@@ -173,7 +201,9 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
           onImageUpload={onImageUpload}
         />
       </div>
-      {addPage && <OutlineButton onClick={handleClick}>목록으로</OutlineButton>}
+      {articleId === 0 && (
+        <OutlineButton onClick={handleClick}>목록으로</OutlineButton>
+      )}
     </div>
   );
 };

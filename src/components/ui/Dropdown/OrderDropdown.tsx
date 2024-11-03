@@ -39,9 +39,9 @@ const OrderDropdown = ({ order, onChange }: OrderDropdownProps) => {
   const buttonText = order === "like" ? "좋아요순" : "최신순";
 
   return (
-    <div className="relative w-fit" ref={dropdownRef}>
+    <div className="relative w-fit " ref={dropdownRef}>
       <button
-        className="flex justify-between items-center bg-gray-100 w-[140px] py-[14px] px-[20px] rounded-[10px] text-gray-500 text-md font-normal"
+        className="flex justify-between items-center bg-gray-100 w-[140px] py-[14px] px-[20px] rounded-[10px] text-gray-500 text-md font-normal Mobile:w-[335px]"
         onClick={handleToggle}
         type="button"
       >
@@ -54,9 +54,9 @@ const OrderDropdown = ({ order, onChange }: OrderDropdownProps) => {
         />
       </button>
       {isOpen && (
-        <ul className="flex flex-col w-[140px] whitespace-nowrap rounded-[10px] text-gray-500 text-md font-normal bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[60px] z-10">
+        <ul className="flex flex-col w-[140px] whitespace-nowrap rounded-[10px] text-gray-500 text-md font-normal bg-gray-50 shadow-[0_4px_20px_#00000014] absolute top-[60px] z-10 Mobile:w-[335px]">
           <li
-            className="flex justify-center py-[14px] px-[20px] cursor-pointer transition-transform transform hover:scale-110"
+            className="flex justify-center py-[14px] px-[20px] cursor-pointer transition-transform transform hover:scale-110 "
             onClick={() => handleMenuClick("recent")}
           >
             최신순

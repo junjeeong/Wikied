@@ -3,8 +3,9 @@ import { getArticle } from "@/api/article";
 import { Article } from "@/types/types";
 import { useEffect, useState } from "react";
 import BoardsLayout from "@/components/Layout/BoardsLayout";
-import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
+import ArticleDetailContainer from "@/containers/ArticleDetailContainer";
 
 const BoardsDetailPage = () => {
   const [article, setArticle] = useState<Article | null>(null);
