@@ -123,6 +123,20 @@
   font-family:"Pretendard","NEXON";
 }
 
+/* editor 영역: placeholder랑 text 크기 동일하게 맞춤 */
+.ql-container.ql-snow .ql-editor {
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+/* placeholder영역 */
+.ql-container.ql-snow .ql-editor.ql-blank {
+   padding-top: 10px;
+}
+
+/* placeholder text style */
 .ql-container.ql-snow .ql-editor.ql-blank::before {
   color: #c8cada;
   font-style: normal;
@@ -130,7 +144,9 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
+  
 }
+
 
 .ql-toolbar.ql-snow {
   border-radius: 21.5px;

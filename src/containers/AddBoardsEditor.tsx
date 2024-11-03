@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import CustomToolbar from "@/components/CustomToolbar";
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo,useEffect } from "react";
 import { stripHTML, calculateCharCount } from "@/utils/calculatedCharCount";
 import { postArticle } from "@/api/article";
 import ImageAddModalContainer from "./ImageAddModalContainer";
@@ -111,9 +111,9 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
     "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Wikied/user/1429/1730515529281/empty_png"; //이미지 첨부 안 할때 첨부할 빈 이미지
 
   const onSubmit = async () => {
-    const imageUrl = extractImageUrl(content)
+    const imageUrl = extractImageUrl(content);
 
-    const res = await postArticle({
+    await postArticle({
       image: imageUrl || defaultUrl,
       content: content,
       title: title,
@@ -134,7 +134,10 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
       const editor = quillRef.current.getEditor();
       const range = editor.getSelection(); // 현재 커서 위치 가져오기
 
-      editor.insertEmbed(range?.index || 0, "image", url); // 에디터에 이미지 삽입
+      // range 값이 없으면 문서 끝에 이미지를 추가
+      const insertIndex = range ? range.index : editor.getLength();
+
+      editor.insertEmbed(insertIndex, "image", url); // 이미지 삽입
       if (range) {
         editor.setSelection(range.index + 2, 0); // 커서를 이미지 다음 위치로 이동
       }
@@ -142,8 +145,6 @@ const AddBoardsEditor = ({ addPage = true }: AddBoardsEditorProps) => {
     }
     setIsOpen(false); // 모달 닫기
   };
-
-  //  dangerouslySetInnerHTML={{ __html: article.content }} 보여주는 곳에서 사용하면 에디터에 쓴 그대로 보여짐
 
   return (
     <div className="flex flex-col items-center justify-center gap-[23px] min-h-screen bg-background Tablet:px-[60px] Mobile:px-5">

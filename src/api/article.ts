@@ -28,8 +28,13 @@ interface patchArticleProps {
 
 // 게시글 등록
 export const postArticle = async (body: postArticleProps) => {
+  const token = localStorage.getItem("accessToken");
   try {
-    const res = await instance.post(`/articles`, body);
+    const res = await instance.post(`/articles`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (err) {
     console.error("게시글 등록에 조회하는데 실패했습니다.", err);
