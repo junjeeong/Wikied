@@ -8,7 +8,8 @@ interface QuizModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
   code: string;
-  onSubmitSueccess?: (quizAnswer: string) => void;
+  onSubmitSueccess?: (quizAnswer: string, registerdAt: string) => void;
+
 }
 
 const QuizModalContainer = ({
@@ -39,10 +40,12 @@ const QuizModalContainer = ({
   const handleSubmit = async () => {
     try {
       if (code) {
-        await postProfilePing({ securityAnswer: quizAnswer }, code);
-
+        const res = await postProfilePing({ securityAnswer: quizAnswer }, code);
+       
+        const registeredAt = res?.data?.registeredAt;
+       
         if (onSubmitSueccess) {
-          onSubmitSueccess(quizAnswer);
+          onSubmitSueccess(quizAnswer, registeredAt);
         }
         setErrorMessage("");
         onClose();
