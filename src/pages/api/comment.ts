@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "PATCH":
       // 댓글 등록 로직
-      const { commentId: patchCommentId } = req.body;
+      const { id: patchCommentId } = req.body;
       if (!patchCommentId)
         if (!patchCommentId) {
           return res
@@ -54,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
     case "DELETE":
-      const { commentId: deleteCommentId } = req.body;
+      const { id: deleteCommentId } = req.body;
       if (!deleteCommentId) {
         return res.status(400).json({ message: "삭제할 댓글 ID가 없습니다." });
       }
