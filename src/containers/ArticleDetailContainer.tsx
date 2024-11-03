@@ -14,6 +14,9 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import AddBoardsEditor from "./AddBoardsEditor";
 import EditArticleModalOverlay from "@/components/EditArticleModalOverlay";
+import useViewport from "@/hooks/useViewport";
+import Edit from "/public/icons/ic_edit.svg";
+import Delete from "/public/icons/ic_delete.svg";
 
 interface ArticleDetailContainerProps {
   article: Article;
@@ -29,9 +32,12 @@ const ArticleDetailContainer = ({
   const [isUpdating, setIsUpdating] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoggedIn } = useAuthStore();
+  const { isMobile } = useViewport();
 
   const myCode = user?.id;
   const isMe = isLoggedIn && myCode === article?.writer?.id;
+
+  const buttonSize = isMobile ? "medium" : "large";
 
   const handlePatchArticle = async ({ articleId, body }: PatchArticleProps) => {
     try {
@@ -91,18 +97,23 @@ const ArticleDetailContainer = ({
         onDeleteLike={handleDeleteLike}
       />
 
-      {isMe && (
+      {isMe && !isMobile ? (
         <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
           <FilledButton onClick={handleOpenModal}>수정하기</FilledButton>
           <FilledButton onClick={handleDeleteArticle} disabled={isUpdating}>
             삭제하기
           </FilledButton>
         </div>
+      ) : (
+        <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
+          <Edit onClick={handleOpenModal} className="cursor-pointer" />
+          <Delete onClick={handleDeleteArticle} className="cursor-pointer" />
+        </div>
       )}
 
       <div className="mt-[60px] flex justify-center">
         <Link href={"/boards"}>
-          <OutlineButton size="large">목록으로</OutlineButton>
+          <OutlineButton size={buttonSize}>목록으로</OutlineButton>
         </Link>
       </div>
 

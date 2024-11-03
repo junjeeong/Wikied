@@ -19,7 +19,7 @@ const ArticleDetail = ({
 
   return (
     <div className="mt-[60px] py-[40px] px-[30px] shadow-[0_4px_20px_#00000014]">
-      <strong className="flex text-gray-500 text-3xl font-semibold">
+      <strong className="flex text-gray-500 text-3xl font-semibold Mobile:text-2xl">
         {article.title}
       </strong>
       <div className="mt-[30px] flex justify-between text-gray-400 text-md">

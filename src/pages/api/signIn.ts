@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { serialize } from "cookie";
+import { serialize } from "cookie"; // cookie.serialize 대신 import
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
