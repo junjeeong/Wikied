@@ -78,3 +78,13 @@ export interface UserProfile {
   updatedAt: string;
   name: string;
 }
+
+export interface User {
+  id: number;
+  email: string;
+  name: string;
+  teamId: string;
+  updatedAt: string;
+  createdAt: string;
+  profile: UserProfile | null;
+}
