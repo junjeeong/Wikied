@@ -78,3 +78,12 @@ export interface UserProfile {
   updatedAt: string;
   name: string;
 }
+
+export interface PatchArticleProps {
+  articleId: number;
+  body: {
+    image: string;
+    content: string;
+    title: string;
+  };
+}

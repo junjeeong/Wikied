@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
-import CloseBtn from "/public/icons/ic_close.svg";
+import { ReactNode, useEffect } from "react";
+import FilledButton from "./ui/Button/FilledButton";
+import useViewport from "@/hooks/useViewport";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,23 +9,36 @@ interface ModalProps {
 }
 
 const EditArticleModalOverlay = ({ isOpen, onClose, children }: ModalProps) => {
+  const { isMobile } = useViewport();
+  const buttonSize = isMobile ? "small" : "medium";
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <>
       <div
         className={
-          "flex justify-center items-center fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-30 z-[100]"
+          "flex justify-center items-center fixed top-0 left-0 right-0 bottom-0  bg-gray-500 bg-opacity-30 z-[100]"
         }
       >
-        <div className="bg-background rounded-[10px] w-[1200px] Tablet:w-[800px] Mobile:w-[500px] px-5 py-5 relative z-20">
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute top-5 right-5 bg-cover w-5 h-5"
-          >
-            <CloseBtn className="text-gray-400" />
-          </button>
+        <div className="bg-background rounded-[10px] w-[1060px] max-h-[90%] overflow-y-auto relative z-20 Tablet:w-[800px] Mobile:w-[500px]">
+          <div className="absolute top-[46px] right-[170px] Tablet:right-[170px] Mobile:right-[125px]">
+            <FilledButton onClick={onClose} size={buttonSize}>
+              돌아가기
+            </FilledButton>
+          </div>
           {children}
         </div>
       </div>
@@ -33,3 +47,5 @@ const EditArticleModalOverlay = ({ isOpen, onClose, children }: ModalProps) => {
 };
 
 export default EditArticleModalOverlay;
+
+// max-w-[1060px] min-h-[846px]  Mobile:w-[500px] Tablet:w-[800px]

@@ -13,9 +13,10 @@ const TotalArticlesContainer = ({
   totalCount,
 }: TotalArticlesContainerProps) => {
   const [inputValue, setInputValue] = useState("");
-  // const [isLoading, setIsLoading] = useState(false); 로딩 처리를 인덱스에서 해야함
-  const totalPage = Math.ceil(totalCount / 10);
   const router = useRouter();
+
+  const totalPage = Math.ceil(totalCount / 10);
+  const currentPage = router.query.page ? Number(router.query.page) : 1;
 
   const { isPC } = useViewport();
   const size = isPC ? "medium" : "small";
@@ -78,7 +79,7 @@ const TotalArticlesContainer = ({
       <div className="my-[60px] flex justify-center">
         <PaginationBar
           totalPage={totalPage}
-          currentPage={Number(router.query.page)}
+          currentPage={currentPage}
           handlePageChange={handlePageChange}
           isLoading={false}
         />

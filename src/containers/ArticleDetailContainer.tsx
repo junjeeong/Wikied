@@ -9,7 +9,7 @@ import FilledButton from "@/components/ui/Button/FilledButton";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
 import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
-import { Article } from "@/types/types";
+import { Article, PatchArticleProps } from "@/types/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import AddBoardsEditor from "./AddBoardsEditor";
@@ -33,18 +33,19 @@ const ArticleDetailContainer = ({
   const myCode = user?.id;
   const isMe = isLoggedIn && myCode === article?.writer?.id;
 
-  // const handlePatchArticle = async ({ articleId, body }: any) => {
-  //   try {
-  //     setIsUpdating(true);
-  //     const res = await patchArticle({ articleId, body });
+  const handlePatchArticle = async ({ articleId, body }: PatchArticleProps) => {
+    try {
+      setIsUpdating(true);
+      const res = await patchArticle({ articleId, body });
 
-  //     setArticle(res);
-  //   } catch (error) {
-  //     console.error("Failed to update article:", error);
-  //   } finally {
-  //     setIsUpdating(false);
-  //   }
-  // };
+      setArticle(res);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Failed to update article:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const handleOpenModal = () => {
     setIsOpen(!isOpen);
@@ -106,7 +107,11 @@ const ArticleDetailContainer = ({
       </div>
 
       <EditArticleModalOverlay isOpen={isOpen} onClose={handleOpenModal}>
-        <AddBoardsEditor article={article} articleId={articleId} />
+        <AddBoardsEditor
+          article={article}
+          articleId={articleId}
+          onUpdate={handlePatchArticle}
+        />
       </EditArticleModalOverlay>
     </div>
   );

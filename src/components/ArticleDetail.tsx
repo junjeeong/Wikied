@@ -42,17 +42,10 @@ const ArticleDetail = ({
           {article.likeCount}
         </button>
       </div>
-      <div className="relative mt-[38px] w-[500px] h-[300px]">
-        <Image
-          src={article.image ?? "/icons/ic_image.svg"}
-          fill
-          style={{ objectFit: "cover" }}
-          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
-          priority
-          alt={article.title}
-        />
-      </div>
-      <p className="mt-[20px] text-gray-500 text-lg">{article.content}</p>
+      <div
+        className="mt-[20px] text-gray-500 text-lg"
+        dangerouslySetInnerHTML={{ __html: article.content }}
+      />
     </div>
   );
 };
