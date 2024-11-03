@@ -31,6 +31,7 @@ const useNotify = () => {
         autoClose: 2000,
         closeButton: false,
         pauseOnHover: false,
+        hideProgressBar: true,
         draggable: true,
         closeOnClick: true,
         bodyClassName: "font-pretendard text-md font-semibold p-0 m-0",

@@ -45,12 +45,14 @@ const ProfileInput = ({
       >
         {label}
       </label>
+
       {isMe && isEditing ? (
         <input
           className="PC:w-60 w-full h-[45px] rounded-[10px] px-5 py-[10.5px] bg-gray-100 focus:outline-none focus:bg-gray-200 Mobile:h-[34px] Mobile:px-4 Mobile:py-2"
           id={Id}
           type="text"
           placeholder="정보를 입력해 주세요"
+          defaultValue={inputValue}
           {...register(Id)}
           onKeyDown={handlekeyDown}
           autoComplete="off"

@@ -50,52 +50,6 @@
     --toastify-toast-min-height: 50px;
     --toastify-toast-offset: 0px;
   }
-
-  #toolBar {
-    border: none;
-    padding: 16px;
-    font-family: "Pretendard", Helvetica, Arial, sans-serif;
-
-    scrollbar-width: none;
-  }
-  #toolBar .ql-formats {
-    margin: 0px;
-  }
-  #toolBar button {
-    width: 28px;
-    height: 28px;
-    padding: 2px;
-    opacity: 0.5;
-  }
-  #toolBar button:hover,
-  #toolBar button.ql-active {
-    background: #e4e5f0;
-    border-radius: 5px;
-    opacity: 1;
-  }
-  #toolBar .ql-separator {
-    display: inline-block;
-    width: 2px;
-    height: 20px;
-    background-color: #e4e5f0;
-  }
-  #toolBar .ql-header {
-    width: 80.36px;
-    font-size: 16px;
-    color: #00000060;
-    font-weight: 600;
-  }
-
-  /* 이 아래는 적용이 안되는 스타일 */
-  .quill .ql-container.ql-snow {
-    border: 0;
-    height: 540px;
-  }
-
-  .ql-container.ql-snow.ql-editor {
-    border-style: none;
-    font-size: 16px;
-  }
 }
 
 @layer components {
@@ -112,6 +66,42 @@
   }
 }
 
+#toolBar {
+  border: none;
+  padding: 16px;
+  font-family: "Pretendard", Helvetica, Arial, sans-serif;
+  scrollbar-width: none;
+}
+#toolBar .ql-formats {
+  margin: 0px;
+}
+#toolBar button {
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  opacity: 0.5;
+}
+#toolBar button:hover,
+#toolBar button.ql-active {
+  background: #e4e5f0;
+  border-radius: 5px;
+  opacity: 1;
+}
+#toolBar .ql-separator {
+  display: inline-block;
+  width: 2px;
+  height: 20px;
+  background-color: #e4e5f0;
+}
+#toolBar .ql-header {
+  width: 80.36px;
+  font-size: 16px;
+  color: #00000060;
+  font-weight: 600;
+}
+.ql-toolbar.ql-snow .ql-header.ql-picker.ql-expanded .ql-picker-label {
+  border: none;
+}
 .quill .ql-container.ql-snow {
   border: 0;
 }
@@ -120,7 +110,7 @@
   padding-left: 0;
   min-height: 540px;
   font-size: 16px;
-  font-family:"Pretendard","NEXON";
+  font-family: "Pretendard", "NEXON";
 }
 
 /* editor 영역: placeholder랑 text 크기 동일하게 맞춤 */
@@ -151,4 +141,3 @@
 .ql-toolbar.ql-snow {
   border-radius: 21.5px;
 }
-
