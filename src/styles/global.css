@@ -106,24 +106,20 @@
   border: 0;
 }
 
-.ql-container.ql-snow .ql-editor {
-  padding-left: 0;
-  min-height: 540px;
-  font-size: 16px;
-  font-family: "Pretendard", "NEXON";
-}
-
 /* editor 영역: placeholder랑 text 크기 동일하게 맞춤 */
 .ql-container.ql-snow .ql-editor {
+  padding: 0;
+  height: 800px;
   padding-top: 10px;
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
+  font-family: "Pretendard", "NEXON";
 }
 
 /* placeholder영역 */
 .ql-container.ql-snow .ql-editor.ql-blank {
-   padding-top: 10px;
+  padding-top: 10px;
 }
 
 /* placeholder text style */
@@ -134,10 +130,24 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
-  
 }
-
 
 .ql-toolbar.ql-snow {
   border-radius: 21.5px;
+}
+
+@media (max-width: 767px) {
+  .ql-container.ql-snow .ql-editor {
+    height: 600px;
+  }
+
+  .ql-container.ql-snow .ql-editor {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .ql-container.ql-snow .ql-editor.ql-blank::before {
+    font-size: 16px;
+    line-height: 26px;
+  }
 }

@@ -1,7 +1,7 @@
 const CustomToolbar = () => (
   <div id="toolbar">
     <div className="flex justify-between">
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         <div className="flex gap-1">
           <button
             type="button"

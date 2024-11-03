@@ -7,9 +7,6 @@ const AddBoard = () => {
   return (
     <>
       <AddBoardsEditor />
-      
-    
-     
     </>
   );
 };
