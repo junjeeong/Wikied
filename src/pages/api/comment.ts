@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import cookie from "cookie";
 import instance from "@/api/axios";
+import { patchComment } from "@/api/comment";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = cookie.parse(req.headers.cookie || "");
@@ -32,16 +33,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "PATCH":
       // 댓글 등록 로직
-      const { id: patchCommentId } = req.body;
-      if (!patchCommentId)
-        if (!patchCommentId) {
+      const { commentId: patchComment } = req.query;
+      if (!patchComment)
+        if (!patchComment) {
           return res
             .status(400)
             .json({ message: "수정할 댓글 ID가 없습니다." });
         }
       try {
         const response = await instance.patch(
-          `/articles/comments/${patchCommentId}`,
+          `/articles/comments/${patchComment}`,
           req.body.content,
           {
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -54,12 +55,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
     case "DELETE":
-      const { id: deleteCommentId } = req.body;
-      if (!deleteCommentId) {
+      const { commentId: deleteComment } = req.query;
+      if (!deleteComment) {
         return res.status(400).json({ message: "삭제할 댓글 ID가 없습니다." });
       }
       try {
-        const response = await instance.delete(`/comments/${deleteCommentId}`, {
+        const response = await instance.delete(`/comments/${deleteComment}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         return res.status(200).json(response.data);

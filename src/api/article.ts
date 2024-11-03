@@ -50,74 +50,38 @@ export const getArticles = async (query: getArticlesProps) => {
 
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
-  try {
-    const res = await instance.get("/api/article", articleId);
-    return res.data;
-  } catch (err) {
-    console.error("게시글 상세 조회에 실패했습니다.", err);
-    return {};
-  }
+  const res = await instance.get(`/api/article/${articleId}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 수정
 export const patchArticle = async (query: patchArticleProps) => {
-  const { articleId, body } = query;
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.patch(`/articles/${articleId}`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 수정에 실패했습니다.", err);
-    return {};
-  }
+  const res = await instance.patch(
+    `/api/article/${query.articleId}`,
+    query.body
+  );
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 삭제
-export const deleteArticle = async (articleId: number) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.delete(`/articles/${articleId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 삭제에 실패했습니다.", err);
-    return {};
-  }
+export const deleteArticle = async () => {
+  const res = await instance.delete("/api/article");
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 좋아요 추가
-export const postArticleLike = async (articleId: number) => {
-  try {
-    const res = await instance.post(`/articles/${articleId}/like`);
-    return res.data;
-  } catch (err) {
-    console.error("게시글 좋아요 추가에 실패했습니다.", err);
-    return {};
-  }
+export const postArticleLike = async () => {
+  const res = await instance.post(`/api/like`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async (articleId: number) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.delete(`/articles/${articleId}/like`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 좋아요 취소에 실패했습니다.", err);
-    return {};
-  }
+export const deleteArticleLike = async () => {
+  const res = await instance.delete(`/api/like`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };

@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       // 게시글 조회 로직
-      const articleId = req.query.id;
+      const { articleId } = req.query;
 
       try {
         if (!articleId) {
@@ -44,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "PATCH":
       // 게시글 수정 로직
-      const updateId = req.query.id;
+      const { articleId: updateId } = req.query;
       if (!updateId) {
         return res
           .status(400)

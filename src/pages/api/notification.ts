@@ -10,9 +10,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       // 알림 목록 조회
       try {
-        const response = await instance.get("/notifications", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const response = await instance.get(
+          "/notifications?page=1?pageSize=10",
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
         return res.status(201).json(response.data);
       } catch (err) {
         console.error(err);
