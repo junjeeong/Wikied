@@ -5,7 +5,7 @@ import { postImage } from "@/api/image";
 import ModalOverlay from "@/components/ModalOverlay";
 
 interface ImageAddModalProps {
-  isOpen: boolean;
+  isOpen:boolean;
   onClose: () => void;
   onImageUpload: (url:string) => void; //부모 페이지에서 보여주기 위해 전달
 }
@@ -68,58 +68,58 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
   },[preview])
 
   return (
-   
-    <ModalOverlay isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col items-center gap-5 pt-[30px] mb-5">
-        <span className="text-2lg font-semibold">이미지</span>
-        <label
-          htmlFor="image"
-          className="flex rounded-[10px] bg-gray-100 w-[354px] h-[160px] relative Mobile:w-[338px] Mobile:h-[278px]"
+    <>
+      <ModalOverlay isOpen={isOpen} onClose={onClose}>
+        <div className="flex flex-col items-center gap-5 pt-[30px] mb-5">
+          <span className="text-2lg font-semibold">이미지</span>
+          <label
+            htmlFor="image"
+            className="flex rounded-[10px] bg-gray-100 w-[354px] h-[160px] relative Mobile:w-[338px] Mobile:h-[278px]"
           >
-          {preview ? (
-            <Image
-            src={preview}
-            alt="미리보기"
-            width={354}
-              height={160}
-              className="object-cover w-full h-full rounded-[10px]"
+            {preview ? (
+              <Image
+                src={preview}
+                alt="미리보기"
+                width={354}
+                height={160}
+                className="object-cover w-full h-full rounded-[10px]"
               />
             ) : (
               <Camera
-              width={36}
-              height={36}
-              className="absolute top-[62px] left-[159px]"
+                width={36}
+                height={36}
+                className="absolute top-[62px] left-[159px]"
               />
             )}
-        </label>
-        <input
-          ref={inputRef}
-          id="image"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileChange}
+          </label>
+          <input
+            ref={inputRef}
+            id="image"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
           ></input>
-      </div>
-      {failedMsg && (
-        <span className="text-red-200" role="alert">
-          {failedMsg}
-        </span>
-      )}
-      <div className="flex justify-end">
-        <button
-          type="button"
-          className={`rounded-[10px] text-background text-md font-semibold px-5 py-[8px] ${
-            preview ? "bg-green-200" : "bg-gray-300"
-          }`}
-          onClick={handleUpload}
-          disabled={!preview}
+        </div>
+        {failedMsg && (
+          <span className="text-red-200" role="alert">
+            {failedMsg}
+          </span>
+        )}
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className={`rounded-[10px] text-background text-md font-semibold px-5 py-[8px] ${
+              preview ? "bg-green-200" : "bg-gray-300"
+            }`}
+            onClick={handleUpload}
+            disabled={!preview}
           >
-          삽입하기
-        </button>
-      </div>
-          </ModalOverlay>
-    
+            삽입하기
+          </button>
+        </div>
+      </ModalOverlay>
+    </>
   );
 };
 

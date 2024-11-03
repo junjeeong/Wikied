@@ -8,7 +8,9 @@ export interface Article {
     id: number;
     name: string;
   };
+  isLiked: boolean;
   likeCount: number;
+  content: string;
 }
 
 export interface Profile {
@@ -22,6 +24,17 @@ export interface Profile {
   updatedAt: string;
 }
 
+export interface Comment {
+  id: number;
+  updatedAt: string;
+  content: string;
+  createdAt: string;
+  writer: {
+    image: string;
+    name: string;
+    id: number;
+  };
+}
 export interface GetProfilesResponse {
   list: Profile[];
   totalCount: number;

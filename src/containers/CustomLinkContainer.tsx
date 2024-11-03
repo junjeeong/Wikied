@@ -1,16 +1,17 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CustomLink from "@/components/ui/CustomLink";
 import useNotify from "@/hooks/useNotify";
 
-const CustomLinkContainer = () => {
-  const router = useRouter();
+interface CustomLinkContainerProps {
+  link: string;
+}
+const CustomLinkContainer = ({ link }: CustomLinkContainerProps) => {
   const [fullUrl, setFullUrl] = useState("");
 
   useEffect(() => {
-    const url = `${window.location.origin}${decodeURIComponent(router.asPath)}`;
+    const url = `${window.location.origin}${link}`;
     setFullUrl(url);
-  }, [router.asPath]);
+  }, [link]);
 
   const notify = useNotify();
   const copyToClipboard = async () => {

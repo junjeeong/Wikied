@@ -1,3 +1,4 @@
+import axios from "axios";
 import instance from "./axios";
 
 interface PostSignUpQuery {
@@ -20,9 +21,9 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
-  const res = await instance.post(`/auth/signIn`, body);
+  const res = await axios.post("/api/signIn", body);
   return res.data;
-}; 
+};
 
 // 토큰 재갱신
 export const postRefreshToken = async (refreshToken: string) => {

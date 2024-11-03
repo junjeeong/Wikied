@@ -5,7 +5,7 @@ interface SearchInputProps {
   size: "large" | "medium" | "small";
   onSubmit: FormEventHandler;
   onChange?: ChangeEventHandler;
-  value: string;
+  value?: string;
 }
 
 export const SearchInput = ({
@@ -30,6 +30,7 @@ export const SearchInput = ({
           type="text"
           placeholder="이름으로 위키 찾기"
           onChange={onChange}
+          value={value}
         />
         <button
           className={`absolute top-[10px] left-[16px] border-transparent bg-gray-100 cursor-pointer focus:outline-green-100`}
