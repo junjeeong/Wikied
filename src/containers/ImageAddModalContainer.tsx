@@ -49,12 +49,14 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
       try {
         const res = await postImage(formData);
         onClose();
+        setPreview("")
         if (res && res.url) {
           onImageUpload(res.url)
-          setFailedMsg("");
         }
       } catch (error) {
         setFailedMsg("이미지 업로드에 실패했습니다.");
+      } finally {
+        setPreview("")
       }
     }
   };
