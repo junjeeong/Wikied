@@ -44,7 +44,7 @@ const QuizModalContainer = ({
        
         const registeredAt = res?.data?.registeredAt;
        
-        if (onSubmitSueccess) {
+        if (onSubmitSuccess) {
           onSubmitSuccess(quizAnswer, registeredAt);
         }
         setErrorMessage("");
