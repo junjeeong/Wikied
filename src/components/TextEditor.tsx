@@ -9,7 +9,10 @@ const ReactQuill = dynamic(() => import("react-quill"), {
   loading: () => <LoadingSpinner />,
 });
 
-const TextEditor: React.FC = () => {
+interface TextEditorProps {
+  contentData: string;
+}
+const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
   const { setValue } = useFormContext();
 
   const formats: string[] = [
@@ -29,7 +32,7 @@ const TextEditor: React.FC = () => {
   ];
 
   const handleChange = (value: string) => {
-    setValue("context", value);
+    setValue("content", value);
   };
 
   const modules: {} = useMemo(
@@ -57,8 +60,9 @@ const TextEditor: React.FC = () => {
         onChange={handleChange}
         formats={formats}
         modules={modules}
-        className="min-h-[800px]"
-        placeholder="내용을 입력해주세요."
+        className=""
+        placeholder="내용을 입력해 주세요."
+        defaultValue={contentData}
       />
     </div>
   );

@@ -1,10 +1,15 @@
 import FilledButton from "./ui/Button/FilledButton";
+import dynamic from "next/dynamic";
 
-interface WikiContent {
+interface WikiContentProps {
   content: string;
 }
 
-const WikiContent = ({ content }: WikiContent) => {
+const NoSSRContent = dynamic(() => import("@/utils/ssrContent"), {
+  ssr: false,
+});
+
+const WikiContent = ({ content }: WikiContentProps) => {
   const isEmpty = content === "" ? true : false;
 
   return (
@@ -19,7 +24,12 @@ const WikiContent = ({ content }: WikiContent) => {
           <FilledButton size="small">시작하기</FilledButton>
         </div>
       ) : (
-        <div className="w-full">{content}</div>
+        <div
+          className="w-full"
+          // dangerouslySetInnerHTML={{ __html: cleanInput }}
+        >
+          <NoSSRContent content={content} />
+        </div>
       )}
     </>
   );

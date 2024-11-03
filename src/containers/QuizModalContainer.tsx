@@ -8,8 +8,8 @@ interface QuizModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
   code: string;
-  onSubmitSuccess?:(registeredAt:string) => void;
-  isMe:boolean;
+  onSubmitSuccess?: (registeredAt: string) => void;
+  isMe: boolean;
 }
 
 const QuizModalContainer = ({
@@ -23,9 +23,9 @@ const QuizModalContainer = ({
   const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
 
-
   useEffect(() => {
-    if (code && !isMe) {
+    // if (code && !isMe) {
+    if (code) {
       const getQuestion = async () => {
         const res = await getUserProfile(code);
         setQuestion(res?.data.securityQuestion);
@@ -45,10 +45,10 @@ const QuizModalContainer = ({
         const res = await postProfilePing({ securityAnswer: quizAnswer }, code);
 
         if (onSubmitSuccess) {
-          onSubmitSuccess(res.data.registeredAt)
+          onSubmitSuccess(res.data.registeredAt);
         }
-          // API 호출이 성공적으로 완료되면 모달을 닫음
-          onClose();
+        // API 호출이 성공적으로 완료되면 모달을 닫음
+        onClose();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -59,8 +59,9 @@ const QuizModalContainer = ({
     }
   };
 
-  if (isMe || !isOpen) {
-    return null
+  // if (isMe || !isOpen) {
+  if (!isOpen) {
+    return null;
   }
 
   return (
