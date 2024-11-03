@@ -49,11 +49,10 @@ const SearchPage = ({ list, totalCount, q }: SearchPageProps) => {
       <SearchedWikiList list={list} totalCount={totalCount} q={q} />
       <div className="absolute bottom-[10%]">
         <PaginationBar
-          totalPage={totalCount / 3}
+          totalPage={Math.ceil(totalCount / 3)}
           currentPage={Number(router.query.page) || 1}
           handlePageChange={handlePageChange}
           isLoading={false}
-          maxPage={5}
         />
       </div>
     </div>
