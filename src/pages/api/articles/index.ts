@@ -6,12 +6,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
-  const { articleId } = req.query;
-  if (!articleId) {
-    return res
-      .status(400)
-      .json({ message: "쿼리 파라미터에 게시글 ID가 없습니다." });
-  }
+  // const { articleId } = req.query;
+  // if (!articleId) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "쿼리 파라미터에 게시글 ID가 없습니다." });
+  // }
 
   switch (req.method) {
     case "POST":
