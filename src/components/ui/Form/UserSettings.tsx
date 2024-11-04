@@ -23,7 +23,7 @@ const UserSettings = ({
   getValues,
 }: UserSettingsProps) => {
   return (
-    <div className="flex flex-col mt-[120px] justify-center mx-auto w-[400px] Mobile:w-[335px]">
+    <div className="flex flex-col justify-center min-h-screen -mt-[80px] mx-auto w-[400px] Mobile:w-[335px]">
       <h1 className="text-2xl font-semibold text-gray-500">계정 설정</h1>
       <form
         className="w-full mt-[40px] flex flex-col"
