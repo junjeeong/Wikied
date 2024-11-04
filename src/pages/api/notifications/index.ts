@@ -11,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       // 알림 목록 조회
       try {
         const response = await instance.get(
-          "/notifications?page=1?pageSize=10",
+          "/notifications?page=1&pageSize=2",
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           }

@@ -37,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
     } catch (error) {
       const errorMessage =
-        (error as Error).message || "알 수 없는 오류가 발생했습니다.";
+         "비밀번호가 일치하지 않습니다.";
       res.status(500).json({ message: errorMessage });
     }
   } else {
