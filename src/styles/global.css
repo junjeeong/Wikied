@@ -136,6 +136,18 @@
   border-radius: 21.5px;
 }
 
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-right {
+  text-align: right;
+}
+.ql-align-left {
+  text-align: left;
+}
+
+
+
 @media (max-width: 767px) {
   .ql-container.ql-snow .ql-editor {
     height: 600px;
