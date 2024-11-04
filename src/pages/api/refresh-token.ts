@@ -12,7 +12,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST":
       try {
-        const response = await instance.post("/auth/refresh-token");
+        const response = await instance.post("/auth/refresh-token", {
+          refreshToken: refreshToken,
+        });
 
         // 성공적으로 갱신되면 쿠키에 새로운 액세스 토큰을 설정
         const newAccessToken = response.data.accessToken;
@@ -23,15 +25,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           serialize("accessToken", newAccessToken, {
             httpOnly: true, // 클라이언트 자바스크립트에서 접근할 수 없도록 설정
             secure: process.env.NODE_ENV === "production", // 프로덕션 환경에서만 secure 플래그 설정
+            sameSite: "strict",
             maxAge: 60 * 60, // 1시간
             path: "/", // 쿠키의 경로
           })
         );
 
         // 성공 응답
-        return res
-          .status(200)
-          .json({ message: "액세스 토큰이 갱신되었습니다." });
+        return res.status(200).json({
+          message: "액세스 토큰이 갱신되었습니다.",
+          accessToken: newAccessToken,
+        });
       } catch (err) {
         console.error(err);
         return res
