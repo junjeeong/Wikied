@@ -66,7 +66,6 @@ const TotalArticlesContainer = ({
     });
   };
 
-
   return (
     <div className="my-[60px]">
       <div className="flex gap-[20px] items-center Mobile:flex-col">
