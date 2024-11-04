@@ -24,8 +24,7 @@ const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
       setTotalCount(res.totalCount);
       setNotifications(res.list);
     };
-
-    fetchNotifications();
+if (isOpen) fetchNotifications();
   }, [isOpen]);
 
   const handleDelete = (id: number) => {
