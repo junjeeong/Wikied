@@ -13,7 +13,7 @@ const SearchedWikiCard = ({ info }: SearchedWikiCardProps) => {
 
   return (
     <div className="flex relative w-[859px] h-[142px] px-[36px] py-[24px] border rounded-[10px] shadow-[0_4px_20px_#00000014]  cursor-pointer hover:scale-105 transition-all Tabel:w-[696px] Tablet:h-[142px] Mobile:w-[334px] Mobile:h-[150px] ">
-      <Link href={`${info.name}`}>
+      <Link href={`/wiki/${info.name}`}>
         <div className="flex gap-[32px] flex-grow">
           <ProfileSVG className="w-[85px] h-[85px] text-gray-300" />
           <div>
