@@ -23,19 +23,19 @@ const CustomToolbar = () => (
         <div className="flex gap-1">
           <button
             type="button"
-            className="ql-align-left"
+            className="ql-align"
             value=""
             aria-label="Align Left"
           ></button>
           <button
             type="button"
-            className="ql-align-center"
+            className="ql-align"
             value="center"
             aria-label="Align Center"
           ></button>
           <button
             type="button"
-            className="ql-align-right"
+            className="ql-align"
             value="right"
             aria-label="Align Right"
           ></button>
