@@ -7,7 +7,6 @@ interface QuizModalProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errorMessage: string;
   handleSubmit: () => void;
-
 }
 
 const QuizModal = ({
@@ -27,7 +26,7 @@ const QuizModal = ({
           다음 퀴즈를 맞추고 <br /> 위키를 작성해보세요.
         </div>
       </div>
-      <div onSubmit={handleSubmit} className="flex flex-col ">
+      <div className="flex flex-col ">
         <label
           htmlFor="quiz"
           className="text-2lg text-gray-500 font-semibold mb-[10px]"

@@ -5,7 +5,6 @@ import instance from "@/api/axios";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
-  console.log("액세스 토큰:", accessToken);
 
   const { code } = req.query;
   if (!code) {
