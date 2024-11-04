@@ -1,6 +1,7 @@
 const ReactModule = () => {
   return (
-    <div className="flex items-center justify-center gap-[15px]">
+    // <div className="flex items-center justify-center gap-[15px]">
+    <div className="wikiToolBar">
       <button type="button" className="ql-bold" />
       <button type="button" className="ql-italic" />
       <button type="button" className="ql-underline" />
