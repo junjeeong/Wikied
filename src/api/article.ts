@@ -53,14 +53,14 @@ export const getArticle = async (articleId: number) => {
 
 // 게시글 수정
 export const patchArticle = async (query: patchArticleProps) => {
-  const res = await proxy.patch(`/api/article/${query.articleId}`, query.body);
+  const res = await proxy.patch(`/api/articles/${query.articleId}`, query.body);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
 
 // 게시글 삭제
 export const deleteArticle = async (articleId: number) => {
-  const res = await proxy.delete(`/api/article/${articleId}`);
+  const res = await proxy.delete(`/api/articles/${articleId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
