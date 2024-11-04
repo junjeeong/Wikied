@@ -21,6 +21,7 @@ const FormInput = ({
   register,
   onError,
   submitError,
+  onKeyDown,
 }: FormInputProps) => {
   return (
     <div className="lex flex-col gap-2.5">
@@ -38,6 +39,7 @@ const FormInput = ({
           error ? "outline-red-200" : "outline-green-200"
         }`}
         onChange={onError}
+        onKeyDown={onKeyDown}
       ></input>
       {error && (
         <span className="text-xs text-red-200" role="alert">
