@@ -26,6 +26,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(500).json({ message: "게시글 조회에 실패했습니다." });
       }
 
+    case "POST":
+      // 댓글 등록 로직
+      try {
+        const response = await instance.post(
+          `/articles/${articleId}/comments`,
+          req.body,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        return res.status(201).json(response.data);
+      } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "게시글 등록에 실패했습니다." });
+      }
+
     case "PATCH":
       // 게시글 수정 로직
       try {
@@ -54,7 +70,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
     default:
-      res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
+      res.setHeader("Allow", ["GET", "POST", "PATCH", "DELETE"]);
       return res.status(405).end(`메서드 ${req.method}는 허용되지 않습니다.`);
   }
 };

@@ -28,7 +28,7 @@ export const getComments = async (articleId: number) => {
 // 댓글 등록
 export const postComment = async (query: PostCommentQuery) => {
   const res = await instance.post(
-    `/api/comments/${query.articleId}`,
+    `/api/articles/${query.articleId}`,
     query.body
   );
   if (res.status >= 200 && res.status < 300) return res.data;
