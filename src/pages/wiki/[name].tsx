@@ -8,11 +8,11 @@ import {
   getProfiles,
   getUserProfile,
   patchProfile,
+  postProfilePing,
 } from "@/api/profile";
 import ProfileCard from "@/components/ProfileCard";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import WikiProfileTitle from "@/components/WikiProfileTitle";
-// import TextEditor from "@/components/TextEditor";
 import useViewport from "@/hooks/useViewport";
 import useNotify from "@/hooks/useNotify";
 import InfoIcon from "/public/icons/ic_info.svg";
@@ -69,6 +69,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(userProfile.image);
   const [disconnectModalOpen, setDisconnectModalOpen] =
     useState<boolean>(false);
+  const [quizAnswer, setQuizAnswer] = useState("");
 
   const TextEditor = dynamic(() => import("../../components/TextEditor"), {
     ssr: false,
@@ -78,14 +79,37 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   const myCode = user?.profile?.code;
   const isMe = isLoggedIn && myCode === userProfile.code;
 
+  function getUpdatedPatchBody() {
+    const data: PatchBody = {
+      securityAnswer: quizAnswer,
+      securityQuestion: userProfile.securityQuestion,
+      nationality: userProfile.nationality,
+      family: userProfile.family,
+      bloodType: userProfile.bloodType,
+      nickname: userProfile.nickname,
+      birthday: userProfile.birthday,
+      sns: userProfile.sns,
+      job: userProfile.job,
+      mbti: userProfile.mbti,
+      city: userProfile.city,
+      image: userProfile.image,
+      content: userProfile.content,
+    };
+    return data;
+  }
+
   // 편집 상태에서 취소 버튼을 누르면
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    await postProfilePing({ securityAnswer: quizAnswer }, code);
+    const data = getUpdatedPatchBody();
+    await patchProfile({ code, body: data });
     setIsEditing(false);
     reset();
   };
 
   // 퀴즈 모달에서 정답을 맞추면
-  const handleQuizSuccess = (registeredAt: string) => {
+  const handleQuizSuccess = (quizAnswer: string, registeredAt: string) => {
+    setQuizAnswer(quizAnswer);
     setRegisteredAt(registeredAt);
     setIsEditing(true);
   };
@@ -162,7 +186,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
       family: "",
       securityQuestion: userProfile.securityQuestion,
       // 이후 퀴즈모달 PR 완료되면 모달에서 퀴즈답안 받아서 수정
-      securityAnswer: "고양이",
+      securityAnswer: quizAnswer,
       image: imageUrl,
     };
 
@@ -271,7 +295,6 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
         isOpen={quizModalOpen}
         onClose={closeQuizModal}
         code={code}
-        isMe={isMe}
         onSubmitSuccess={handleQuizSuccess}
       />
       <ConnectLostModal

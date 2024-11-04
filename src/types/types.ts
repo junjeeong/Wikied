@@ -90,7 +90,6 @@ export interface User {
   updatedAt: string;
   createdAt: string;
   profile: UserProfile | null;
-
 }
 
 export interface PatchArticleProps {
@@ -100,3 +99,4 @@ export interface PatchArticleProps {
     content: string;
     title: string;
   };
+}
