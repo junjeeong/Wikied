@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { GetProfilesResponse } from "@/types/types";
 import PaginationBar from "@/components/PaginationBar";
 import SearchedWikiList from "@/components/SearchedWikiList";
-import { Profile } from "@/types/types";
 
 interface SearchPageProps extends GetProfilesResponse {
   q: string;
@@ -45,7 +44,7 @@ const SearchPage = ({ list, totalCount, q }: SearchPageProps) => {
   };
 
   return (
-    <div className="relative max-w-[860px] h-screen flex flex-col items-center py-[160px] mx-auto">
+    <div className="relative max-w-[860px] mt-[80px] h-screen flex flex-col items-center mx-auto">
       <SearchedWikiList list={list} totalCount={totalCount} q={q} />
       <div className="absolute bottom-[10%]">
         <PaginationBar
