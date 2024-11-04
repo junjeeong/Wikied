@@ -28,7 +28,7 @@ const WikiCard = ({ info }: WikiCardProps) => {
       <Link key={info.id} href={`/wiki/${info.name}`}>
         <section className="flex flex-grow-1 justify-between p-[20px] bg-white">
           <div>
-            <h2 className="text-2lg font-medium">{info.name}</h2>
+            <h2 className="font-medium text-2lg">{info.name}</h2>
             <div className="flex flex-col gap-[4px] mt-[8px] text-gray-300 text-md leading-4">
               <p>{info.city}</p>
               <p>{info.job}</p>
@@ -36,7 +36,7 @@ const WikiCard = ({ info }: WikiCardProps) => {
           </div>
           <div>
             <div className="rounded-full w-[70px] h-[70px] text-gray-300 overflow-hidden relative">
-              {info.image ? (
+              {info.image !== "https://example.com/..." && info.image ? (
                 <Image
                   src={info.image}
                   layout="fill"
@@ -54,7 +54,7 @@ const WikiCard = ({ info }: WikiCardProps) => {
         onClick={handleClick}
         className="flex justify-between align-middle w-full px-[24px] py-[24px] bg-gray-100 text-gray-400 hover:text-green-100"
       >
-        <span className="text-md font-semibold truncate max-w-xs">
+        <span className="max-w-xs font-semibold truncate text-md">
           wikied.kr/{info.name}
         </span>
         <ShareSVG className="w-[20px]" />
