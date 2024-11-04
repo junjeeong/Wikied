@@ -2,23 +2,26 @@ import { GetServerSideProps } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import useAuthStore from "@/store/AuthStore";
-import { UserProfile } from "@/types/types";
+import { PatchBody, UserProfile } from "@/types/types";
 import {
   getProfilePing,
   getProfiles,
   getUserProfile,
   patchProfile,
+  postProfilePing,
 } from "@/api/profile";
 import ProfileCard from "@/components/ProfileCard";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import WikiProfileTitle from "@/components/WikiProfileTitle";
-import TextEditor from "@/components/TextEditor";
 import useViewport from "@/hooks/useViewport";
 import useNotify from "@/hooks/useNotify";
 import InfoIcon from "/public/icons/ic_info.svg";
 import QuizModalContainer from "@/containers/QuizModalContainer";
 import WikiContent from "@/components/WikiContent";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
+import ConnectLostModal from "@/components/ConnectLostModal";
+import dynamic from "next/dynamic";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface WikiPageProps {
   initialProfile: UserProfile;
@@ -64,21 +67,51 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   const [editStatus, setEditStatus] = useState<string>("idle"); // 위키 편집 가능 여부
   const [registeredAt, setRegisteredAt] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string | null>(userProfile.image);
+  const [disconnectModalOpen, setDisconnectModalOpen] =
+    useState<boolean>(false);
+  const [quizAnswer, setQuizAnswer] = useState("");
+
+  const TextEditor = dynamic(() => import("../../components/TextEditor"), {
+    ssr: false,
+    loading: LoadingSpinner,
+  });
 
   const myCode = user?.profile?.code;
   const isMe = isLoggedIn && myCode === userProfile.code;
 
+  function getUpdatedPatchBody() {
+    const data: PatchBody = {
+      securityAnswer: quizAnswer,
+      securityQuestion: userProfile.securityQuestion,
+      nationality: userProfile.nationality,
+      family: userProfile.family,
+      bloodType: userProfile.bloodType,
+      nickname: userProfile.nickname,
+      birthday: userProfile.birthday,
+      sns: userProfile.sns,
+      job: userProfile.job,
+      mbti: userProfile.mbti,
+      city: userProfile.city,
+      image: userProfile.image,
+      content: userProfile.content,
+    };
+    return data;
+  }
+
   // 편집 상태에서 취소 버튼을 누르면
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    await postProfilePing({ securityAnswer: quizAnswer }, code);
+    const data = getUpdatedPatchBody();
+    await patchProfile({ code, body: data });
     setIsEditing(false);
     reset();
   };
 
   // 퀴즈 모달에서 정답을 맞추면
-  const handleQuizSuccess = (registeredAt: string) => {
+  const handleQuizSuccess = (quizAnswer: string, registeredAt: string) => {
+    setQuizAnswer(quizAnswer);
     setRegisteredAt(registeredAt);
     setIsEditing(true);
-    console.log(registeredAt);
   };
 
   const closeQuizModal = () => {
@@ -87,27 +120,33 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
 
   // 위키 참여하기 버튼을 누르면
   const handleEdit = async () => {
+    const res = await getUserProfile(code);
+    setUserProfile(res?.data);
     // 해당 위키 페이지가 수정 중인지 확인
     const getPingData = await getProfilePing(code);
-    console.log(getPingData);
+
     // status = 200 -> 누군가 편집 중
     if (getPingData?.status === 200) {
-      // 누군가 수정중이라고 토스트와 함께 해당시간동안 위키참여하기 버튼 비활성화.
-      setRegisteredAt(getPingData.data.registeredAt);
-      setEditStatus("buttonDisabled");
-      notify(
-        "다른 친구가 편집하고 있어요. 나중에 다시 시도해 주세요.",
-        "error"
-      );
-      setTimeout(() => {
-        setEditStatus("textVisible");
-      }, 3000);
+      const updatedTime = new Date(userProfile.updatedAt);
+      const registeredTime = new Date(getPingData.data.registeredAt);
+      if (updatedTime > registeredTime) {
+        setQuizModalOpen(true);
+      } else {
+        // 누군가 수정중이라고 토스트와 함께 해당시간동안 위키참여하기 버튼 비활성화.
+        setRegisteredAt(getPingData.data.registeredAt);
+        setEditStatus("buttonDisabled");
+        notify(
+          "다른 친구가 편집하고 있어요. 나중에 다시 시도해 주세요.",
+          "error"
+        );
+        setTimeout(() => {
+          setEditStatus("textVisible");
+        }, 3000);
+      }
     }
     // status = 204 -> 편집 가능한 상태
     else {
       // 퀴즈 모달을 띄운다
-      console.log(getPingData?.status);
-      console.log(quizModalOpen);
       setQuizModalOpen(true);
     }
   };
@@ -126,25 +165,31 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     }
   }, [registeredAt]);
 
+  // 편집 시작 시 5분 타이머 시작
+  useEffect(() => {
+    if (isEditing) {
+      const timer = setTimeout(() => {
+        setDisconnectModalOpen(true);
+      }, 5 * 60 * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isEditing]);
+
   const onSubmit = async (data: any) => {
     // PATCH profile/{code} 로 유저 프로필 정보 수정
     const editedUserProfile = {
       ...data,
       family: "",
       securityQuestion: userProfile.securityQuestion,
-      securityAnswer: "고양이",
+      // 이후 퀴즈모달 PR 완료되면 모달에서 퀴즈답안 받아서 수정
+      securityAnswer: quizAnswer,
       image: imageUrl,
     };
 
     const response = await patchProfile({ code, body: editedUserProfile });
 
-    if (response) {
-      console.log(response);
-      // setUserProfile(response});
-      setIsEditing(false);
-    }
-
-    console.log("userProfile: ", userProfile);
+    setUserProfile(response);
+    setIsEditing(false);
   };
 
   const fetchUserProfile = useCallback(async () => {
@@ -231,8 +276,8 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
             </div>
           )}
           {!isEditing && (
-            <div className="mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
-              <WikiContent content={userProfile.content} />
+            <div className="ql-editor mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
+              <WikiContent content={userProfile.content} onClick={handleEdit} />
             </div>
           )}
         </div>
@@ -242,8 +287,12 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
         isOpen={quizModalOpen}
         onClose={closeQuizModal}
         code={code}
-        isMe={isMe}
         onSubmitSuccess={handleQuizSuccess}
+      />
+      <ConnectLostModal
+        isOpen={disconnectModalOpen}
+        onClose={() => setDisconnectModalOpen(false)}
+        handleCancel={handleCancel}
       />
     </FormProvider>
   );

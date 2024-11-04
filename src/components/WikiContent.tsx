@@ -3,13 +3,14 @@ import dynamic from "next/dynamic";
 
 interface WikiContentProps {
   content: string;
+  onClick: () => void;
 }
 
-const NoSSRContent = dynamic(() => import("@/utils/ssrContent"), {
+const NoSSRContent = dynamic(() => import("@/utils/NoSSRContent"), {
   ssr: false,
 });
 
-const WikiContent = ({ content }: WikiContentProps) => {
+const WikiContent = ({ content, onClick }: WikiContentProps) => {
   const isEmpty = content === "" ? true : false;
 
   return (
@@ -21,13 +22,12 @@ const WikiContent = ({ content }: WikiContentProps) => {
             <br />
             위키에 참여해 보세요!
           </p>
-          <FilledButton size="small">시작하기</FilledButton>
+          <FilledButton size="small" type="button" onClick={onClick}>
+            시작하기
+          </FilledButton>
         </div>
       ) : (
-        <div
-          className="w-full"
-          // dangerouslySetInnerHTML={{ __html: cleanContent }}
-        >
+        <div id="Quill" className="w-full">
           <NoSSRContent content={content} />
         </div>
       )}

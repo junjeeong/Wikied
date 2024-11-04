@@ -4,11 +4,12 @@ interface NoSSRContentProps {
   content: string;
 }
 
-const SsrContent = ({ content }: NoSSRContentProps) => {
+const NoSsrContent = ({ content }: NoSSRContentProps) => {
   const cleanContent = sanitizeHtml(content);
 
   return (
     <div
+      className="prose max-w-none"
       dangerouslySetInnerHTML={{
         __html: cleanContent,
       }}
@@ -16,4 +17,4 @@ const SsrContent = ({ content }: NoSSRContentProps) => {
   );
 };
 
-export default SsrContent;
+export default NoSsrContent;

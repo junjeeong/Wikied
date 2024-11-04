@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import cookie from "cookie";
+import { parse } from "cookie";
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const cookies = cookie.parse(req.headers.cookie || "");
+  const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
+
   const { id } = req.query;
   if (!id) {
     return res.status(400).json({ message: "삭제할 알림 ID가 없습니다." });

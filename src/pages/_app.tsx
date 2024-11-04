@@ -49,10 +49,6 @@ export default function App({ Component, pageProps }: AppProps) {
           content="지인들의 위키를 직접 작성하고 공유해보세요"
         />
         <meta property="og:image" content="/images/img_home1.png" />
-        <meta
-          property="og:url"
-          content={`https://example.com${router.pathname}`} // 배포 주소로 변경
-        />
         <link rel="icon" href="/logo/logo.svg"></link>
       </Head>
       <Header />

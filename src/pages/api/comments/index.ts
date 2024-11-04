@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import cookie from "cookie";
+import { parse } from "cookie";
 import instance from "@/api/axios";
-import { patchComment } from "@/api/comment";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const cookies = cookie.parse(req.headers.cookie || "");
+  const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
   switch (req.method) {

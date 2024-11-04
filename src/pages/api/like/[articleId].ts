@@ -1,20 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import cookie from "cookie";
+import { parse } from "cookie";
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const cookies = cookie.parse(req.headers.cookie || "");
+  const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
+
+  const { articleId } = req.query;
+  if (!articleId) {
+    return res
+      .status(400)
+      .json({ message: "좋아요를 등록할 게시글 ID가 없습니다." });
+  }
 
   switch (req.method) {
     case "POST":
       // 좋아요 등록 로직
-      const articleId = req.query.id;
-      if (!articleId) {
-        return res
-          .status(400)
-          .json({ message: "좋아요를 등록할 게시글 ID가 없습니다." });
-      }
       try {
         const response = await instance.post(
           `/articles/${articleId}/like`,
@@ -33,14 +34,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "DELETE":
       // 좋아요 취소 로직
-      const targetId = req.query.id;
-      if (!targetId) {
-        return res
-          .status(400)
-          .json({ message: "좋아요를 취소할 게시글 ID가 없습니다." });
-      }
       try {
-        const response = await instance.delete(`/articles/${targetId}/like`, {
+        const response = await instance.delete(`/articles/${articleId}/like`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         return res.status(200).json(response.data);
