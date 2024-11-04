@@ -15,6 +15,8 @@ const AlarmModal = ({
   newAlarmExist,
   setNewAlarmExist,
 }: AlarmModalProps) => {
+
+
   return (
     <>
       <Alarm
@@ -22,10 +24,10 @@ const AlarmModal = ({
         className="relative cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden"
       />
       <div>
-        {/* <NotificationModalContainer
+        <NotificationModalContainer
           isOpen={isOpen}
-          onClose={() => setIsOpen(!isOpen)}
-        /> */}
+          onClose={() => setIsOpen(false)}
+        />
       </div>
     </>
   );

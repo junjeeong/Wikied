@@ -9,7 +9,6 @@ interface QuizModalContainerProps {
   onClose: () => void;
   code: string;
   onSubmitSuccess?: (quizAnswer: string, registerdAt: string) => void;
-
 }
 
 const QuizModalContainer = ({
@@ -41,9 +40,9 @@ const QuizModalContainer = ({
     try {
       if (code) {
         const res = await postProfilePing({ securityAnswer: quizAnswer }, code);
-       
+
         const registeredAt = res?.data?.registeredAt;
-       
+
         if (onSubmitSuccess) {
           onSubmitSuccess(quizAnswer, registeredAt);
         }

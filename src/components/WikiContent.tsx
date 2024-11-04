@@ -1,10 +1,16 @@
 import FilledButton from "./ui/Button/FilledButton";
+import dynamic from "next/dynamic";
 
-interface WikiContent {
+interface WikiContentProps {
   content: string;
+  onClick: () => void;
 }
 
-const WikiContent = ({ content }: WikiContent) => {
+const NoSSRContent = dynamic(() => import("@/utils/NoSSRContent"), {
+  ssr: false,
+});
+
+const WikiContent = ({ content, onClick }: WikiContentProps) => {
   const isEmpty = content === "" ? true : false;
 
   return (
@@ -16,10 +22,14 @@ const WikiContent = ({ content }: WikiContent) => {
             <br />
             위키에 참여해 보세요!
           </p>
-          <FilledButton size="small">시작하기</FilledButton>
+          <FilledButton size="small" type="button" onClick={onClick}>
+            시작하기
+          </FilledButton>
         </div>
       ) : (
-        <div className="w-full">{content}</div>
+        <div id="Quill" className="w-full">
+          <NoSSRContent content={content} />
+        </div>
       )}
     </>
   );

@@ -66,8 +66,6 @@ const TotalArticlesContainer = ({
     });
   };
 
-  const currentPage = router.query.page ? Number(router.query.page) : 1;
-
   return (
     <div className="my-[60px]">
       <div className="flex gap-[20px] items-center Mobile:flex-col">

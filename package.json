@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.15",
     "@xeger/quill-image-actions": "^0.7.2",
     "@xeger/quill-image-formats": "^0.7.2",
     "axios": "^1.7.7",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
     "@types/cookie": "^0.6.0",
+    "@types/dompurify": "^3.0.5",
     "@types/node": "^20",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18",

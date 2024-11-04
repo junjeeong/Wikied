@@ -53,28 +53,28 @@ export const getArticle = async (articleId: number) => {
 
 // 게시글 수정
 export const patchArticle = async (query: patchArticleProps) => {
-  const res = await proxy.patch(`/api/article/${query.articleId}`, query.body);
+  const res = await proxy.patch(`/api/articles/${query.articleId}`, query.body);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
 
 // 게시글 삭제
-export const deleteArticle = async () => {
-  const res = await proxy.delete(`/api/article`);
+export const deleteArticle = async (articleId: number) => {
+  const res = await proxy.delete(`/api/articles/${articleId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
 
 // 게시글 좋아요 추가
-export const postArticleLike = async () => {
-  const res = await proxy.post(`/api/like`);
+export const postArticleLike = async (articleId: number) => {
+  const res = await proxy.post(`/api/like/${articleId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async () => {
-  const res = await proxy.delete(`/api/like`);
+export const deleteArticleLike = async (articleId: number) => {
+  const res = await proxy.delete(`/api/like/${articleId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };

@@ -1,4 +1,5 @@
 import instance, { proxy } from "@/api/axios";
+import { PatchBody } from "@/types/types";
 
 interface GetProfilesQuery {
   page?: number;
@@ -18,6 +19,11 @@ interface PatchProfileQuery {
 
 interface PostProfilePingQuery {
   securityAnswer: string;
+}
+
+interface PatchProfileQuery {
+  code: string;
+  body: PatchBody;
 }
 
 // 프로필 목록 조회
@@ -68,6 +74,13 @@ export const getUserProfile = async (code: string) => {
   }
 };
 
+export const patchProfile = async (query: PatchProfileQuery) => {
+  const { code, body } = query;
+  const res = await proxy.patch(`/api/profiles/${code}`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
+};
+
 // 프로필 수정 중 체크
 export const getProfilePing = async (code: string) => {
   try {
@@ -82,13 +95,6 @@ export const getProfilePing = async (code: string) => {
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
   const res = await proxy.post(`/api/profiles`, body);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
-};
-
-// 프로필 변경
-export const patchProfile = async (code: string, body: PatchProfileQuery) => {
-  const res = await proxy.patch(`/api/profiles/${code}`, body);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };

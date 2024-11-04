@@ -11,11 +11,19 @@ interface ProfileCardProps {
   userProfile: UserProfile;
   isMe: boolean;
   isEditing: boolean;
+  imageUrl: string | null;
+  setImageUrl: (imageUrl: string | null) => void;
 }
 
-const ProfileCard = ({ userProfile, isMe, isEditing }: ProfileCardProps) => {
+const ProfileCard = ({
+  userProfile,
+  isMe,
+  isEditing,
+  imageUrl,
+  setImageUrl,
+}: ProfileCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  // const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   // 클릭 시 유저 프로필의 영역이 확장됨
   const expandContent = () => {

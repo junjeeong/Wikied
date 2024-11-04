@@ -2,18 +2,26 @@ import { GetServerSideProps } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import useAuthStore from "@/store/AuthStore";
-import { UserProfile } from "@/types/types";
-import { getProfilePing, getProfiles, getUserProfile } from "@/api/profile";
+import { PatchBody, UserProfile } from "@/types/types";
+import {
+  getProfilePing,
+  getProfiles,
+  getUserProfile,
+  patchProfile,
+  postProfilePing,
+} from "@/api/profile";
 import ProfileCard from "@/components/ProfileCard";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import WikiProfileTitle from "@/components/WikiProfileTitle";
-import TextEditor from "@/components/TextEditor";
 import useViewport from "@/hooks/useViewport";
 import useNotify from "@/hooks/useNotify";
 import InfoIcon from "/public/icons/ic_info.svg";
 import QuizModalContainer from "@/containers/QuizModalContainer";
 import WikiContent from "@/components/WikiContent";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
+import ConnectLostModal from "@/components/ConnectLostModal";
+import dynamic from "next/dynamic";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface WikiPageProps {
   initialProfile: UserProfile;
@@ -47,67 +55,149 @@ export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
 };
 
 const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
-  const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile);
-  const { user, isLoggedIn } = useAuthStore();
+  const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile); // 현재 위키의 유저 프로필 정보
+  const { user, isLoggedIn } = useAuthStore(); // 로그인 유무 및 내 위키 확인에 필요한 정보
   const { isMobile } = useViewport();
-  const methods = useForm();
+  const methods = useForm(); // 자식 컴포넌트에서 사용할 폼 메서드와 상태를 생성
+  const { reset } = methods;
   const notify = useNotify();
 
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [quizModalOpen, setQuizModalOpen] = useState<boolean>(false);
-  const [editStatus, setEditStatus] = useState<string>("idle");
+  const [isEditing, setIsEditing] = useState<boolean>(false); // 사용자의 위키 편집 유무
+  const [quizModalOpen, setQuizModalOpen] = useState<boolean>(false); // 퀴즈 모달 상태 관리
+  const [editStatus, setEditStatus] = useState<string>("idle"); // 위키 편집 가능 여부
   const [registeredAt, setRegisteredAt] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string | null>(userProfile.image);
+  const [disconnectModalOpen, setDisconnectModalOpen] =
+    useState<boolean>(false);
+  const [quizAnswer, setQuizAnswer] = useState("");
+
+  const TextEditor = dynamic(() => import("../../components/TextEditor"), {
+    ssr: false,
+    loading: LoadingSpinner,
+  });
 
   const myCode = user?.profile?.code;
   const isMe = isLoggedIn && myCode === userProfile.code;
+
+  function getUpdatedPatchBody() {
+    const data: PatchBody = {
+      securityAnswer: quizAnswer,
+      securityQuestion: userProfile.securityQuestion,
+      nationality: userProfile.nationality,
+      family: userProfile.family,
+      bloodType: userProfile.bloodType,
+      nickname: userProfile.nickname,
+      birthday: userProfile.birthday,
+      sns: userProfile.sns,
+      job: userProfile.job,
+      mbti: userProfile.mbti,
+      city: userProfile.city,
+      image: userProfile.image,
+      content: userProfile.content,
+    };
+    return data;
+  }
+
+  // 편집 상태에서 취소 버튼을 누르면
+  const handleCancel = async () => {
+    await postProfilePing({ securityAnswer: quizAnswer }, code);
+    const data = getUpdatedPatchBody();
+    await patchProfile({ code, body: data });
+    setIsEditing(false);
+    reset();
+  };
+
+  // 퀴즈 모달에서 정답을 맞추면
+  const handleQuizSuccess = (quizAnswer: string, registeredAt: string) => {
+    setQuizAnswer(quizAnswer);
+    setRegisteredAt(registeredAt);
+    setIsEditing(true);
+  };
 
   const closeQuizModal = () => {
     setQuizModalOpen(false);
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
-
+  // 위키 참여하기 버튼을 누르면
   const handleEdit = async () => {
+    const res = await getUserProfile(code);
+    setUserProfile(res?.data);
     // 해당 위키 페이지가 수정 중인지 확인
     const getPingData = await getProfilePing(code);
+    console.log(getPingData);
+
     // status = 200 -> 누군가 편집 중
     if (getPingData?.status === 200) {
-      // 누군가 수정중이라고 토스트와 함께 해당시간동안 위키참여하기 버튼 비활성화.
-      setEditStatus("buttonDisabled");
-      notify(
-        "다른 친구가 편집하고 있어요. 나중에 다시 시도해 주세요.",
-        "error"
-      );
-      setTimeout(() => {
-        setEditStatus("textVisible");
-      }, 2000);
-      setTimeout(() => {
-        setEditStatus("idle");
-      }, 5 * 60 * 1000); // 시간 계산 정확히 안한 상태
+      const updatedTime = new Date(userProfile.updatedAt);
+      const registeredTime = new Date(getPingData.data.registeredAt);
+      console.log(updatedTime);
+      console.log(registeredTime);
+      if (updatedTime > registeredTime) {
+        setQuizModalOpen(true);
+      } else {
+        // 누군가 수정중이라고 토스트와 함께 해당시간동안 위키참여하기 버튼 비활성화.
+        setRegisteredAt(getPingData.data.registeredAt);
+        setEditStatus("buttonDisabled");
+        notify(
+          "다른 친구가 편집하고 있어요. 나중에 다시 시도해 주세요.",
+          "error"
+        );
+        setTimeout(() => {
+          setEditStatus("textVisible");
+        }, 3000);
+      }
     }
     // status = 204 -> 편집 가능한 상태
     else {
-      // 퀴즈 모달 띄우고 registeredAt을 리턴받는다.
+      // 퀴즈 모달을 띄운다
+      console.log(getPingData?.status);
       setQuizModalOpen(true);
-      // 이후 5분(4분30초?) 간격으로 퀴즈 모달 계속 띄우면서 갱신
-      setIsEditing(true);
     }
-    // console.log(getPingData);
-    // console.log(getPingData?.data);
-    // console.log(getPingData?.data.registeredAt);
-    // console.log(getPingData?.status);
-    // getProfilePing(code);
-
-    // postProfilePing(code);
   };
 
-  const onSubmit = (data: any) => {
+  // 수정 가능한 시간 계산
+  useEffect(() => {
+    if (registeredAt) {
+      const registeredTime = new Date(registeredAt).getTime();
+      const now = Date.now();
+      const delay = 5 * 60 * 1000 - (now - registeredTime);
+
+      const timer = setTimeout(() => {
+        setEditStatus("idle");
+      }, delay);
+      return () => clearTimeout(timer);
+    }
+  }, [registeredAt]);
+
+  // 편집 시작 시 5분 타이머 시작
+  useEffect(() => {
+    if (isEditing) {
+      const timer = setTimeout(() => {
+        setDisconnectModalOpen(true);
+      }, 5 * 60 * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isEditing]);
+
+  const onSubmit = async (data: any) => {
     // PATCH profile/{code} 로 유저 프로필 정보 수정
-    console.log(data);
-    setUserProfile(data);
-    console.log(userProfile);
+    const editedUserProfile = {
+      ...data,
+      family: "",
+      securityQuestion: userProfile.securityQuestion,
+      // 이후 퀴즈모달 PR 완료되면 모달에서 퀴즈답안 받아서 수정
+      securityAnswer: quizAnswer,
+      image: imageUrl,
+    };
+
+    const response = await patchProfile({ code, body: editedUserProfile });
+    console.log("response: ", response);
+
+    setUserProfile(response);
+    setIsEditing(false);
+
+    console.log("userProfile: ", userProfile);
+    console.log("이미지URL:", userProfile.content);
   };
 
   const fetchUserProfile = useCallback(async () => {
@@ -134,6 +224,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
           } relative flex flex-col gap-[15px] Mobile:gap-3 Tablet:px-[60px] Mobile:px-5 PC:mx-10`}
         >
           {/* Profile title */}
+          {/* 편집 상태에서는 렌더링 제외 */}
           {!isEditing && (
             <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
               <WikiProfileTitle name={userProfile.name} />
@@ -165,7 +256,11 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
               userProfile={userProfile}
               isMe={isMe}
               isEditing={isEditing}
+              imageUrl={imageUrl}
+              setImageUrl={setImageUrl}
             />
+
+            {/* 편집 상태일 때 취소 / 제출 버튼 렌더링 */}
             {isEditing && (
               <div className="PC:relative absolute Tablet:top-[35px] Mobile:top-[10px] Mobile:right-[20px] Tablet:right-[60px] flex gap-[10px] justify-end PC:mt-[33px]">
                 <OutlineButton
@@ -185,12 +280,12 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
           {/* Profile Content */}
           {isEditing && (
             <div className="mt-[40px] Tablet:mt-[10px] Mobile:mt-[15px]">
-              <TextEditor />
+              <TextEditor contentData={userProfile.content} />
             </div>
           )}
           {!isEditing && (
-            <div className="mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
-              <WikiContent content={userProfile.content} />
+            <div className="ql-editor mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
+              <WikiContent content={userProfile.content} onClick={handleEdit} />
             </div>
           )}
         </div>
@@ -200,8 +295,12 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
         isOpen={quizModalOpen}
         onClose={closeQuizModal}
         code={code}
-        isMe={isMe}
-        onSubmitSuccess={setRegisteredAt}
+        onSubmitSuccess={handleQuizSuccess}
+      />
+      <ConnectLostModal
+        isOpen={disconnectModalOpen}
+        onClose={() => setDisconnectModalOpen(false)}
+        handleCancel={handleCancel}
       />
     </FormProvider>
   );
