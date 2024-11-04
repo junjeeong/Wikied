@@ -19,7 +19,7 @@ interface WikiCardProps {
 }
 
 const WikiCard = ({ info }: WikiCardProps) => {
-  const handleClick = (e: MouseEvent) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     alert("공유하기 기능 구현중....");
   };
 

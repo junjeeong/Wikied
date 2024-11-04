@@ -11,15 +11,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
   const { setValue } = useFormContext();
   const quillRef = useRef<ReactQuill | null>(null);
 
-  useEffect(() => {
-    const editor = quillRef.current?.getEditor();
-    if (editor) {
-      const container = editor.container.firstChild; // 에디터의 첫 번째 자식 요소
-      container.classList.add("prose"); // prose 클래스 추가
-      container.classList.add("max-w-none");
-    }
-  }, []);
-
   const formats: string[] = [
     "bold",
     "italic",
