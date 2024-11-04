@@ -1,4 +1,5 @@
 import instance, { proxy } from "@/api/axios";
+import { PatchBody } from "@/types/types";
 
 interface GetProfilesQuery {
   page?: number;
@@ -13,6 +14,11 @@ interface PostProfileQuery {
 
 interface PostProfilePingQuery {
   securityAnswer: string;
+}
+
+interface PatchProfileQuery {
+  code: string;
+  body: PatchBody;
 }
 
 // 프로필 목록 조회
@@ -59,6 +65,24 @@ export const getUserProfile = async (code: string) => {
     return res;
   } catch (err) {
     console.error("프로필 정보들을 불러오지 못했습니다.", err);
+    return;
+  }
+};
+
+// 프로필 수정
+export const patchProfile = async (query: PatchProfileQuery) => {
+  const { code, body } = query;
+  const token = localStorage.getItem("accessToken");
+
+  try {
+    const res = await instance.patch(`/profiles/${code}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res;
+  } catch (err) {
+    console.error("프로필 정보를 수정하지 못했습니다.", err);
     return;
   }
 };
