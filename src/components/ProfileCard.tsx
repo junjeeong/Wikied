@@ -104,9 +104,9 @@ const ProfileCard = ({
             />
             <label
               htmlFor="image"
-              className="relative block w-full h-full transition-transform duration-300 transform cursor-pointer hover:scale-105"
+              className="absolute top-0 left-0 block w-full h-full transition-transform duration-300 transform cursor-pointer hover:scale-105"
             >
-              <div className="absolute top-0 left-0 rounded-full w-full h-full bg-[#00000080]"></div>
+              <div className="rounded-full w-full h-full bg-[#00000080]"></div>
               <CameraImg className="absolute w-9 h-9 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 right-0 text-gray-200 Tablet:w-5 Tablet:h-5 Mobile:w-[17px] Mobile:h-[17px] " />
             </label>
           </>
