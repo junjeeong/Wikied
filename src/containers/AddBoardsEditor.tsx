@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import CustomToolbar from "@/components/CustomToolbar";
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo,useEffect } from "react";
 import { stripHTML, calculateCharCount } from "@/utils/calculatedCharCount";
 import { patchArticle, postArticle } from "@/api/article";
 import ImageAddModalContainer from "./ImageAddModalContainer";
