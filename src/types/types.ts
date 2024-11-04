@@ -87,4 +87,13 @@ export interface User {
   updatedAt: string;
   createdAt: string;
   profile: UserProfile | null;
+
 }
+
+export interface PatchArticleProps {
+  articleId: number;
+  body: {
+    image: string;
+    content: string;
+    title: string;
+  };

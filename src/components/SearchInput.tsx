@@ -6,6 +6,7 @@ interface SearchInputProps {
   onSubmit: FormEventHandler;
   onChange?: ChangeEventHandler;
   value?: string;
+  placeholder?: string;
 }
 
 export const SearchInput = ({
@@ -13,6 +14,7 @@ export const SearchInput = ({
   onSubmit,
   onChange,
   value,
+  placeholder = "이름으로 위키 찾기",
 }: SearchInputProps) => {
   const sizes = {
     large: "w-[860px] h-[45px]",
@@ -28,7 +30,7 @@ export const SearchInput = ({
         <input
           className={`${style} p-[8px] pl-[56px] pr-[128px] border-none rounded-lg shadow-md bg-gray-100 text-gray-500 text-md focus:outline-green-100 placeholder:text-gray-400`}
           type="text"
-          placeholder="이름으로 위키 찾기"
+          placeholder={placeholder}
           onChange={onChange}
           value={value}
         />

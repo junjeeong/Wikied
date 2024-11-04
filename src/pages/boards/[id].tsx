@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import { getArticle } from "@/api/article";
 import { Article } from "@/types/types";
 import { useEffect, useState } from "react";
-import BoardsLayout from "@/components/Layout/BoardsLayout";
-import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
+import ArticleDetailContainer from "@/containers/ArticleDetailContainer";
+import BoardsDetailLayout from "@/components/Layout/BoardsDetailLayout";
 
 const BoardsDetailPage = () => {
   const [article, setArticle] = useState<Article | null>(null);
@@ -31,17 +32,21 @@ const BoardsDetailPage = () => {
   }, [articleId, router.isReady]);
 
   if (!article) {
-    return <div>게시글을 찾을 수 없습니다.</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
     <>
       {isLoading && <LoadingSpinner />}
 
-      <BoardsLayout>
+      <BoardsDetailLayout>
         <ArticleDetailContainer article={article} articleId={articleId} />
         <ArticleCommentContainer articleId={articleId} />
-      </BoardsLayout>
+      </BoardsDetailLayout>
     </>
   );
 };

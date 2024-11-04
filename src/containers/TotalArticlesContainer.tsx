@@ -7,17 +7,20 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { TotalArticlesContainerProps } from "@/types/types";
 import useViewport from "@/hooks/useViewport";
+import useNotify from "@/hooks/useNotify";
 
 const TotalArticlesContainer = ({
   totalArticles: initialTotalArticles,
   totalCount,
 }: TotalArticlesContainerProps) => {
   const [inputValue, setInputValue] = useState("");
-  // const [isLoading, setIsLoading] = useState(false); 로딩 처리를 인덱스에서 해야함
-  const totalPage = Math.ceil(totalCount / 10);
   const router = useRouter();
+  const notify = useNotify();
 
-  const { isPC } = useViewport();
+  const totalPage = Math.ceil(totalCount / 10);
+  const currentPage = router.query.page ? Number(router.query.page) : 1;
+
+  const { isPC, isMobile } = useViewport();
   const size = isPC ? "medium" : "small";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +33,11 @@ const TotalArticlesContainer = ({
       pathname: router.pathname,
       query: { ...router.query, keyword: inputValue, page: 1 },
     });
+
+    if (!inputValue.trim()) {
+      notify("검색어를 입력해주세요", "warning");
+      return;
+    }
   };
 
   const handleButtonClick = () => {
@@ -37,6 +45,11 @@ const TotalArticlesContainer = ({
       pathname: router.pathname,
       query: { ...router.query, keyword: inputValue, page: 1 },
     });
+
+    if (!inputValue.trim()) {
+      notify("검색어를 입력해주세요", "warning");
+      return;
+    }
   };
 
   const handleOrderChange = (orderValue: string) => {
@@ -53,6 +66,8 @@ const TotalArticlesContainer = ({
     });
   };
 
+  const currentPage = router.query.page ? Number(router.query.page) : 1;
+
   return (
     <div className="my-[60px]">
       <div className="flex gap-[20px] items-center Mobile:flex-col">
@@ -62,10 +77,13 @@ const TotalArticlesContainer = ({
             value={inputValue}
             onChange={handleInputChange}
             onSubmit={handleInputSubmit}
+            placeholder="제목으로 게시글 찾기"
           />
-          <FilledButton size={size} onClick={handleButtonClick}>
-            검색
-          </FilledButton>
+          {!isMobile && (
+            <FilledButton size={size} onClick={handleButtonClick}>
+              검색
+            </FilledButton>
+          )}
         </div>
         <div>
           <OrderDropdown
@@ -78,7 +96,7 @@ const TotalArticlesContainer = ({
       <div className="my-[60px] flex justify-center">
         <PaginationBar
           totalPage={totalPage}
-          currentPage={Number(router.query.page)}
+          currentPage={currentPage}
           handlePageChange={handlePageChange}
           isLoading={false}
         />

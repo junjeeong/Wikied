@@ -21,10 +21,7 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
-  const res = await axios.post("/api/signIn", {
-    email: body.email,
-    password: body.password,
-  });
+  const res = await instance.post("/auth/signIn", body);
   return res.data;
 };
 

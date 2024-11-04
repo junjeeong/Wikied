@@ -43,7 +43,7 @@ const BestArticles = ({ bestArticles }: BestArticlesProps) => {
           <Link href={`/boards/${article.id}`}>
             <li
               key={article.id}
-              className="h-[220px] shadow-[0_4px_20px_#00000014] rounded-[10px] cursor-pointer overflow-hidden"
+              className="h-[220px] shadow-[0_4px_20px_#00000014] rounded-[10px] cursor-pointer overflow-hidden hover:scale-105"
             >
               <div className="relative h-[131px]">
                 <Image
