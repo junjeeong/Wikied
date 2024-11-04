@@ -1,14 +1,14 @@
 const ReactModule = () => {
   return (
     // <div className="flex items-center justify-center gap-[15px]">
-    <div className="wikiToolBar">
-      <button type="button" className="ql-bold" />
-      <button type="button" className="ql-italic" />
-      <button type="button" className="ql-underline" />
-      <button type="button" className="ql-blockquote" />
-      <button type="button" className="ql-code-block" />
-
-      <span className="ql-separator" />
+    <div className="wikiToolBar ">
+      <span className="ql-formats">
+        <button type="button" className="ql-bold" />
+        <button type="button" className="ql-italic" />
+        <button type="button" className="ql-underline" />
+        <button type="button" className="ql-blockquote" />
+        <button type="button" className="ql-code-block" />
+      </span>
 
       <span className="ql-formats">
         <select className="ql-header" defaultValue="7">
@@ -17,25 +17,26 @@ const ReactModule = () => {
           <option value="7">본문</option>
         </select>
       </span>
-      <button type="button" className="ql-list" value="ordered" />
-      <button type="button" className="ql-list" value="bullet" />
+      <span className="ql-formats">
+        <button type="button" className="ql-list" value="ordered" />
+        <button type="button" className="ql-list" value="bullet" />
+      </span>
 
-      <span className="ql-separator" />
+      <span className="ql-formats">
+        <button type="button" className="ql-align" value="" />
+        <button type="button" className="ql-align" value="center" />
+        <button type="button" className="ql-align" value="right" />
+      </span>
 
-      <button type="button" className="ql-align" value="" />
-      <button type="button" className="ql-align" value="center" />
-      <button type="button" className="ql-align" value="right" />
+      <span className="ql-formats">
+        <select className="ql-color" />
+        <select className="ql-background" />
+      </span>
 
-      <span className="ql-separator" />
-
-      <select className="ql-color" />
-      <select className="ql-background" />
-
-      <span className="ql-separator" />
-
-      <button type="button" className="ql-image" />
-      <button type="button" className="ql-video" />
-      <button type="button" className="ql-link" />
+      <span className="ql-formats">
+        <button type="button" className="ql-image" />
+        <button type="button" className="ql-link" />
+      </span>
     </div>
   );
 };
