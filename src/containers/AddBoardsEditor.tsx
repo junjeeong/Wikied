@@ -1,19 +1,19 @@
-import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
-import CustomToolbar from "@/components/CustomToolbar";
-import { useState, useRef, useMemo,useEffect } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { stripHTML, calculateCharCount } from "@/utils/calculatedCharCount";
-import { patchArticle, postArticle } from "@/api/article";
+import { postArticle } from "@/api/article";
+import { useRouter } from "next/router";
+import { ImageActions } from "@xeger/quill-image-actions";
+import { ImageFormats } from "@xeger/quill-image-formats";
+import { Article, PatchArticleProps } from "@/types/types";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+import CustomToolbar from "@/components/CustomToolbar";
 import ImageAddModalContainer from "./ImageAddModalContainer";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import CountSpace from "@/components/AddBoardsCountSpace";
 import AddBordsTitle from "@/components/AddBoardsTitle";
 import AddBoardsRegisterSection from "@/components/AddBoardsRegisterSection";
-import { useRouter } from "next/router";
-import { ImageActions } from "@xeger/quill-image-actions";
-import { ImageFormats } from "@xeger/quill-image-formats";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
-import { Article, PatchArticleProps } from "@/types/types";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -179,7 +179,6 @@ const AddBoardsEditor = ({
         articleId ? "" : "min-h-screen Tablet:px-[60px] Mobile:px-5"
       }`}
     >
-
       <div className="w-full max-w-[1060px] min-h-[846px] px-[30px] pt-[46px] pb-[40px] shadow-[0_4px_20px_#00000014]">
         <AddBoardsRegisterSection
           onSubmit={onSubmit}

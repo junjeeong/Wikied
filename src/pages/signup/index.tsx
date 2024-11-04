@@ -7,11 +7,10 @@ import SignUpFormContainer from "@/containers/SignUpFormContainer";
 import { useEffect } from "react";
 import useAuthStore from "@/store/AuthStore";
 
-
 const SignUp = () => {
   const router = useRouter();
   const notify = useNotify();
-  const {isLoggedIn, user} = useAuthStore()
+  const { isLoggedIn, user } = useAuthStore();
 
   const onSubmit = async (data: InputValues) => {
     try {

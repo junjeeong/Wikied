@@ -1,5 +1,6 @@
 import { patchUser } from "@/api/user";
 import { useRouter } from "next/router";
+import { PatchUserQuery } from "../api/user";
 import useNotify from "./useNotify";
 import useAuthStore from "@/store/AuthStore";
 
@@ -8,7 +9,7 @@ const useChangePassword = () => {
   const router = useRouter();
   const { logout } = useAuthStore.getState();
 
-  const changePassword = async (data) => {
+  const changePassword = async (data: PatchUserQuery) => {
     await patchUser(data);
     notify("비밀번호 변경에 성공했습니다. 다시 로그인 해주세요.", "success");
     logout();

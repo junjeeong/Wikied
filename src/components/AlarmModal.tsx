@@ -15,8 +15,6 @@ const AlarmModal = ({
   newAlarmExist,
   setNewAlarmExist,
 }: AlarmModalProps) => {
-
-
   return (
     <>
       <Alarm

@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST":
       // 프로필 수정 중 갱신 로직
-      const { code } = req.query.body;
+      const { code } = req.query.body as { code?: string };
       try {
         const response = await instance.post(
           `/profiles/${code}/ping`,

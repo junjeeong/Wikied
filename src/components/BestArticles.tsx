@@ -1,23 +1,23 @@
 import { BestArticlesProps } from "@/types/types";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import FilledButton from "./ui/Button/FilledButton";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const BestArticles = ({ bestArticles }: BestArticlesProps) => {
   const [articles, setArticles] = useState(bestArticles);
   const [isMobile, setIsMobile] = useState(false);
 
-  const getArticles = () => {
+  const getArticles = useCallback(() => {
     const width = window.innerWidth;
     if (width < 767) {
-      setArticles(bestArticles.slice(0, 1)); //
+      setArticles(bestArticles.slice(0, 1));
       setIsMobile(true);
     } else {
       setArticles(bestArticles);
       setIsMobile(false);
     }
-  };
+  }, [bestArticles]);
 
   useEffect(() => {
     setArticles(bestArticles);
@@ -28,7 +28,7 @@ const BestArticles = ({ bestArticles }: BestArticlesProps) => {
     return () => {
       window.removeEventListener("resize", getArticles);
     };
-  }, [bestArticles]);
+  }, [bestArticles, getArticles]);
 
   const size = isMobile ? "small" : "medium";
 

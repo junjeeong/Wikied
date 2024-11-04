@@ -7,7 +7,6 @@ interface QuizModalProps {
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errorMessage: string;
   handleSubmit: () => void;
-
 }
 
 const QuizModal = ({

@@ -20,15 +20,15 @@ const QuizSettingsFormContainer = ({ onSubmit }: QuizSettingsFormProps) => {
     mode: "onSubmit",
   });
 
- const handleFormSubmit = async (data: QuizSettingsFormValues) => {
-   await onSubmit(data);
- };
+  const handleFormSubmit = async (data: QuizSettingsFormValues) => {
+    await onSubmit(data);
+  };
 
-const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  if (event.key === "Enter") {
-    handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
-  }
-};
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen -mt-[80px] Mobile:px-5 bg-background">

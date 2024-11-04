@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import useAuthStore from "@/store/AuthStore";
 import { PatchBody, UserProfile } from "@/types/types";
 import {
   getProfilePing,
@@ -10,7 +9,7 @@ import {
   patchProfile,
   postProfilePing,
 } from "@/api/profile";
-import ProfileCard from "@/components/ProfileCard";
+import useAuthStore from "@/store/AuthStore";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import WikiProfileTitle from "@/components/WikiProfileTitle";
 import useViewport from "@/hooks/useViewport";
@@ -170,9 +169,12 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   // 편집 시작 시 5분 타이머 시작
   useEffect(() => {
     if (isEditing) {
-      const timer = setTimeout(() => {
-        setDisconnectModalOpen(true);
-      }, 5 * 60 * 1000);
+      const timer = setTimeout(
+        () => {
+          setDisconnectModalOpen(true);
+        },
+        5 * 60 * 1000
+      );
       return () => clearTimeout(timer);
     }
   }, [isEditing]);
@@ -202,7 +204,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     const updatedProfile = await getUserProfile(code);
 
     setUserProfile(updatedProfile?.data);
-  }, []);
+  }, [code]);
 
   useEffect(() => {
     if (!initialProfile) {

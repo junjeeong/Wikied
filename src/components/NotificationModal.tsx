@@ -1,10 +1,8 @@
-import { timeDiff,getDotColor } from "@/utils/timeDiff";
+import { timeDiff, getDotColor } from "@/utils/timeDiff";
 import { useMemo } from "react";
 import { deleteNotifications } from "@/api/notification";
 import Dot from "/public/icons/ic_dot.svg";
 import Close from "/public/icons/ic_close.svg";
-
-
 
 interface NotificationModalProps {
   createdAt: string;

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ShareSVG from "/public/icons/ic_share.svg";
 import ProfileSVG from "/public/icons/ic_profile.svg";
+import { MouseEvent } from "react"; // MouseEvent를 React에서 가져옵니다.
 
 interface Profile {
   id: number;
@@ -19,7 +20,8 @@ interface WikiCardProps {
 }
 
 const WikiCard = ({ info }: WikiCardProps) => {
-  const handleClick = (e: MouseEvent) => {
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
+    // MouseEvent의 제네릭 타입을 사용합니다.
     alert("공유하기 기능 구현중....");
   };
 

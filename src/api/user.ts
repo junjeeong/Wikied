@@ -1,6 +1,6 @@
 import { proxy } from "./axios";
 
-interface PatchUserQuery {
+export interface PatchUserQuery {
   passwordConfirmation: string;
   password: string;
   currentPassword: string;

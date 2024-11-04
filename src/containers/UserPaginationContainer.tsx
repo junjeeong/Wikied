@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProfiles } from "@/api/profile";
 import PaginationBar from "@/components/PaginationBar";
-// import ProfileList from "@/components/ProfileList";
 
 interface Data {
   name: string;
@@ -22,7 +21,7 @@ const UserPaginationContainer = () => {
   const [data, setData] = useState<Data[]>([]);
   const [totalPage, setTotalPage] = useState<number>(0);
 
-  let userName = "김진"; // 스토어에서 가져오기
+  let userName = "김진";
 
   useEffect(() => {
     const fetchData = async (query: Query) => {
@@ -35,7 +34,7 @@ const UserPaginationContainer = () => {
       pageSize: 3,
       name: userName,
     });
-    setIsLoading(false); //데이터 가져온 후 로딩 끝
+    setIsLoading(false);
   }, [userName, currentPage]);
 
   const handlePageChange = (page: number) => {
@@ -45,13 +44,11 @@ const UserPaginationContainer = () => {
 
   return (
     <>
-      {/* <ProfileList data={data} /> css미완성 */}
       <PaginationBar
         totalPage={totalPage}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
         isLoading={isLoading}
-        maxPage={5}
       ></PaginationBar>
     </>
   );

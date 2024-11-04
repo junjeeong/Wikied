@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import ReactModule from "./ReactModule";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { postImage } from "@/api/image";
 import { useFormContext } from "react-hook-form";
 import ReactQuill from "react-quill";
-import { postImage } from "@/api/image";
+import ReactModule from "./ReactModule";
 
 interface TextEditorProps {
   contentData: string;
 }
+
 const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
   const { setValue } = useFormContext();
   const quillRef = useRef<ReactQuill | null>(null);
@@ -14,9 +15,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
   useEffect(() => {
     const editor = quillRef.current?.getEditor();
     if (editor) {
-      const container = editor.container.firstChild; // 에디터의 첫 번째 자식 요소
-      container.classList.add("prose"); // prose 클래스 추가
-      container.classList.add("max-w-none");
+      const editorContainer = editor.root; // root 속성에 접근
+      editorContainer.classList.add("prose"); // prose 클래스 추가
+      editorContainer.classList.add("max-w-none");
     }
   }, []);
 
@@ -44,7 +45,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
     return fileName.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
   };
 
-  const imageHandler = () => {
+  const imageHandler = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
@@ -88,9 +89,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
         console.log(error);
       }
     });
-  };
+  }, []);
 
-  const modules: {} = useMemo(
+  const modules = useMemo(
     () => ({
       toolbar: {
         container: "#toolBar",

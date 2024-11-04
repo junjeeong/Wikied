@@ -1,4 +1,4 @@
-import Arrow from "../../public/icons/ic_arrow_bottom2.svg"
+import Arrow from "../../public/icons/ic_arrow_bottom2.svg";
 
 interface PaginationBarProps {
   totalPage: number;
@@ -13,8 +13,7 @@ const PaginationBar = ({
   handlePageChange,
   isLoading,
 }: PaginationBarProps) => {
-
-  if (totalPage <=1) return null
+  if (totalPage <= 1) return null;
   let startPage;
   let calNum;
 

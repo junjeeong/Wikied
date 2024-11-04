@@ -5,12 +5,16 @@ import { postImage } from "@/api/image";
 import ModalOverlay from "@/components/ModalOverlay";
 
 interface ImageAddModalProps {
-  isOpen:boolean;
+  isOpen: boolean;
   onClose: () => void;
-  onImageUpload: (url:string) => void; //부모 페이지에서 보여주기 위해 전달
+  onImageUpload: (url: string) => void; //부모 페이지에서 보여주기 위해 전달
 }
 
-const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalProps) => {
+const ImageAddModalContainer = ({
+  isOpen,
+  onClose,
+  onImageUpload,
+}: ImageAddModalProps) => {
   const [preview, setPreview] = useState<string>(""); //미리보기
   const [file, setFile] = useState<File | null>(null); //post 보낼 file
   const [failedMsg, setFailedMsg] = useState<string>("");
@@ -20,7 +24,7 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       if (preview) {
-        URL.revokeObjectURL(preview)
+        URL.revokeObjectURL(preview);
       }
       const localPreview = URL.createObjectURL(selectedFile);
       setPreview(localPreview);
@@ -42,22 +46,22 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
       }
 
       const newFileName = convertFileName(file.name);
-      const newFile = new File([file], newFileName, { type: file.type})
+      const newFile = new File([file], newFileName, { type: file.type });
       const formData = new FormData();
       formData.append("image", newFile);
 
       try {
         const res = await postImage(formData);
         onClose();
-        setPreview("")
+        setPreview("");
         if (res && res.url) {
-          onImageUpload(res.url)
+          onImageUpload(res.url);
         }
       } catch (error) {
         setFailedMsg("이미지 업로드에 실패했습니다.");
       } finally {
-        setPreview("")
-        setFailedMsg("")
+        setPreview("");
+        setFailedMsg("");
       }
     }
   };
@@ -67,8 +71,8 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
       if (preview) {
         URL.revokeObjectURL(preview);
       }
-    }
-  },[preview])
+    };
+  }, [preview]);
 
   return (
     <>

@@ -16,7 +16,7 @@ const Login = () => {
       setSubmitError(errorMsg);
       return;
     } else {
-      clearSubmitError()
+      clearSubmitError();
       const user = useAuthStore.getState().user;
       if (user?.profile !== null) {
         router.push(`/wiki/${user?.name}`);
