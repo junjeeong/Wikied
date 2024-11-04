@@ -57,6 +57,7 @@ const ImageAddModalContainer = ({ isOpen,onClose,onImageUpload }: ImageAddModalP
         setFailedMsg("이미지 업로드에 실패했습니다.");
       } finally {
         setPreview("")
+        setFailedMsg("")
       }
     }
   };
