@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
     default:
-      res.setHeader("Allow", ["POST", "PATCH"]);
+      res.setHeader("Allow", ["POST"]);
       return res.status(405).end(`메서드 ${req.method}는 허용되지 않습니다.`);
   }
 };

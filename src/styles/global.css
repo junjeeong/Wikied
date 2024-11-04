@@ -6,6 +6,7 @@
 /* @tailwind utilities : 유틸리티 클래스 로드 */
 @tailwind utilities;
 
+/* 폰트 설정 */
 @font-face {
   font-family: "Pretendard";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
@@ -22,6 +23,7 @@
   font-style: normal;
 }
 
+/* 기본 스타일 설정 */
 @layer base {
   html,
   body {
@@ -52,6 +54,46 @@
   }
 }
 
+/* 포커스 스타일 */
+:focus {
+  @apply outline-green-200;
+}
+
+/* 공통 클래스 */
+.divider {
+  @apply w-full border border-gray-50;
+}
+
+/* 마이페이지 스타일 */
+.mypage-input {
+  @apply w-full h-[45px] py-[20px] px-[16px] rounded-xl bg-gray-50 text-sm;
+}
+
+.mypage-button {
+  @apply mt-[16px] ml-auto px-[20px] py-[11px] text-sm font-bold text-gray-50 bg-green-200 rounded-[10px];
+}
+
+/* 에러 메시지 스타일 */
+.errormessage {
+  @apply pl-[8px] text-red-500 text-sm;
+}
+
+/* 섹션 패딩 스타일 */
+.section-padding {
+  @apply py-[100px] Tablet:py-[160px] PC:py-[200px];
+}
+
+/* 섹션 제목 스타일 */
+.section-title {
+  @apply font-bold text-green-200 text-[10px] leading-[11.5px] Tablet:text-[20px] Tablet:leading-[23px] PC:text-[30px] PC:leading-[34.5px];
+}
+
+/* 섹션 부제목 스타일 */
+.section-subtitle {
+  @apply text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px];
+}
+
+/* 컴포넌트 스타일 */
 @layer components {
   .section-padding {
     @apply py-[100px] Tablet:py-[160px] PC:py-[200px];
