@@ -106,10 +106,9 @@ const LoginDropdown = () => {
               자유게시판
             </MenuItem>
           )}
-          {isMobile && <MenuItem onClick={handleToggle}>알림</MenuItem>}
           <MenuItem
             className="text-red-500"
-            href="#"
+            href="/login"
             onClick={() => {
               handleToggle();
               logout();
