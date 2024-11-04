@@ -85,29 +85,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   };
 
   // 퀴즈 모달에서 정답을 맞추면
-  const handleQuizSuccess = async (registeredAt: string) => {
+  const handleQuizSuccess = (registeredAt: string) => {
     setRegisteredAt(registeredAt);
     setIsEditing(true);
-
-    const updatedData: PatchBody = {
-      securityAnswer: "고양이",
-      securityQuestion: userProfile.securityQuestion,
-      nationality: userProfile.nationality,
-      family: registeredAt,
-      bloodType: userProfile.bloodType,
-      nickname: userProfile.nickname,
-      birthday: userProfile.birthday,
-      sns: userProfile.sns,
-      job: userProfile.job,
-      mbti: userProfile.mbti,
-      city: userProfile.city,
-      image: userProfile.image,
-      content: userProfile.content,
-    };
-
-    console.log(registeredAt);
-    console.log("updatedData: ", updatedData);
-    await patchProfile({ code, body: updatedData });
   };
 
   const closeQuizModal = () => {
@@ -117,16 +97,18 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   // 위키 참여하기 버튼을 누르면
   const handleEdit = async () => {
     const res = await getUserProfile(code);
+    setUserProfile(res?.data);
     // 해당 위키 페이지가 수정 중인지 확인
     const getPingData = await getProfilePing(code);
     console.log(getPingData);
 
     // status = 200 -> 누군가 편집 중
     if (getPingData?.status === 200) {
-      console.log(registeredAt);
-      console.log(res?.data.family);
-      if (getPingData.data.registeredAt === res?.data.family) {
-        console.log(quizModalOpen);
+      const updatedTime = new Date(userProfile.updatedAt);
+      const registeredTime = new Date(getPingData.data.registeredAt);
+      console.log(updatedTime);
+      console.log(registeredTime);
+      if (updatedTime > registeredTime) {
         setQuizModalOpen(true);
       } else {
         // 누군가 수정중이라고 토스트와 함께 해당시간동안 위키참여하기 버튼 비활성화.
@@ -145,7 +127,6 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     else {
       // 퀴즈 모달을 띄운다
       console.log(getPingData?.status);
-      console.log(quizModalOpen);
       setQuizModalOpen(true);
     }
   };
@@ -164,6 +145,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     }
   }, [registeredAt]);
 
+  // 편집 시작 시 5분 타이머 시작
   useEffect(() => {
     if (isEditing) {
       const timer = setTimeout(() => {
@@ -177,8 +159,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     // PATCH profile/{code} 로 유저 프로필 정보 수정
     const editedUserProfile = {
       ...data,
-      family: registeredAt,
+      family: "",
       securityQuestion: userProfile.securityQuestion,
+      // 이후 퀴즈모달 PR 완료되면 모달에서 퀴즈답안 받아서 수정
       securityAnswer: "고양이",
       image: imageUrl,
     };

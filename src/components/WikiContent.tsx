@@ -6,7 +6,7 @@ interface WikiContentProps {
   onClick: () => void;
 }
 
-const NoSSRContent = dynamic(() => import("@/utils/ssrContent"), {
+const NoSSRContent = dynamic(() => import("@/utils/NoSSRContent"), {
   ssr: false,
 });
 

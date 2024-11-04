@@ -4,7 +4,7 @@ interface NoSSRContentProps {
   content: string;
 }
 
-const SsrContent = ({ content }: NoSSRContentProps) => {
+const NoSsrContent = ({ content }: NoSSRContentProps) => {
   const cleanContent = sanitizeHtml(content);
 
   return (
@@ -17,4 +17,4 @@ const SsrContent = ({ content }: NoSSRContentProps) => {
   );
 };
 
-export default SsrContent;
+export default NoSsrContent;
