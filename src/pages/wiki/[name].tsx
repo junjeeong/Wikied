@@ -102,7 +102,8 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   const handleCancel = async () => {
     await postProfilePing({ securityAnswer: quizAnswer }, code);
     const data = getUpdatedPatchBody();
-    await patchProfile({ code, body: data });
+    const res = await patchProfile({ code, body: data });
+    setUserProfile({ userProfile, ...res });
     setIsEditing(false);
     reset();
   };
@@ -129,6 +130,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     if (getPingData?.status === 200) {
       const updatedTime = new Date(userProfile.updatedAt);
       const registeredTime = new Date(getPingData.data.registeredAt);
+
       if (updatedTime > registeredTime) {
         setQuizModalOpen(true);
       } else {
@@ -175,6 +177,10 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     }
   }, [isEditing]);
 
+  useEffect(() => {
+    setUserProfile(initialProfile);
+  }, [initialProfile]);
+
   const onSubmit = async (data: any) => {
     // PATCH profile/{code} 로 유저 프로필 정보 수정
     const editedUserProfile = {
@@ -208,7 +214,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="relative flex justify-center w-full h-full mb-20"
+        className="relative flex justify-center w-full h-full mb-[40px]"
       >
         <div
           className={`${

@@ -12,6 +12,11 @@ interface PostProfileQuery {
   securityQuestion: string;
 }
 
+interface PatchProfileQuery {
+  securityAnswer: string;
+  securityQuestion: string;
+}
+
 interface PostProfilePingQuery {
   securityAnswer: string;
 }

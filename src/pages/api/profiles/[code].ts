@@ -5,6 +5,7 @@ import instance from "@/api/axios";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
+  console.log("액세스 토큰:", accessToken);
 
   const { code } = req.query;
   if (!code) {
@@ -20,10 +21,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         });
         return res.status(200).json(response.data);
       } catch (err) {
-        console.error(err);
         return res.status(500).json({ message: "프로필 수정에 실패했습니다." });
       }
-
     case "POST":
       // 프로필 수정 중 갱신 로직
       try {
@@ -36,7 +35,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         );
         return res.status(201).json(response.data);
       } catch (err) {
-        console.error(err);
         return res
           .status(500)
           .json({ message: "프로필 수정 중 갱신에 실패했습니다." });

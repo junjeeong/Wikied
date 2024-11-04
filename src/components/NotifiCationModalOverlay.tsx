@@ -16,25 +16,22 @@ const NotificationModalOverlay = ({
   onClose,
   children,
 }: ModalProps) => {
-  
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (e:MouseEvent) => {
+  const handleClickOutside = (e: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
     }
-  }
+  };
 
-  useEffect(()=> {
-    document.addEventListener("mousedown",handleClickOutside);
-    return ()=> {
-      document.removeEventListener("mousedown",handleClickOutside);
-    }
-  },[])
-  console.log(modalRef)
-  
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   if (!isOpen) return null;
-
 
   return (
     <>
@@ -48,7 +45,7 @@ const NotificationModalOverlay = ({
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-5 right-5 bg-cover w-6 h-6"
+            className="absolute w-6 h-6 bg-cover top-5 right-5"
           >
             <CloseBtn className="text-notice-text" />
           </button>
