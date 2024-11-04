@@ -9,7 +9,7 @@ interface FormInputProps {
   submitError?: string;
   register: UseFormRegisterReturn;
   onError?: () => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const FormInput = ({
