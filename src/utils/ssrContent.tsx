@@ -9,6 +9,7 @@ const SsrContent = ({ content }: NoSSRContentProps) => {
 
   return (
     <div
+      className="prose max-w-none"
       dangerouslySetInnerHTML={{
         __html: cleanContent,
       }}

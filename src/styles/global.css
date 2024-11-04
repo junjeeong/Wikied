@@ -109,6 +109,7 @@
 .ql-container.ql-snow .ql-editor {
   padding-left: 0;
   min-height: 540px;
+  width: 100%;
   font-size: 16px;
   font-family: "Pretendard", "NEXON";
 }
@@ -120,6 +121,31 @@
   font-weight: 400;
   line-height: 32px;
 }
-.ql-toolbar.ql-snow {
-  border-radius: 21.5px;
+
+#Quill .prose {
+  margin-top: 0;
+  margin-bottom: 0;
+  a {
+    color: #4cbfa4;
+  }
+  .ql-toolbar.ql-snow {
+    border-radius: 21.5px;
+  }
+  .ql-align-center {
+    text-align: center;
+  }
+  .ql-align-right {
+    text-align: right;
+  }
+  :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+  :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+  :where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+  :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+  :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  :where(h2 + *):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    margin-top: 20px;
+  }
 }

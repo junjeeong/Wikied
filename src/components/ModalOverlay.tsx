@@ -6,11 +6,15 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  handleCancel?: () => void;
 }
 
-const ModalOverlay = ({ isOpen, onClose, children }: ModalProps) => {
-  if (!isOpen) return null;
-
+const ModalOverlay = ({
+  isOpen,
+  onClose,
+  children,
+  handleCancel,
+}: ModalProps) => {
   useEffect(() => {
     if (isOpen) {
       // 모달이 열렸을 때 스크롤 막기
@@ -28,6 +32,15 @@ const ModalOverlay = ({ isOpen, onClose, children }: ModalProps) => {
 
   if (!isOpen) return null;
 
+  const handleClose = () => {
+    if (handleCancel) {
+      handleCancel();
+      onClose();
+    } else {
+      onClose();
+    }
+  };
+
   return (
     <>
       <div
@@ -38,7 +51,7 @@ const ModalOverlay = ({ isOpen, onClose, children }: ModalProps) => {
         <div className="bg-background rounded-[10px] px-5 py-5 relative z-10">
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute w-5 h-5 bg-cover top-5 right-5"
           >
             <CloseBtn className="text-gray-400" />
