@@ -12,7 +12,7 @@ interface PostProfileQuery {
   securityQuestion: string;
 }
 
-interface PostProfilePingQuery {
+export interface PostProfilePingQuery {
   securityAnswer: string;
 }
 

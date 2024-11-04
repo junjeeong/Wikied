@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       // 댓글 등록 로직
       try {
         const response = await instance.patch(
-          `/articles/comments/${commentId}`,
+          `/comments/${commentId}`,
           req.body,
           {
             headers: { Authorization: `Bearer ${accessToken}` },

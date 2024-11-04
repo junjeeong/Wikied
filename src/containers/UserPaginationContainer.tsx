@@ -51,7 +51,6 @@ const UserPaginationContainer = () => {
         currentPage={currentPage}
         handlePageChange={handlePageChange}
         isLoading={isLoading}
-        maxPage={5}
       ></PaginationBar>
     </>
   );
