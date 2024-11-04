@@ -6,7 +6,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
-  const articleId = req.query;
+  const { articleId } = req.query;
   if (!articleId) {
     return res
       .status(400)
