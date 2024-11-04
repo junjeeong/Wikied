@@ -19,14 +19,8 @@ instance.interceptors.response.use(
       originalRequest._retry = true; // 재시도 방지 플래그
 
       try {
-        // 액세스 토큰 갱신 요청
-        const response = await axios.post("/api/refresh-token");
-
-        const newAccessToken = response.data.accessToken;
-
-        // 새로운 액세스 토큰을 상태에 저장
-        useAuthStore.getState().setAccessToken(newAccessToken); // 상태 업데이트
-
+        // 액세스 토큰 갱신 요청 -> 클라이언트의 쿠키가 새로운 액세스 토큰으로 갱신됨
+        await axios.post("/api/refresh-token");
         // 원래 요청 다시 시도
         return instance(originalRequest);
       } catch (err) {

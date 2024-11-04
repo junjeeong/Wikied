@@ -6,7 +6,6 @@ import { User } from "@/types/types";
 
 interface AuthStore {
   user: User | null;
-  accessToken: string | null;
   isLoggedIn: boolean;
   login: (email: string, password: string) => Promise<string | undefined>;
   logout: () => void;
@@ -14,7 +13,6 @@ interface AuthStore {
     securityAnswer: string,
     securityQuestion: string
   ) => Promise<void>;
-  setAccessToken: (token: string) => void;
 }
 
 const useAuthStore = create<AuthStore>((set, get) => ({
@@ -27,7 +25,6 @@ const useAuthStore = create<AuthStore>((set, get) => ({
       if (userData) {
         set({
           user: userData.user,
-          accessToken: userData.accessToken,
           isLoggedIn: true,
         });
       }
@@ -40,7 +37,6 @@ const useAuthStore = create<AuthStore>((set, get) => ({
   logout: () => {
     set({
       user: null,
-      accessToken: null,
       isLoggedIn: false,
     });
   },
@@ -62,7 +58,6 @@ const useAuthStore = create<AuthStore>((set, get) => ({
       });
     }
   },
-  setAccessToken: (token: string) => set({ accessToken: token }),
 }));
 
 export default useAuthStore;
