@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 export const proxy = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://9-3-wikied.vercel.app/",
 });
 
 // 응답 인터셉터
