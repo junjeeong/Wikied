@@ -124,14 +124,11 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     setUserProfile(res?.data);
     // 해당 위키 페이지가 수정 중인지 확인
     const getPingData = await getProfilePing(code);
-    console.log(getPingData);
 
     // status = 200 -> 누군가 편집 중
     if (getPingData?.status === 200) {
       const updatedTime = new Date(userProfile.updatedAt);
       const registeredTime = new Date(getPingData.data.registeredAt);
-      console.log(updatedTime);
-      console.log(registeredTime);
       if (updatedTime > registeredTime) {
         setQuizModalOpen(true);
       } else {
@@ -150,7 +147,6 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     // status = 204 -> 편집 가능한 상태
     else {
       // 퀴즈 모달을 띄운다
-      console.log(getPingData?.status);
       setQuizModalOpen(true);
     }
   };
@@ -191,13 +187,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     };
 
     const response = await patchProfile({ code, body: editedUserProfile });
-    console.log("response: ", response);
 
     setUserProfile(response);
     setIsEditing(false);
-
-    console.log("userProfile: ", userProfile);
-    console.log("이미지URL:", userProfile.content);
   };
 
   const fetchUserProfile = useCallback(async () => {
