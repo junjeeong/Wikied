@@ -40,11 +40,8 @@ const BestArticles = ({ bestArticles }: BestArticlesProps) => {
 
       <ul className="mt-[60px] grid grid-cols-4 Tablet:grid-cols-2 Mobile:grid-cols-1 gap-[16px] ">
         {articles.map((article) => (
-          <Link href={`/boards/${article.id}`}>
-            <li
-              key={article.id}
-              className="h-[220px] shadow-[0_4px_20px_#00000014] rounded-[10px] cursor-pointer overflow-hidden hover:scale-105"
-            >
+          <Link key={article.id} href={`/boards/${article.id}`}>
+            <li className="h-[220px] shadow-[0_4px_20px_#00000014] rounded-[10px] cursor-pointer overflow-hidden hover:scale-105">
               <div className="relative h-[131px]">
                 <Image
                   src={article.image ?? "/public/icons/ic_image.svg"}
@@ -56,7 +53,7 @@ const BestArticles = ({ bestArticles }: BestArticlesProps) => {
                 />
               </div>
               <div className="py-[19px] px-[19px]">
-                <strong className="text-2lg font-semibold text-gray-500">
+                <strong className="font-semibold text-gray-500 text-2lg">
                   {article.title}
                 </strong>
                 <div className="mt-[6px] flex justify-between text-md text-gray-400">

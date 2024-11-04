@@ -191,9 +191,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     };
 
     const response = await patchProfile({ code, body: editedUserProfile });
-    console.log("response: ", response?.data);
+    console.log("response: ", response);
 
-    setUserProfile(response?.data);
+    setUserProfile(response);
     setIsEditing(false);
 
     console.log("userProfile: ", userProfile);
@@ -284,7 +284,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
             </div>
           )}
           {!isEditing && (
-            <div className="mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
+            <div className="ql-editor mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
               <WikiContent content={userProfile.content} onClick={handleEdit} />
             </div>
           )}

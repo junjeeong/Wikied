@@ -69,22 +69,11 @@ export const getUserProfile = async (code: string) => {
   }
 };
 
-// 프로필 수정
 export const patchProfile = async (query: PatchProfileQuery) => {
   const { code, body } = query;
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.patch(`/profiles/${code}`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res;
-  } catch (err) {
-    console.error("프로필 정보를 수정하지 못했습니다.", err);
-    return;
-  }
+  const res = await proxy.patch(`/api/profiles/${code}`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 프로필 수정 중 체크
