@@ -1,6 +1,7 @@
 import instance from "./axios";
 
 interface PostCommentQuery {
+  articleId: number;
   body: {
     content: string;
   };
@@ -25,8 +26,11 @@ export const getComments = async (articleId: number) => {
 };
 
 // 댓글 등록
-export const postComment = async (body: PostCommentQuery) => {
-  const res = await instance.post(`/api/comment`, body);
+export const postComment = async (query: PostCommentQuery) => {
+  const res = await instance.post(
+    `/api/comments/${query.articleId}`,
+    query.body
+  );
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
@@ -34,7 +38,7 @@ export const postComment = async (body: PostCommentQuery) => {
 // 댓글 수정
 export const patchComment = async (query: PatchCommentQuery) => {
   const res = await instance.patch(
-    `/api/comment/${query.commentId}`,
+    `/api/comments/${query.commentId}`,
     query.body
   );
   if (res.status >= 200 && res.status < 300) return res.data;
@@ -42,8 +46,8 @@ export const patchComment = async (query: PatchCommentQuery) => {
 };
 
 // 댓글 삭제
-export const deleteComment = async (commentId: number) => {
-  const res = await instance.delete(`/api/comment/${commentId}`);
+export const deleteComment = async (targetId: number) => {
+  const res = await instance.delete(`/api/comments/${targetId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };

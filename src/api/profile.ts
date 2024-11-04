@@ -86,8 +86,7 @@ export const postProfilePing = async (
   content: PostProfilePingQuery,
   code: string
 ) => {
-  const body = { code: code, content: content };
-  const res = await instance.post(`/api/ping`, body);
+  const res = await instance.post(`/api/profils/${code}`, content);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };

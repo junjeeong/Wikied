@@ -24,13 +24,9 @@ interface patchArticleProps {
 
 // 게시글 등록
 export const postArticle = async (body: postArticleProps) => {
-  try {
-    const res = await instance.post(`/articles`, body);
-    return res.data;
-  } catch (err) {
-    console.error("게시글 등록에 조회하는데 실패했습니다.", err);
-    return {};
-  }
+  const res = await instance.post(`/api/articles/`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 목록 조희
@@ -50,7 +46,7 @@ export const getArticles = async (query: getArticlesProps) => {
 
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
-  const res = await instance.get(`/api/article/${articleId}`);
+  const res = await instance.get(`/api/articles/${articleId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
