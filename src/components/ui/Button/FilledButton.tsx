@@ -23,7 +23,7 @@ const FilledButton = ({
   return (
     <>
       <button
-        className={`bg-green-200 rounded-[10px] text-gray-50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300${
+        className={`bg-green-200 rounded-[10px] text-gray-50 text-[14px] font-semibold leading-[24px] hover:bg-green-100 disabled:bg-gray-300 ${
           sizeClasses[size]
         }  ${fullWidth ? "w-full" : ""}`}
         {...rest}

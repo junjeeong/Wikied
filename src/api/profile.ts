@@ -1,4 +1,4 @@
-import instance from "@/api/axios";
+import instance, { proxy } from "@/api/axios";
 
 interface GetProfilesQuery {
   page?: number;
@@ -63,36 +63,30 @@ export const getUserProfile = async (code: string) => {
   }
 };
 
-// 프로필 생성
-export const postProfile = async (body: PostProfileQuery) => {
-  const token = localStorage.getItem("accessToken");
+// 프로필 수정 중 체크
+export const getProfilePing = async (code: string) => {
   try {
-    const res = await instance.post(`/profiles`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
+    const res = await instance.get(`/profiles/${code}/ping`);
+    return res;
   } catch (err) {
-    console.error("프로필 등록에 실패했습니다.", err);
-    return {};
+    console.error("프로필 핑 요청 중 에러 발생: ", err);
+    return;
   }
 };
 
-// 프로필 수정 중 체크
-export const postProfilePing = async (
-  body: PostProfilePingQuery,
-  code: string
-) => {
-  const token = localStorage.getItem("accessToken");
-
-  const res = await instance.post(`/profiles/${code}/ping`, body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return res;
+// 프로필 생성
+export const postProfile = async (body: PostProfileQuery) => {
+  const res = await proxy.post(`/api/profiles`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
-// 프로필 수정, 프로필 수정 중 갱신 api 구현해야 함
+// 프로필 수정 중 갱신
+export const postProfilePing = async (
+  content: PostProfilePingQuery,
+  code: string
+) => {
+  const res = await proxy.post(`/api/profiles/${code}`, content);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
+};

@@ -1,39 +1,26 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist } from "zustand/middleware"; // persist 미들웨어 import
 import { postSignIn } from "@/api/auth";
-import { AxiosError } from "axios"; // AxiosError import
-
-interface Profile {
-  id: number;
-  code: string;
-}
-
-interface User {
-  id: number;
-  email: string;
-  name: string;
-  teamId: string;
-  updatedAt: string;
-  createdAt: string;
-  profile: Profile | null;
-}
+import { postProfile } from "@/api/profile";
+import { AxiosError } from "axios";
+import { User } from "@/types/types";
 
 interface AuthStore {
   user: User | null;
-  accessToken: string | null;
-  refreshToken: string | null;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => Promise<string | undefined>; //반환 타입 수정
+  login: (email: string, password: string) => Promise<string | undefined>;
   logout: () => void;
-  setAccessToken: (token: string) => void; // Access Token을 업데이트하는 함수 추가
+  updateProfile: (
+    securityAnswer: string,
+    securityQuestion: string
+  ) => Promise<void>;
 }
 
-const useAuthStore = create(
-  persist<AuthStore>(
-    (set) => ({
+// persist 미들웨어에 타입을 추가합니다.
+const useAuthStore = create<AuthStore>()(
+  persist(
+    (set, get) => ({
       user: null,
-      accessToken: null,
-      refreshToken: null,
       isLoggedIn: false,
       login: async (email, password) => {
         try {
@@ -41,12 +28,8 @@ const useAuthStore = create(
           if (userData) {
             set({
               user: userData.user,
-              accessToken: userData.accessToken,
-              refreshToken: userData.refreshToken,
               isLoggedIn: true,
             });
-            localStorage.setItem("accessToken", userData.accessToken);
-            localStorage.setItem("refreshToken", userData.refreshToken);
           }
         } catch (error) {
           if (error instanceof AxiosError) {
@@ -57,20 +40,30 @@ const useAuthStore = create(
       logout: () => {
         set({
           user: null,
-          accessToken: null,
-          refreshToken: null,
           isLoggedIn: false,
         });
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
       },
-      setAccessToken: (token) => {
-        set({ accessToken: token });
-        localStorage.setItem("accessToken", token);
+      updateProfile: async (securityAnswer, securityQuestion) => {
+        const { user } = get();
+        if (user) {
+          const updatedProfileData = await postProfile({
+            securityAnswer,
+            securityQuestion,
+          });
+          set({
+            user: {
+              ...user,
+              profile: {
+                ...user.profile,
+                ...updatedProfileData,
+              },
+            },
+          });
+        }
       },
     }),
     {
-      name: "auto-storage",
+      name: "auth-storage",
     }
   )
 );

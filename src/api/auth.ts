@@ -1,4 +1,4 @@
-import instance from "./axios";
+import instance, { proxy } from "./axios";
 
 interface PostSignUpQuery {
   email: string;
@@ -20,19 +20,6 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
-  const res = await instance.post(`/auth/signIn`, body);
-  return res.data;
-}; 
-
-// 토큰 재갱신
-export const postRefreshToken = async (refreshToken: string) => {
-  try {
-    const res = await instance.post(`/auth/refresh-token`, {
-      refreshToken: refreshToken,
-    });
-    return res.data;
-  } catch (err) {
-    console.error("토큰 재갱신에 실패했습니다.", err);
-    return {};
-  }
+  const res = await proxy.post(`/api/signIn`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
 };

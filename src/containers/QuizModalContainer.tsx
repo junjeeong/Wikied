@@ -1,22 +1,26 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getUserProfile, postProfilePing } from "@/api/profile";
 import { AxiosError } from "axios";
-import QuizModal from "@/components/ui/Modal/QuizModal";
+import QuizModal from "@/components/QuizModal";
 import ModalOverlay from "@/components/ModalOverlay";
-import useAuthStore from "@/store/AuthStore";
 
 interface QuizModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
+  code: string;
+  onSubmitSuccess?: (quizAnswer: string, registerdAt: string) => void;
+
 }
 
-const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
+const QuizModalContainer = ({
+  isOpen,
+  onClose,
+  code,
+  onSubmitSuccess,
+}: QuizModalContainerProps) => {
   const [question, setQuestion] = useState(""); //사용자 질문
   const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
-  const { user } = useAuthStore();
-
-  const code = user?.profile?.code;
 
   useEffect(() => {
     if (code) {
@@ -36,22 +40,30 @@ const QuizModalContainer = ({ isOpen, onClose }: QuizModalContainerProps) => {
   const handleSubmit = async () => {
     try {
       if (code) {
-        await postProfilePing(
-          {
-            securityAnswer: quizAnswer,
-          },
-          code
-        );
+        const res = await postProfilePing({ securityAnswer: quizAnswer }, code);
+       
+        const registeredAt = res?.data?.registeredAt;
+       
+        if (onSubmitSuccess) {
+          onSubmitSuccess(quizAnswer, registeredAt);
+        }
+        setErrorMessage("");
+        onClose();
       }
-      console.log("수정가능"); //수정 페이지로 이동
     } catch (error) {
       if (error instanceof AxiosError) {
         setErrorMessage("정답이 아닙니다. 다시 시도해 주세요.");
       } else {
         console.error(error);
       }
+    } finally {
+      setQuizAnswer("");
     }
   };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <ModalOverlay isOpen={isOpen} onClose={onClose}>

@@ -40,48 +40,50 @@ const BestArticles = ({ bestArticles }: BestArticlesProps) => {
 
       <ul className="mt-[60px] grid grid-cols-4 Tablet:grid-cols-2 Mobile:grid-cols-1 gap-[16px] ">
         {articles.map((article) => (
-          <li
-            key={article.id}
-            className="h-[220px] shadow-[0_4px_20px_#00000014] rounded-[10px] cursor-pointer overflow-hidden"
-          >
-            <div className="relative h-[131px]">
-              <Image
-                src={article.image ?? "/public/icons/ic_image.svg"}
-                fill
-                style={{ objectFit: "cover" }}
-                sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
-                alt={article.title}
-                priority
-              />
-            </div>
-            <div className="py-[19px] px-[19px]">
-              <strong className="text-2lg font-semibold text-gray-500">
-                {article.title}
-              </strong>
-              <div className="mt-[6px] flex justify-between text-md text-gray-400">
-                <div className="flex gap-[8px] ">
-                  <small>{article.writer.name}</small>
-                  <small>
-                    {new Date(article.createdAt).toLocaleDateString()}
+          <Link href={`/boards/${article.id}`}>
+            <li
+              key={article.id}
+              className="h-[220px] shadow-[0_4px_20px_#00000014] rounded-[10px] cursor-pointer overflow-hidden hover:scale-105"
+            >
+              <div className="relative h-[131px]">
+                <Image
+                  src={article.image ?? "/public/icons/ic_image.svg"}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+                  alt={article.title}
+                  priority
+                />
+              </div>
+              <div className="py-[19px] px-[19px]">
+                <strong className="text-2lg font-semibold text-gray-500">
+                  {article.title}
+                </strong>
+                <div className="mt-[6px] flex justify-between text-md text-gray-400">
+                  <div className="flex gap-[8px] ">
+                    <small>{article.writer.name}</small>
+                    <small>
+                      {new Date(article.createdAt).toLocaleDateString()}
+                    </small>
+                  </div>
+                  <small className="flex gap-[4px]">
+                    <Image
+                      src={"/icons/ic_heart.svg"}
+                      width={18}
+                      height={18}
+                      alt="좋아요"
+                    />
+                    {article.likeCount}
                   </small>
                 </div>
-                <small className="flex gap-[4px]">
-                  <Image
-                    src={"/icons/ic_heart.svg"}
-                    width={18}
-                    height={18}
-                    alt="좋아요"
-                  />
-                  {article.likeCount}
-                </small>
               </div>
-            </div>
-          </li>
+            </li>
+          </Link>
         ))}
       </ul>
 
       <div className="absolute top-0 right-0">
-        <Link href={"/"}>
+        <Link href={"/addboard"}>
           <FilledButton size={size}>게시글 등록하기</FilledButton>
         </Link>
       </div>

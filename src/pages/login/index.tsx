@@ -1,18 +1,10 @@
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useAuthStore from "@/store/AuthStore";
-import LoginForm from "@/components/LoginForm";
-import { InputValues } from "@/components/SignUpForm";
+import { InputValues } from "@/containers/SignUpFormContainer";
+import LoginFormContainer from "@/containers/LoginFormContainer";
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-  } = useForm<InputValues>({
-    mode: "onSubmit",
-  });
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
   const { login, isLoggedIn } = useAuthStore();
@@ -25,8 +17,8 @@ const Login = () => {
       return;
     } else {
       const user = useAuthStore.getState().user;
-      if (user?.profile) {
-        router.push(`/wiki/${user.name}`);
+      if (user?.profile !== null) {
+        router.push(`/wiki/${user?.name}`);
       } else {
         router.push("/quiz-settings");
       }
@@ -36,28 +28,24 @@ const Login = () => {
   useEffect(() => {
     if (isLoggedIn) {
       const user = useAuthStore.getState().user;
-      if (user?.profile) {
-        router.push(`/wiki/${user.name}`);
+      if (user?.profile !== null) {
+        router.push(`/wiki/${user?.name}`);
       } else {
         router.push("/quiz-settings");
       }
     }
   }, [isLoggedIn, router]);
 
-  const handleChange = () => {
+  const clearSubmitError = () => {
     setSubmitError("");
   };
+
   return (
-    <>
-      <LoginForm
-        onSubmit={handleSubmit(onSubmit)}
-        register={register}
-        errors={errors}
-        isSubmitting={isSubmitting}
-        submitError={submitError}
-        handleChange={handleChange}
-      />
-    </>
+    <LoginFormContainer
+      onSubmit={onSubmit}
+      submitError={submitError}
+      onClearSubmitError={clearSubmitError}
+    />
   );
 };
 

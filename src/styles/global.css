@@ -1,3 +1,4 @@
+@import "react-quill/dist/quill.snow.css";
 /* @tailwind base : reset CSS 포함 */
 @tailwind base;
 /* @tailwind components : 재사용할 CSS 규칙 */
@@ -8,21 +9,22 @@
 /* 폰트 설정 */
 @font-face {
   font-family: "Pretendard";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "NEXON";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 /* 기본 스타일 설정 */
 @layer base {
-
   html,
   body {
     @apply max-w-full;
@@ -103,5 +105,91 @@
 
   .section-subtitle {
     @apply text-gray-500 text-[16px] leading-[18.4px] Mobile:mt-[10px] Tablet:text-[32px] Tablet:leading-[36.8px] mt-[20px] PC:text-[50px] PC:leading-[57.5px];
+  }
+}
+
+#toolBar {
+  border: none;
+  padding: 16px;
+  font-family: "Pretendard", Helvetica, Arial, sans-serif;
+  scrollbar-width: none;
+}
+#toolBar .ql-formats {
+  margin: 0px;
+}
+#toolBar button {
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  opacity: 0.5;
+}
+#toolBar button:hover,
+#toolBar button.ql-active {
+  background: #e4e5f0;
+  border-radius: 5px;
+  opacity: 1;
+}
+#toolBar .ql-separator {
+  display: inline-block;
+  width: 2px;
+  height: 20px;
+  background-color: #e4e5f0;
+}
+#toolBar .ql-header {
+  width: 80.36px;
+  font-size: 16px;
+  color: #00000060;
+  font-weight: 600;
+}
+.ql-toolbar.ql-snow .ql-header.ql-picker.ql-expanded .ql-picker-label {
+  border: none;
+}
+.quill .ql-container.ql-snow {
+  border: 0;
+}
+
+/* editor 영역: placeholder랑 text 크기 동일하게 맞춤 */
+.ql-container.ql-snow .ql-editor {
+  padding: 0;
+  height: 800px;
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  font-family: "Pretendard", "NEXON";
+}
+
+/* placeholder영역 */
+.ql-container.ql-snow .ql-editor.ql-blank {
+  padding-top: 10px;
+}
+
+/* placeholder text style */
+.ql-container.ql-snow .ql-editor.ql-blank::before {
+  color: #c8cada;
+  font-style: normal;
+  left: 0;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+.ql-toolbar.ql-snow {
+  border-radius: 21.5px;
+}
+
+@media (max-width: 767px) {
+  .ql-container.ql-snow .ql-editor {
+    height: 600px;
+  }
+
+  .ql-container.ql-snow .ql-editor {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .ql-container.ql-snow .ql-editor.ql-blank::before {
+    font-size: 16px;
+    line-height: 26px;
   }
 }
