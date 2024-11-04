@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import cookie from "cookie";
+import { parse, serialize } from "cookie";
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const cookies = cookie.parse(req.headers.cookie || "");
+  const cookies = parse(req.headers.cookie || "");
   const refreshToken = cookies.refreshToken;
   if (!refreshToken) {
     return res.status(400).json({ message: "리프레시 토큰이 없습니다." });
@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         // 쿠키에 액세스 토큰을 설정 (옵션은 필요에 따라 조정)
         res.setHeader(
           "Set-Cookie",
-          cookie.serialize("accessToken", newAccessToken, {
+          serialize("accessToken", newAccessToken, {
             httpOnly: true, // 클라이언트 자바스크립트에서 접근할 수 없도록 설정
             secure: process.env.NODE_ENV === "production", // 프로덕션 환경에서만 secure 플래그 설정
             maxAge: 60 * 60, // 1시간

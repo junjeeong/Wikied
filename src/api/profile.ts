@@ -1,4 +1,4 @@
-import instance from "@/api/axios";
+import instance, { proxy } from "@/api/axios";
 
 interface GetProfilesQuery {
   page?: number;
@@ -63,13 +63,6 @@ export const getUserProfile = async (code: string) => {
   }
 };
 
-// 프로필 생성
-export const postProfile = async (body: PostProfileQuery) => {
-  const res = await instance.post(`/api/profile`, body);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
-};
-
 // 프로필 수정 중 체크
 export const getProfilePing = async (code: string) => {
   try {
@@ -81,12 +74,19 @@ export const getProfilePing = async (code: string) => {
   }
 };
 
+// 프로필 생성
+export const postProfile = async (body: PostProfileQuery) => {
+  const res = await proxy.post(`/api/profiles`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
+};
+
 // 프로필 수정 중 갱신
 export const postProfilePing = async (
   content: PostProfilePingQuery,
   code: string
 ) => {
-  const res = await instance.post(`/api/profils/${code}`, content);
+  const res = await proxy.post(`/api/profiles/${code}`, content);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };

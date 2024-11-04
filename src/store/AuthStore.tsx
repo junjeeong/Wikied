@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware"; // persist 미들웨어 import
 import { postSignIn } from "@/api/auth";
 import { postProfile } from "@/api/profile";
 import { AxiosError } from "axios";
@@ -15,49 +16,56 @@ interface AuthStore {
   ) => Promise<void>;
 }
 
-const useAuthStore = create<AuthStore>((set, get) => ({
-  user: null,
-  accessToken: null,
-  isLoggedIn: false,
-  login: async (email, password) => {
-    try {
-      const userData = await postSignIn({ email, password });
-      if (userData) {
-        set({
-          user: userData.user,
-          isLoggedIn: true,
-        });
-      }
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        return error.response?.data.message;
-      }
-    }
-  },
-  logout: () => {
-    set({
+// persist 미들웨어에 타입을 추가합니다.
+const useAuthStore = create<AuthStore>()(
+  persist(
+    (set, get) => ({
       user: null,
       isLoggedIn: false,
-    });
-  },
-  updateProfile: async (securityAnswer, securityQuestion) => {
-    const { user } = get();
-    if (user) {
-      const updatedProfileData = await postProfile({
-        securityAnswer,
-        securityQuestion,
-      });
-      set({
-        user: {
-          ...user,
-          profile: {
-            ...user.profile,
-            ...updatedProfileData,
-          },
-        },
-      });
+      login: async (email, password) => {
+        try {
+          const userData = await postSignIn({ email, password });
+          if (userData) {
+            set({
+              user: userData.user,
+              isLoggedIn: true,
+            });
+          }
+        } catch (error) {
+          if (error instanceof AxiosError) {
+            return error.response?.data.message;
+          }
+        }
+      },
+      logout: () => {
+        set({
+          user: null,
+          isLoggedIn: false,
+        });
+      },
+      updateProfile: async (securityAnswer, securityQuestion) => {
+        const { user } = get();
+        if (user) {
+          const updatedProfileData = await postProfile({
+            securityAnswer,
+            securityQuestion,
+          });
+          set({
+            user: {
+              ...user,
+              profile: {
+                ...user.profile,
+                ...updatedProfileData,
+              },
+            },
+          });
+        }
+      },
+    }),
+    {
+      name: "auth-storage",
     }
-  },
-}));
+  )
+);
 
 export default useAuthStore;
