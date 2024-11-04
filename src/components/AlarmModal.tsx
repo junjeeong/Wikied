@@ -33,4 +33,4 @@ const AlarmModal = ({
   );
 };
 
-export default AlarmModal; // default export 문법 수정
+export default AlarmModal;
