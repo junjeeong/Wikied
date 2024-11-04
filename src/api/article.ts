@@ -1,13 +1,9 @@
-import instance from "./axios";
+import instance, { proxy } from "./axios";
 
 interface postArticleProps {
   image: string;
   content: string;
   title: string;
-}
-
-interface getArticleProps {
-  articleId: number;
 }
 
 interface getArticlesProps {
@@ -26,21 +22,6 @@ interface patchArticleProps {
   };
 }
 
-type deleteArticleProps = getArticleProps;
-type postArticleLikeProps = getArticleProps;
-type deleteArticleLikeProps = getArticleProps;
-
-// 게시글 등록
-export const postArticle = async (body: postArticleProps) => {
-  try {
-    const res = await instance.post(`/articles`, body);
-    return res.data;
-  } catch (err) {
-    console.error("게시글 등록에 조회하는데 실패했습니다.", err);
-    return {};
-  }
-};
-
 // 게시글 목록 조희
 export const getArticles = async (query: getArticlesProps) => {
   const { page = 1, pageSize = 10, orderBy = "recent", keyword = "" } = query;
@@ -56,82 +37,44 @@ export const getArticles = async (query: getArticlesProps) => {
   }
 };
 
+// 게시글 등록
+export const postArticle = async (body: postArticleProps) => {
+  const res = await proxy.post(`/api/articles/`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
+};
+
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.get(`/articles/${articleId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 상세 조회에 실패했습니다.", err);
-    return {};
-  }
+  const res = await proxy.get(`/api/articles/${articleId}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 수정
 export const patchArticle = async (query: patchArticleProps) => {
-  const { articleId, body } = query;
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.patch(`/articles/${articleId}`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 수정에 실패했습니다.", err);
-    return {};
-  }
+  const res = await proxy.patch(`/api/articles/${query.articleId}`, query.body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 삭제
-export const deleteArticle = async (articleId: deleteArticleProps) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.delete(`/articles/${articleId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 삭제에 실패했습니다.", err);
-    return {};
-  }
+export const deleteArticle = async (articleId: number) => {
+  const res = await proxy.delete(`/api/articles/${articleId}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 좋아요 추가
-export const postArticleLike = async (articleId: postArticleLikeProps) => {
-  try {
-    const res = await instance.post(`/articles/${articleId}/like`);
-    return res.data;
-  } catch (err) {
-    console.error("게시글 좋아요 추가에 실패했습니다.", err);
-    return {};
-  }
+export const postArticleLike = async (articleId: number) => {
+  const res = await proxy.post(`/api/like/${articleId}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async (articleId: deleteArticleLikeProps) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.delete(`/articles/${articleId}/like`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("게시글 좋아요 취소에 실패했습니다.", err);
-    return {};
-  }
+export const deleteArticleLike = async (articleId: number) => {
+  const res = await proxy.delete(`/api/like/${articleId}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };

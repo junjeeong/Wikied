@@ -16,6 +16,7 @@ const Login = () => {
       setSubmitError(errorMsg);
       return;
     } else {
+      clearSubmitError()
       const user = useAuthStore.getState().user;
       if (user?.profile !== null) {
         router.push(`/wiki/${user?.name}`);
@@ -36,7 +37,7 @@ const Login = () => {
     }
   }, [isLoggedIn, router]);
 
-  const handleChange = () => {
+  const clearSubmitError = () => {
     setSubmitError("");
   };
 
@@ -44,7 +45,7 @@ const Login = () => {
     <LoginFormContainer
       onSubmit={onSubmit}
       submitError={submitError}
-      onChange={handleChange}
+      onClearSubmitError={clearSubmitError}
     />
   );
 };

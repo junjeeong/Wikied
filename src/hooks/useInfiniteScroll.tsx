@@ -1,5 +1,5 @@
-import { getProfiles } from "@/api/profile";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getProfiles } from "@/api/profile";
 import { Profile } from "@/types/types";
 
 const useInfiniteScroll = (initialPage: number, initialList: Profile[]) => {
@@ -9,7 +9,7 @@ const useInfiniteScroll = (initialPage: number, initialList: Profile[]) => {
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   const loadMoreProfiles = useCallback(async () => {
-    const newProfiles = await getProfiles({ page: page + 1 });
+    const newProfiles = await getProfiles({ page: page + 1, pageSize: 12 });
 
     if (newProfiles.length === 0) {
       setHasMore(false);

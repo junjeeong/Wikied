@@ -1,44 +1,15 @@
-import instance from "./axios";
-
-interface GetNotificationsQuery {
-  page?: number;
-  pageSize: number;
-}
+import { proxy } from "./axios";
 
 // 알림 목록 조회
-export const getNotifications = async (query: GetNotificationsQuery) => {
-  const { page = 1, pageSize = 10 } = query;
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.get(
-      `/notifications?page=${page}&pageSize=${pageSize}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return res.data; //totalCount 필요
-  } catch (err) {
-    console.error("알림 목록을 불러오지 못했습니다.", err);
-    return []
-  }
+export const getNotifications = async () => {
+  const res = await proxy.get(`/api/notifications/`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return [];
 };
 
 // 알림 삭제
 export const deleteNotifications = async (id: number) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.delete(`/notifications/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("알림 목록을 삭제하는데 실패하였습니다.", err);
-    return {};
-  }
+  const res = await proxy.delete(`/api/notifications/${id}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };

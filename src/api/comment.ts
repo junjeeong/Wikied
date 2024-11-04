@@ -1,9 +1,4 @@
-import instance from "./axios";
-
-interface GetCommentQuery {
-  articleId: number;
-  limit?: number;
-}
+import instance, { proxy } from "./axios";
 
 interface PostCommentQuery {
   articleId: number;
@@ -20,13 +15,9 @@ interface PatchCommentQuery {
 }
 
 // 게시글의 댓글 목록 조회
-export const getComment = async (query: GetCommentQuery) => {
-  const { articleId, limit = 3 } = query;
-
+export const getComments = async (articleId: number) => {
   try {
-    const res = await instance.get(
-      `/articles/${articleId}/comments?limit=${limit}`
-    );
+    const res = await instance.get(`/articles/${articleId}/comments?limit=7`);
     return res.data.list;
   } catch (err) {
     console.error("댓글 목록을 불러오지 못했습니다.", err);
@@ -36,53 +27,21 @@ export const getComment = async (query: GetCommentQuery) => {
 
 // 댓글 등록
 export const postComment = async (query: PostCommentQuery) => {
-  const { articleId, body } = query;
-  const token = localStorage.getItem("accesToken");
-
-  try {
-    const res = await instance.post(`/articles/${articleId}/comments`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("댓글을 등록하는데 실패했습니다.", err);
-    return {};
-  }
+  const res = await proxy.post(`/api/articles/${query.articleId}`, query.body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 댓글 수정
 export const patchComment = async (query: PatchCommentQuery) => {
-  const { commentId, body } = query;
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.patch(`/comments/${commentId}`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("댓글을 수정하는데 실패했습니다.", err);
-    return {};
-  }
+  const res = await proxy.patch(`/api/comments/${query.commentId}`, query.body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 댓글 삭제
-export const deleteComment = async (commentId: number) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.delete(`/comments/${commentId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("댓글을 삭제하는데 실패했습니다.", err);
-    return {};
-  }
+export const deleteComment = async (targetId: number) => {
+  const res = await proxy.delete(`/api/comments/${targetId}`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };

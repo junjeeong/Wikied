@@ -15,6 +15,8 @@ const AlarmModal = ({
   newAlarmExist,
   setNewAlarmExist,
 }: AlarmModalProps) => {
+
+
   return (
     <>
       <Alarm
@@ -24,7 +26,7 @@ const AlarmModal = ({
       <div>
         <NotificationModalContainer
           isOpen={isOpen}
-          onClose={() => setIsOpen(!isOpen)}
+          onClose={() => setIsOpen(false)}
         />
       </div>
     </>

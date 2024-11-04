@@ -1,8 +1,8 @@
+import { ChangeEvent, FormEvent, useState } from "react";
 import { SearchInput } from "./SearchInput";
 import { Profile } from "@/types/types";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import SearchedWikiCard from "@/containers/SearchedWikiCard";
 import { useRouter } from "next/router";
+import SearchedWikiCard from "@/containers/SearchedWikiCard";
 
 interface SearchedWikiListProps {
   list: Profile[];
