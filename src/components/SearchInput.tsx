@@ -3,6 +3,7 @@ import Image from "next/image";
 
 interface SearchInputProps {
   size: "large" | "medium" | "small";
+  source?: "header" | "boards";
   onSubmit: FormEventHandler;
   onChange?: ChangeEventHandler;
   value?: string;
@@ -10,6 +11,7 @@ interface SearchInputProps {
 
 export const SearchInput = ({
   size,
+  source,
   onSubmit,
   onChange,
   value,
@@ -28,7 +30,9 @@ export const SearchInput = ({
         <input
           className={`${style} p-[8px] pl-[56px] pr-[128px] border-none rounded-lg shadow-md bg-gray-100 text-gray-500 text-md focus:outline-green-100 placeholder:text-gray-400`}
           type="text"
-          placeholder="이름으로 위키 찾기"
+          placeholder={
+            source === "header" ? "이름으로 위키 찾기" : "제목으로 검색하기"
+          }
           onChange={onChange}
           value={value}
         />
