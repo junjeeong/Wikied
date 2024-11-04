@@ -100,17 +100,10 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
 
   // 편집 상태에서 취소 버튼을 누르면
   const handleCancel = async () => {
-    const pingdata = await postProfilePing(
-      { securityAnswer: quizAnswer },
-      code
-    );
-    console.log("pingdata: ", pingdata);
+    await postProfilePing({ securityAnswer: quizAnswer }, code);
     const data = getUpdatedPatchBody();
-    console.log("data: ", data);
     const res = await patchProfile({ code, body: data });
-    console.log("res: ", res);
     setUserProfile({ userProfile, ...res });
-    console.log("update : ", new Date(res.updatedAt));
     setIsEditing(false);
     reset();
   };
@@ -132,13 +125,12 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     setUserProfile(res?.data);
     // 해당 위키 페이지가 수정 중인지 확인
     const getPingData = await getProfilePing(code);
-    console.log("getPingData: ", getPingData?.status);
+
     // status = 200 -> 누군가 편집 중
     if (getPingData?.status === 200) {
       const updatedTime = new Date(userProfile.updatedAt);
       const registeredTime = new Date(getPingData.data.registeredAt);
-      console.log("updatedTime: ", updatedTime);
-      console.log("registeredTime: ", registeredTime);
+
       if (updatedTime > registeredTime) {
         setQuizModalOpen(true);
       } else {
@@ -201,8 +193,6 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     };
 
     const response = await patchProfile({ code, body: editedUserProfile });
-    console.log(response);
-    console.log("update : ", new Date(response.updatedAt));
 
     setUserProfile(response);
     setIsEditing(false);
