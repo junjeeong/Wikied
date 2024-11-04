@@ -65,18 +65,9 @@ export const getUserProfile = async (code: string) => {
 
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
-  const token = localStorage.getItem("accessToken");
-  try {
-    const res = await instance.post(`/profiles`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("프로필 등록에 실패했습니다.", err);
-    return {};
-  }
+  const res = await instance.post(`/api/profile`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 프로필 수정 중 체크
@@ -92,18 +83,10 @@ export const getProfilePing = async (code: string) => {
 
 // 프로필 수정 중 갱신
 export const postProfilePing = async (
-  body: PostProfilePingQuery,
+  content: PostProfilePingQuery,
   code: string
 ) => {
-  const token = localStorage.getItem("accessToken");
-
-  const res = await instance.post(`/profiles/${code}/ping`, body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-  return res;
+  const res = await instance.post(`/api/profils/${code}`, content);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
-
-// 프로필 수정, 프로필 수정 중 갱신 api 구현해야 함

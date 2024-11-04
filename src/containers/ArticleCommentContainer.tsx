@@ -1,4 +1,3 @@
-import { patchComment } from "@/api/comment";
 import CommentInputContainer from "./CommentInputContainer";
 import CommentNoExist from "@/components/ui/CommentNoExist";
 import useComments from "@/hooks/useComments";

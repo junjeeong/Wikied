@@ -79,6 +79,17 @@ export interface UserProfile {
   name: string;
 }
 
+export interface User {
+  id: number;
+  email: string;
+  name: string;
+  teamId: string;
+  updatedAt: string;
+  createdAt: string;
+  profile: UserProfile | null;
+
+}
+
 export interface PatchArticleProps {
   articleId: number;
   body: {
@@ -86,4 +97,3 @@ export interface PatchArticleProps {
     content: string;
     title: string;
   };
-}
