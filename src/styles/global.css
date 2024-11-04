@@ -54,11 +54,6 @@
   }
 }
 
-/* 포커스 스타일 */
-:focus {
-  @apply outline-green-200;
-}
-
 /* 공통 클래스 */
 .divider {
   @apply w-full border border-gray-50;
