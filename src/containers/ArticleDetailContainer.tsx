@@ -97,19 +97,21 @@ const ArticleDetailContainer = ({
         onDeleteLike={handleDeleteLike}
       />
 
-      {isMe && !isMobile ? (
-        <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
-          <FilledButton onClick={handleOpenModal}>수정하기</FilledButton>
-          <FilledButton onClick={handleDeleteArticle} disabled={isUpdating}>
-            삭제하기
-          </FilledButton>
-        </div>
-      ) : (
-        <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
-          <Edit onClick={handleOpenModal} className="cursor-pointer" />
-          <Delete onClick={handleDeleteArticle} className="cursor-pointer" />
-        </div>
-      )}
+      {isMe ? (
+        !isMobile ? (
+          <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
+            <FilledButton onClick={handleOpenModal}>수정하기</FilledButton>
+            <FilledButton onClick={handleDeleteArticle} disabled={isUpdating}>
+              삭제하기
+            </FilledButton>
+          </div>
+        ) : (
+          <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
+            <Edit onClick={handleOpenModal} className="cursor-pointer" />
+            <Delete onClick={handleDeleteArticle} className="cursor-pointer" />
+          </div>
+        )
+      ) : null}
 
       <div className="mt-[60px] flex justify-center">
         <Link href={"/boards"}>
