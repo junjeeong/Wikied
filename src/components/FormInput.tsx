@@ -37,7 +37,7 @@ const FormInput = ({
         className={`w-full rounded-[10px] px-5 py-[10.5px] mb-[10px] bg-gray-100 placeholder:text-md placeholder:text-gray-400 ${
           error ? "outline-red-200" : "outline-green-200"
         }`}
-        onError={onError}
+        onChange={onError}
       ></input>
       {error && (
         <span className="text-xs text-red-200" role="alert">
