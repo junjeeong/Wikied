@@ -70,7 +70,7 @@ const MainPage = () => {
               className="w-full h-full"
               alt="write 섹션 이미지"
               width={192}
-              height={100}
+              height={300}
             />
           </div>
         </div>
@@ -87,11 +87,11 @@ const MainPage = () => {
         </div>
 
         <div className="flex justify-center overflow-visible gap-[10px] Tablet:gap-[20px] PC:gap-[70px] mt-10 Tablet:mt-20 PC:mt-[120px]">
-          <div className="w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0 rounded-[10px] bg-[#DEE5F5]"></div>
+          <div className="w-[76px] Tablet:w-[147px] PC:w-[218px] aspect-square flex-grow flex-shrink-0 rounded-[10px] bg-[#DEE5F5]"></div>
           {shareItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-[10px] w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
+              className="rounded-[10px] w-[76px] Tablet:w-[147px] PC:w-[218px] aspect-square flex-grow flex-shrink-0"
               style={{ backgroundColor: item.bgColor }}
             >
               <Image
@@ -99,12 +99,12 @@ const MainPage = () => {
                 className="w-full h-full"
                 src={item.src}
                 alt={`share 이미지 ${index + 1}`}
-                width={360}
-                height={360}
+                width={218}
+                height={218}
               />
             </div>
           ))}
-          <div className="w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0 rounded-[10px] bg-[#DEE5F5]"></div>
+          <div className="w-[76px] Tablet:w-[147px] PC:w-[218px] aspect-square flex-grow flex-shrink-0 rounded-[10px] bg-[#DEE5F5]"></div>
         </div>
       </section>
       {/* view section */}
