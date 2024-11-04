@@ -20,7 +20,7 @@ const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const res = await getNotifications({ page: 1, pageSize: 10 });
+      const res = await getNotifications();
       setTotalCount(res.totalCount);
       setNotifications(res.list);
 

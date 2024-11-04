@@ -20,7 +20,7 @@ const QuizSettings = () => {
       router.push("/login");
     } else if (user?.profile) {
       router.push(`/wiki/${user?.name}`);
-    }
+    } router.push('/quiz-settings')
   }, [isLoggedIn, user, router]);
 
   return <QuizSettingsFormContainer onSubmit={onSubmit} />;
