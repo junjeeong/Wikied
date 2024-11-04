@@ -36,7 +36,7 @@ const WikiCard = ({ info }: WikiCardProps) => {
           </div>
           <div>
             <div className="rounded-full w-[70px] h-[70px] text-gray-300 overflow-hidden relative">
-              {info.image ? (
+              {info.image !== "https://example.com/..." && info.image ? (
                 <Image
                   src={info.image}
                   layout="fill"
