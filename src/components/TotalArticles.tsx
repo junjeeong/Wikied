@@ -13,7 +13,7 @@ const TotalArticles = ({ totalArticles }: TotalArticlesProps) => {
         <div className="w-2/12 text-center">날짜</div>
       </li>
       {totalArticles.map(({ id, title, writer, likeCount, createdAt }) => (
-        <Link href={`boards/${id}`} key={id}>
+        <Link key={id} href={`boards/${id}`}>
           <li className="flex text-lg text-gray-500 border-b border-gray-200 pt-[11px] pb-[12px] cursor-pointer Mobile:flex-col">
             <div className="w-1/12 text-center Mobile:hidden">{id}</div>
             <div className="w-5/12 text-center Mobile:w-full Mobile:text-left">
