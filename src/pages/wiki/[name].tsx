@@ -214,7 +214,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="relative flex justify-center w-full h-full mb-20"
+        className="relative flex justify-center w-full h-full mb-[40px]"
       >
         <div
           className={`${

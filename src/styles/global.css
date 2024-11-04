@@ -151,7 +151,7 @@
 /* editor 영역: placeholder랑 text 크기 동일하게 맞춤 */
 .ql-container.ql-snow .ql-editor {
   padding: 0;
-  height: 750px;
+  height: 650px;
   padding-top: 10px;
   font-size: 20px;
   font-weight: 400;
@@ -176,6 +176,12 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 32px;
+}
+
+#toolBar .customToolBar {
+  button {
+    margin-right: 15px;
+  }
 }
 
 #Quill .prose {
