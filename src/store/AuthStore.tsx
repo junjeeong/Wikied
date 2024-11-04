@@ -14,6 +14,7 @@ interface AuthStore {
     securityAnswer: string,
     securityQuestion: string
   ) => Promise<void>;
+  setAccessToken: (token: string) => void;
 }
 
 const useAuthStore = create<AuthStore>((set, get) => ({
@@ -61,6 +62,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
       });
     }
   },
+  setAccessToken: (token: string) => set({ accessToken: token }),
 }));
 
 export default useAuthStore;
