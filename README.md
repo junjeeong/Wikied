@@ -1,2 +1,1 @@
-# 9_3_Wikid
-sprint FE_9기의 중급 프로젝트 WIkid
+## 지인의 위키를 작성하고 공유하는 플랫폼 Wikid!!
