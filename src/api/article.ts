@@ -66,15 +66,15 @@ export const deleteArticle = async () => {
 };
 
 // 게시글 좋아요 추가
-export const postArticleLike = async () => {
-  const res = await proxy.post(`/api/like`);
+export const postArticleLike = async (id: number) => {
+  const res = await proxy.post(`/api/like/${id}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
 
 // 게시글 좋아요 취소
-export const deleteArticleLike = async () => {
-  const res = await proxy.delete(`/api/like`);
+export const deleteArticleLike = async (id: number) => {
+  const res = await proxy.delete(`/api/like/${id}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
