@@ -201,6 +201,11 @@
     margin-top: 20px;
   }
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge, Opera에서 스크롤바 숨김 */
+}
+
 @media (max-width: 767px) {
   .ql-container.ql-snow .ql-editor {
     height: 600px;
