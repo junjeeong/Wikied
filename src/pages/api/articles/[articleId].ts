@@ -3,7 +3,6 @@ import { parse } from "cookie";
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log(req.query);
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 

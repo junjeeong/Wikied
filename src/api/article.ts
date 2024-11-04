@@ -74,7 +74,7 @@ export const postArticleLike = async (articleId: number) => {
 
 // 게시글 좋아요 취소
 export const deleteArticleLike = async (articleId: number) => {
-  const res = await proxy.delete(`/api/like${articleId}`);
+  const res = await proxy.delete(`/api/like/${articleId}`);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };

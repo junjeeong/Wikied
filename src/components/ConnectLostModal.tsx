@@ -8,21 +8,23 @@ import ModalOverlay from "./ModalOverlay";
 interface ConnectLostModalProps {
   isOpen: boolean;
   onClose: () => void;
+  handleCancel: () => void;
 }
 
-const ConnectLostModal = ({ isOpen, onClose }: ConnectLostModalProps) => {
-  const router = useRouter();
-  const { user } = useAuthStore();
-  const name = user?.profile?.name;
-
-  const handelConfirmClick = () => {
-    router.push(`/wiki/${name}`);
+const ConnectLostModal = ({
+  isOpen,
+  onClose,
+  handleCancel,
+}: ConnectLostModalProps) => {
+  const handelClickConfirm = () => {
+    handleCancel();
+    onClose();
   };
 
   return (
-    <ModalOverlay isOpen={isOpen} onClose={onClose}>
+    <ModalOverlay isOpen={isOpen} onClose={onClose} handleCancel={handleCancel}>
       <div className="flex flex-col justify-center gap-[10px] pl-[10px] pr-[38px] pt-10 pb-[33px] Mobile:pl-0 Mobile:pr-[22px]">
-        <span className="text-2lg text-gray-500 font-semibold Mobile:text-lg">
+        <span className="font-semibold text-gray-500 text-2lg Mobile:text-lg">
           5분 이상 글을 쓰지 않아 접속이 끊어졌어요.
         </span>
         <span className="text-lg text-gray-400 Mobile:text-md">
@@ -30,7 +32,7 @@ const ConnectLostModal = ({ isOpen, onClose }: ConnectLostModalProps) => {
         </span>
       </div>
       <div className="flex justify-end">
-        <FilledButton size="small" onClick={handelConfirmClick}>
+        <FilledButton size="small" onClick={handelClickConfirm}>
           확인
         </FilledButton>
       </div>

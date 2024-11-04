@@ -16,7 +16,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST":
       // 좋아요 등록 로직
-
       try {
         const response = await instance.post(
           `/articles/${articleId}/like`,
