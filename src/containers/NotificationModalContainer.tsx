@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { getNotifications } from "@/api/notification";
 import NotificationModal from "@/components/NotificationModal";
 import NotificationModalOverlay from "@/components/NotifiCationModalOverlay";
@@ -17,7 +17,7 @@ interface ModalProps {
 const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-
+  
   useEffect(() => {
     const fetchNotifications = async () => {
       const res = await getNotifications({ page: 1, pageSize: 10 });

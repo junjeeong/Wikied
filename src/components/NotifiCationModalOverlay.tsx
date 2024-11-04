@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import CloseBtn from "/public/icons/ic_close.svg";
+import { useRef } from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,7 +16,23 @@ const NotificationModalOverlay = ({
   onClose,
   children,
 }: ModalProps) => {
+  
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (e:MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node))
+      onClose()
+  }
+
+  useEffect(()=> {
+    document.addEventListener("mousedown",handleClickOutside);
+    return ()=> {
+      document.removeEventListener("mousedown",handleClickOutside);
+    }
+  },[])
+  
   if (!isOpen) return null;
+
 
   return (
     <>
