@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import useAuthStore from "@/store/AuthStore";
 import UserSettings from "@/components/ui/Form/UserSettings";
 import useChangePassword from "@/hooks/useChangePassword";
 import useChangeQuiz from "@/hooks/useChangeQuiz";
+import useAuthStore from "@/store/AuthStore";
 
 interface ChangePasswordType {
   currentPassword: string;

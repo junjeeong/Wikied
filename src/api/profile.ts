@@ -11,6 +11,11 @@ interface PostProfileQuery {
   securityQuestion: string;
 }
 
+interface PatchProfileQuery {
+  securityAnswer: string;
+  securityQuestion: string;
+}
+
 interface PostProfilePingQuery {
   securityAnswer: string;
 }
@@ -77,6 +82,13 @@ export const getProfilePing = async (code: string) => {
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
   const res = await proxy.post(`/api/profiles`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
+};
+
+// 프로필 변경
+export const patchProfile = async (code: string, body: PatchProfileQuery) => {
+  const res = await proxy.patch(`/api/profiles/${code}`, body);
   if (res.status >= 200 && res.status < 300) return res.data;
   else return {};
 };
