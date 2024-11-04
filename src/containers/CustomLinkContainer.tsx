@@ -4,8 +4,9 @@ import useNotify from "@/hooks/useNotify";
 
 interface CustomLinkContainerProps {
   link: string;
+  size: "medium" | "small";
 }
-const CustomLinkContainer = ({ link }: CustomLinkContainerProps) => {
+const CustomLinkContainer = ({ link, size }: CustomLinkContainerProps) => {
   const [fullUrl, setFullUrl] = useState("");
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const CustomLinkContainer = ({ link }: CustomLinkContainerProps) => {
 
   return (
     <div>
-      <CustomLink link={fullUrl} handleClick={handleClick} />
+      <CustomLink link={fullUrl} handleClick={handleClick} size={size} />
     </div>
   );
 };
