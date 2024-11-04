@@ -91,7 +91,7 @@ const MainPage = () => {
           {shareItems.map((item, index) => (
             <div
               key={index}
-              className="rounded-[10px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
+              className="rounded-[10px] w-[76px] Tablet:w-[147px] PC:w-[360px] aspect-square flex-grow flex-shrink-0"
               style={{ backgroundColor: item.bgColor }}
             >
               <Image
@@ -100,7 +100,7 @@ const MainPage = () => {
                 src={item.src}
                 alt={`share 이미지 ${index + 1}`}
                 width={360}
-                height={100}
+                height={360}
               />
             </div>
           ))}
@@ -124,8 +124,8 @@ const MainPage = () => {
               src={"/images/img_home3.png"}
               className="w-full h-auto"
               alt="view 이미지 1"
-              width={100}
-              height={100}
+              width={924}
+              height={280}
             />
 
             <div className="flex justify-between gap-[10px] Tablet:gap-[22px] PC:gap-[40px] ">
@@ -133,16 +133,16 @@ const MainPage = () => {
                 <Image
                   src={"/images/img_bell.png"}
                   alt="bell 이미지"
-                  width={100}
-                  height={100}
+                  width={280}
+                  height={280}
                 />
               </div>
               <div>
                 <Image
                   src={"/images/img_home2.png"}
                   alt="view 이미지 2"
-                  width={100}
-                  height={100}
+                  width={604}
+                  height={280}
                 />
               </div>
             </div>

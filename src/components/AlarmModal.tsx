@@ -15,20 +15,22 @@ const AlarmModal = ({
   newAlarmExist,
   setNewAlarmExist,
 }: AlarmModalProps) => {
+
+
   return (
     <>
       <Alarm
         onClick={() => setIsOpen(!isOpen)}
         className="relative cursor-pointer text-gray-400 hover:text-gray-500 Mobile:hidden"
       />
-      {/* <div>
+      <div>
         <NotificationModalContainer
           isOpen={isOpen}
-          onClose={() => setIsOpen(!isOpen)}
+          onClose={() => setIsOpen(false)}
         />
-      </div> */}
+      </div>
     </>
   );
 };
 
-export default AlarmModal; // default export 문법 수정
+export default AlarmModal;

@@ -1,33 +1,49 @@
-import useAuthStore from "../store/AuthStore";
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 const instance = axios.create({
   baseURL: "https://wikied-api.vercel.app/9-3/",
-  // timeout: 1000,
 });
 
-instance.interceptors.response.use(
-  (res) => res,
-  async (error) => {
-    const originalRequest = error.config;
-    const { refreshToken, setAccessToken } = useAuthStore.getState(); // Zustand에서 상태값 가져오기
+export const proxy = axios.create({
+  baseURL: "http://localhost:3000",
+});
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      // refresh-token API 호출
-      const { data } = await instance.post("/auth/refresh-token", {
-        refreshToken,
-      });
-      originalRequest._retry = true;
+// 응답 인터셉터
+const setupInterceptors = (instance: AxiosInstance) => {
+  instance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const originalRequest = error.config;
 
-      if (data?.accessToken) {
-        setAccessToken(data.accessToken); // 새로운 Access Token을 상태에 저장
-        originalRequest.headers["Authorization"] = `Bearer ${data.accessToken}`; // 요청에 새로운 토큰 적용
+      // 401 에러인 경우
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true; // 재시도 방지 플래그
+
+        try {
+          // 액세스 토큰 갱신 요청
+          await proxy.post("/api/refresh-token"); // 'proxy' 인스턴스를 사용
+          // 원래 요청 다시 시도
+          return instance(originalRequest);
+        } catch (err) {
+          console.error("액세스 토큰 갱신 실패:", err);
+          return Promise.reject(err);
+        }
       }
 
-      return instance(originalRequest); // 원래 요청 재시도
+      // error.response가 undefined일 경우를 처리
+      if (!error.response) {
+        console.error("응답이 없습니다:", error);
+        return Promise.reject(new Error("응답이 없습니다."));
+      }
+
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
+  );
+};
+
+setupInterceptors(instance);
+setupInterceptors(proxy);
 
 export default instance;

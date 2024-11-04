@@ -1,18 +1,22 @@
-import instance from "./axios";
+import instance, { proxy } from "./axios";
 
-// 이미지 업로드, 프로젝트에 저장하는 이미지들은 이 엔드포인트를 통해 업로드한 후 URL을 획득하여 사용합니다.
+// 이미지 업로드
 export const postImage = async (data: FormData) => {
-  const token = localStorage.getItem("accessToken");
-
   try {
-    const res = await instance.post(`/images/upload`, data, {
+    const getAccessToken = await proxy.post("api/refresh-token");
+    const { accessToken } = getAccessToken.data;
+
+    const res2 = await instance.post(`/images/upload`, data, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
-    return res.data;
-  } catch (err) {
-    console.error("이미지 업로드에 실패했습니다.", err);
+
+    if (res2.status >= 200 && res2.status < 300) {
+      return res2.data;
+    }
+  } catch (error) {
+    console.error("이미지 업로드에 실패했습니다.", error);
     return {};
   }
 };

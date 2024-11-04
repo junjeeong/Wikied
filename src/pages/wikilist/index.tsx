@@ -1,4 +1,3 @@
-import { GetServerSideProps } from "next";
 import { getProfiles } from "@/api/profile";
 import { Profile } from "@/types/types";
 import WikiListTitle from "@/components/WikiListTitle";
@@ -10,10 +9,8 @@ interface WikiListProps {
   initialList: Profile[];
 }
 
-export const getServerSideProps: GetServerSideProps<
-  WikiListProps
-> = async () => {
-  const res = await getProfiles();
+export const getServerSideProps = async () => {
+  const res = await getProfiles({ pageSize: 12 });
   return {
     props: {
       initialList: res,

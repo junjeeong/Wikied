@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { getNotifications } from "@/api/notification";
 import NotificationModal from "@/components/NotificationModal";
 import NotificationModalOverlay from "@/components/NotifiCationModalOverlay";
@@ -17,18 +17,14 @@ interface ModalProps {
 const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-
+  
   useEffect(() => {
     const fetchNotifications = async () => {
-      const res = await getNotifications({ page: 1, pageSize: 10 });
-      console.log(res);
+      const res = await getNotifications();
       setTotalCount(res.totalCount);
       setNotifications(res.list);
-
-
     };
-
-    fetchNotifications();
+if (isOpen) fetchNotifications();
   }, [isOpen]);
 
   const handleDelete = (id: number) => {
@@ -38,7 +34,7 @@ const NotificatonModalContainer = ({ isOpen, onClose }: ModalProps) => {
     setTotalCount((prev) => prev - 1);
   };
 
-  return totalCount === 0 ? (
+  return totalCount === 0 || !totalCount ? (
     <NotificationModalOverlay isOpen={isOpen} onClose={onClose}>
       <div className="w-[328px] mt-10 px-3 py-4 font-semibold bg-background border border-green-50 rounded-[5px]">
         새로운 알림이 없습니다.

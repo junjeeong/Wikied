@@ -9,11 +9,14 @@ import FilledButton from "@/components/ui/Button/FilledButton";
 import OutlineButton from "@/components/ui/Button/OutlineButton";
 import useAuthStore from "@/store/AuthStore";
 import Link from "next/link";
-import { Article } from "@/types/types";
+import { Article, PatchArticleProps } from "@/types/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import AddBoardsEditor from "./AddBoardsEditor";
 import EditArticleModalOverlay from "@/components/EditArticleModalOverlay";
+import useViewport from "@/hooks/useViewport";
+import Edit from "/public/icons/ic_edit.svg";
+import Delete from "/public/icons/ic_delete.svg";
 
 interface ArticleDetailContainerProps {
   article: Article;
@@ -29,22 +32,26 @@ const ArticleDetailContainer = ({
   const [isUpdating, setIsUpdating] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoggedIn } = useAuthStore();
+  const { isMobile } = useViewport();
 
   const myCode = user?.id;
   const isMe = isLoggedIn && myCode === article?.writer?.id;
 
-  // const handlePatchArticle = async ({ articleId, body }: any) => {
-  //   try {
-  //     setIsUpdating(true);
-  //     const res = await patchArticle({ articleId, body });
+  const buttonSize = isMobile ? "medium" : "large";
 
-  //     setArticle(res);
-  //   } catch (error) {
-  //     console.error("Failed to update article:", error);
-  //   } finally {
-  //     setIsUpdating(false);
-  //   }
-  // };
+  const handlePatchArticle = async ({ articleId, body }: PatchArticleProps) => {
+    try {
+      setIsUpdating(true);
+      const res = await patchArticle({ articleId, body });
+
+      setArticle(res);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Failed to update article:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const handleOpenModal = () => {
     setIsOpen(!isOpen);
@@ -90,23 +97,34 @@ const ArticleDetailContainer = ({
         onDeleteLike={handleDeleteLike}
       />
 
-      {isMe && (
-        <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
-          <FilledButton onClick={handleOpenModal}>수정하기</FilledButton>
-          <FilledButton onClick={handleDeleteArticle} disabled={isUpdating}>
-            삭제하기
-          </FilledButton>
-        </div>
-      )}
+      {isMe ? (
+        !isMobile ? (
+          <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
+            <FilledButton onClick={handleOpenModal}>수정하기</FilledButton>
+            <FilledButton onClick={handleDeleteArticle} disabled={isUpdating}>
+              삭제하기
+            </FilledButton>
+          </div>
+        ) : (
+          <div className="absolute top-[40px] right-[30px] flex gap-[10px]">
+            <Edit onClick={handleOpenModal} className="cursor-pointer" />
+            <Delete onClick={handleDeleteArticle} className="cursor-pointer" />
+          </div>
+        )
+      ) : null}
 
       <div className="mt-[60px] flex justify-center">
         <Link href={"/boards"}>
-          <OutlineButton size="large">목록으로</OutlineButton>
+          <OutlineButton size={buttonSize}>목록으로</OutlineButton>
         </Link>
       </div>
 
       <EditArticleModalOverlay isOpen={isOpen} onClose={handleOpenModal}>
-        <AddBoardsEditor article={article} articleId={articleId} />
+        <AddBoardsEditor
+          article={article}
+          articleId={articleId}
+          onUpdate={handlePatchArticle}
+        />
       </EditArticleModalOverlay>
     </div>
   );

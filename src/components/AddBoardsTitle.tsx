@@ -11,7 +11,7 @@ const AddBordsTitle = ({ title, onChange }: AddBordsTitleProps) => {
         value={title}
         onChange={onChange}
         placeholder="제목을 입력해주세요"
-        className="w-full outline-none text-lg bg-transparent text-gray-500 placeholder-gray-400 Mobile:placeholder:text-lg"
+        className="w-full outline-none text-xl bg-transparent text-gray-500 placeholder-gray-400 Mobile:placeholder:text-lg"
       />
       <span className="text-sm text-gray-400 Mobile:text-[13px] Mobile:leading-[22px]">
         {title.length}/
