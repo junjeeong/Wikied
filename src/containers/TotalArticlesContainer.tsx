@@ -18,7 +18,6 @@ const TotalArticlesContainer = ({
   const notify = useNotify();
 
   const totalPage = Math.ceil(totalCount / 10);
-  const currentPage = router.query.page ? Number(router.query.page) : 1;
 
   const { isPC, isMobile } = useViewport();
   const size = isPC ? "medium" : "small";
