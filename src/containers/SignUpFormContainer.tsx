@@ -29,9 +29,15 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
     await onSubmit(data);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
+    }
+  };
+
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen Mobile:px-5 bg-background">
+      <div className="flex items-center justify-center min-h-screen -mt-[80px] Mobile:px-5 bg-background">
         <div className="w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-[50px] text-center">
             회원가입
@@ -52,6 +58,7 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                   message: "열 자 이하로 작성해 주세요",
                 },
               })}
+              onKeyDown={handleKeyDown}
               error={errors.name}
             />
             <FormInput
@@ -66,6 +73,7 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                   message: "이메일 형식으로 작성해 주세요.",
                 },
               })}
+              onKeyDown={handleKeyDown}
               error={errors.email}
             />
             <FormInput
@@ -80,6 +88,7 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                   message: "8자 이상 작성해 주세요",
                 },
               })}
+              onKeyDown={handleKeyDown}
               error={errors.password}
             />
             <FormInput
@@ -92,6 +101,7 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                 validate: (value) =>
                   value === password || "비밀번호가 일치하지 않습니다",
               })}
+              onKeyDown={handleKeyDown}
               error={errors.passwordConfirmation}
             />
             <FilledButton type="submit" disabled={isSubmitting}>

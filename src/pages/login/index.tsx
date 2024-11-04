@@ -36,7 +36,7 @@ const Login = () => {
     }
   }, [isLoggedIn, router]);
 
-  const handleChange = () => {
+  const clearSubmitError = () => {
     setSubmitError("");
   };
 
@@ -44,7 +44,7 @@ const Login = () => {
     <LoginFormContainer
       onSubmit={onSubmit}
       submitError={submitError}
-      onChange={handleChange}
+      onClearSubmitError={clearSubmitError}
     />
   );
 };

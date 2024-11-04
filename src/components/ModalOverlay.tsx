@@ -23,7 +23,6 @@ const ModalOverlay = ({
       // 모달이 닫히면 스크롤 복원
       document.body.style.overflow = "";
     }
-
     // cleanup 함수: 컴포넌트가 언마운트될 때 스크롤 복원
     return () => {
       document.body.style.overflow = "";

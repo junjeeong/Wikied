@@ -81,3 +81,22 @@ export interface UserProfile extends PatchBody {
   name: string;
   code: string;
 }
+
+export interface User {
+  id: number;
+  email: string;
+  name: string;
+  teamId: string;
+  updatedAt: string;
+  createdAt: string;
+  profile: UserProfile | null;
+
+}
+
+export interface PatchArticleProps {
+  articleId: number;
+  body: {
+    image: string;
+    content: string;
+    title: string;
+  };

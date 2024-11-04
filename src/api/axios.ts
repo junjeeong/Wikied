@@ -1,4 +1,3 @@
-import useAuthStore from "../store/AuthStore";
 import axios from "axios";
 
 const instance = axios.create({
@@ -6,26 +5,29 @@ const instance = axios.create({
   // timeout: 1000,
 });
 
+// 응답 인터셉터
 instance.interceptors.response.use(
-  (res) => res,
+  (response) => {
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
-    const { refreshToken, setAccessToken } = useAuthStore.getState(); // Zustand에서 상태값 가져오기
 
+    // 401 에러인 경우
     if (error.response?.status === 401 && !originalRequest._retry) {
-      // refresh-token API 호출
-      const { data } = await instance.post("/auth/refresh-token", {
-        refreshToken,
-      });
-      originalRequest._retry = true;
+      originalRequest._retry = true; // 재시도 방지 플래그
 
-      if (data?.accessToken) {
-        setAccessToken(data.accessToken); // 새로운 Access Token을 상태에 저장
-        originalRequest.headers["Authorization"] = `Bearer ${data.accessToken}`; // 요청에 새로운 토큰 적용
+      try {
+        // 액세스 토큰 갱신 요청 -> 클라이언트의 쿠키가 새로운 액세스 토큰으로 갱신됨
+        await axios.post("/api/refresh-token");
+        // 원래 요청 다시 시도
+        return instance(originalRequest);
+      } catch (err) {
+        console.error("액세스 토큰 갱신 실패:", err);
+        return Promise.reject(err);
       }
-
-      return instance(originalRequest); // 원래 요청 재시도
     }
+
     return Promise.reject(error);
   }
 );
