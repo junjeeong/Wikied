@@ -20,8 +20,8 @@ const NotificationModalOverlay = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e:MouseEvent) => {
-    if (modalRef.current){
-      onClose()
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      onClose();
     }
   }
 
