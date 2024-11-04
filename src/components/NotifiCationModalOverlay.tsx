@@ -20,8 +20,9 @@ const NotificationModalOverlay = ({
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e:MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node))
+    if (modalRef.current){
       onClose()
+    }
   }
 
   useEffect(()=> {
@@ -30,6 +31,7 @@ const NotificationModalOverlay = ({
       document.removeEventListener("mousedown",handleClickOutside);
     }
   },[])
+  console.log(modalRef)
   
   if (!isOpen) return null;
 
@@ -37,6 +39,7 @@ const NotificationModalOverlay = ({
   return (
     <>
       <div
+        ref={modalRef}
         className={
           "flex justify-center items-center absolute top-16 right-20 z-50"
         }
@@ -47,7 +50,7 @@ const NotificationModalOverlay = ({
             onClick={onClose}
             className="absolute top-5 right-5 bg-cover w-6 h-6"
           >
-            <CloseBtn className="text-notice-text"/>
+            <CloseBtn className="text-notice-text" />
           </button>
           {children}
         </div>
