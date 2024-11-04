@@ -1,4 +1,3 @@
-import Link from "next/link";
 import WikiCard from "@/components/WikiCard";
 
 interface Profile {
@@ -20,9 +19,7 @@ const WikiCardList = ({ list }: WikiCardListProps) => {
   return (
     <div className="grid grid-cols-3 auto-rows-auto gap-[24px] Tablet:grid-cols-2 Mobile:grid-cols-1">
       {list.map((el) => (
-        <Link key={el.id} href={`/wiki/${el.name}`}>
-          <WikiCard info={el} />
-        </Link>
+        <WikiCard key={el.id} info={el} />
       ))}
     </div>
   );
