@@ -28,7 +28,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
     "list",
     "align",
     "image",
-    "video",
     "link",
     "color",
     "background",
@@ -109,7 +108,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ contentData }) => {
     <div id="Quill">
       <div
         id="toolBar"
-        className="rounded-[10px] bg-gray-100 mb-[60px] Tablet:mb-10 Mobile:mb-[15px]"
+        className="flex items-center justify-center overflow-hidden overflow-x-auto whitespace-nowrap rounded-[10px] bg-gray-100 mb-[60px] Tablet:mb-10 Mobile:mb-[15px]"
       >
         <ReactModule />
       </div>

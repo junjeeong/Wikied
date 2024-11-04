@@ -54,11 +54,6 @@
   }
 }
 
-/* 포커스 스타일 */
-:focus {
-  @apply outline-green-200;
-}
-
 /* 공통 클래스 */
 .divider {
   @apply w-full border border-gray-50;
@@ -129,7 +124,7 @@
   border-radius: 5px;
   opacity: 1;
 }
-#toolBar .ql-separator {
+#toolBar .wikiToolBar .ql-separator {
   display: inline-block;
   width: 2px;
   height: 20px;
@@ -151,7 +146,7 @@
 /* editor 영역: placeholder랑 text 크기 동일하게 맞춤 */
 .ql-container.ql-snow .ql-editor {
   padding: 0;
-  height: 650px;
+  height: 550px;
   padding-top: 10px;
   font-size: 20px;
   font-weight: 400;
@@ -179,7 +174,10 @@
 }
 
 #toolBar .wikiToolBar {
-  button {
+  button,
+  .ql-color,
+  .ql-header,
+  .ql-background {
     margin-right: 15px;
   }
 }
