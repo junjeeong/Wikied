@@ -1,5 +1,5 @@
-// UserSettings.tsx
-import { SubmitHandler, UseFormRegister, FieldErrors } from "react-hook-form";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import FilledButton from "../Button/FilledButton";
 
 interface ChangePasswordType {
   currentPassword: string;
@@ -7,39 +7,26 @@ interface ChangePasswordType {
   passwordConfirmation: string;
 }
 
-interface ChangeWikiType {
-  securityQuestion: string;
-  securityAnswer: string;
-}
-
 interface UserSettingsProps {
   onSubmitPasswordChange: (
     e: React.FormEvent<HTMLFormElement>
   ) => Promise<void>;
-  onSubmitWiki: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   passwordErrors: FieldErrors<ChangePasswordType>;
-  wikiErrors: FieldErrors<ChangeWikiType>;
   registerPassword: UseFormRegister<ChangePasswordType>;
-  registerWiki: UseFormRegister<ChangeWikiType>;
   getValues: (name?: keyof ChangePasswordType) => any;
 }
 
 const UserSettings = ({
   onSubmitPasswordChange,
-  onSubmitWiki,
   passwordErrors,
-  wikiErrors,
   registerPassword,
-  registerWiki,
   getValues,
 }: UserSettingsProps) => {
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen mx-auto w-[400px] Mobile:w-[335px]">
+    <div className="flex flex-col mt-[120px] justify-center mx-auto w-[400px] Mobile:w-[335px]">
       <h1 className="text-2xl font-semibold text-gray-500">계정 설정</h1>
-
-      {/* 비밀번호 변경 폼 */}
       <form
-        className="w-full mt-16 flex flex-col"
+        className="w-full mt-[40px] flex flex-col"
         onSubmit={onSubmitPasswordChange}
       >
         <label className="text-md text-gray-500" htmlFor="changePassword">
@@ -93,47 +80,9 @@ const UserSettings = ({
             </span>
           )}
         </div>
-        <button className="mypage-button hover:bg-green100">변경하기</button>
-      </form>
-
-      <div className="divider mt-[32px]"></div>
-
-      {/* 위키 생성 폼 */}
-      <form className="w-full mt-[32px] flex flex-col" onSubmit={onSubmitWiki}>
-        <label className="text-md text-gray-500" htmlFor="wikiRegister">
-          위키 생성하기
-        </label>
-        <div className="flex flex-col gap-2 mt-[8px]">
-          <input
-            className="mypage-input placeholder:text-gray-400"
-            type="text"
-            placeholder="질문을 입력해 주세요"
-            {...registerWiki("securityQuestion", {
-              required: "질문은 필수입니다.",
-            })}
-          />
-          {wikiErrors.securityQuestion && (
-            <span className="errormessage">
-              {wikiErrors.securityQuestion.message}
-            </span>
-          )}
-
-          <input
-            className="mypage-input placeholder:text-gray-400"
-            type="text"
-            placeholder="답을 입력해 주세요"
-            {...registerWiki("securityAnswer", {
-              required: "답은 필수입니다.",
-            })}
-          />
-          {wikiErrors.securityAnswer && (
-            <span className="errormessage">
-              {wikiErrors.securityAnswer.message}
-            </span>
-          )}
+        <div className="ml-auto mt-[20px]">
+          <FilledButton size="small">변경하기</FilledButton>
         </div>
-
-        <button className="mypage-button hover:bg-green100">생성하기</button>
       </form>
     </div>
   );

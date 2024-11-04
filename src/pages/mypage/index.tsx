@@ -1,140 +1,41 @@
-import { patchUser } from "@/api/user";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import UserSettings from "@/components/ui/Form/UserSettings";
+import useChangePassword from "@/hooks/useChangePassword";
+import useAuthStore from "@/store/AuthStore";
 
-interface ChangePasswordForm {
-  passwordConfirmation: string;
-  password: string;
+interface ChangePasswordType {
   currentPassword: string;
-}
-
-interface WikiForm {
-  wikiQuestion: string;
-  wikiAnswer: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 const MyPage = () => {
+  const router = useRouter();
+  const { isLoggedIn } = useAuthStore.getState();
+  const changePassword = useChangePassword();
+
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,
-    getValues,
     formState: { errors: passwordErrors },
-  } = useForm<ChangePasswordForm>();
+    getValues,
+  } = useForm<ChangePasswordType>();
 
-  const {
-    register: registerWiki,
-    handleSubmit: handleWikiSubmit,
-    formState: { errors: wikiErrors },
-  } = useForm<WikiForm>();
-
-  const onChangePasswordSubmit: SubmitHandler<ChangePasswordForm> = async (
-    data
-  ) => {
-    const res = await patchUser(data);
-    console.log("비밀번호 변경 결과:", res);
-  };
-
-  const MyPage: SubmitHandler<WikiForm> = (data) => {
-    // 위키 생성 로직 구현해야 함.
-  };
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    }
+  }, [isLoggedIn, router]);
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen mx-auto w-[400px] Mobile:w-[335px]">
-      <h1 className="text-2xl font-semibold text-gray-500">계정 설정</h1>
-
-      {/* 비밀번호 변경 폼 */}
-      <form
-        className="w-full mt-16 flex flex-col"
-        onSubmit={handlePasswordSubmit(onChangePasswordSubmit)}
-      >
-        <label className="text-md text-gray-500" htmlFor="changePassword">
-          비밀번호 변경
-        </label>
-        <div className="flex flex-col gap-2">
-          <input
-            className="mypage-input"
-            type="password"
-            placeholder="기존 비밀번호"
-            {...registerPassword("currentPassword", {
-              required: "기존 비밀번호는 필수입니다.",
-            })}
-          />
-          {passwordErrors.currentPassword && (
-            <span className="errormessage">
-              {passwordErrors.currentPassword.message}
-            </span>
-          )}
-
-          <input
-            className="mypage-input"
-            type="password"
-            placeholder="새 비밀번호"
-            {...registerPassword("password", {
-              required: "새 비밀번호는 필수입니다.",
-            })}
-          />
-          {passwordErrors.password && (
-            <span className="errormessage">
-              {passwordErrors.password.message}
-            </span>
-          )}
-
-          <input
-            className="mypage-input placeholder: text-gray-400"
-            type="password"
-            placeholder="새 비밀번호 확인"
-            {...registerPassword("passwordConfirmation", {
-              required: "비밀번호 확인은 필수입니다.",
-              validate: (value) => {
-                if (value !== getValues("password")) {
-                  return "비밀번호가 일치하지 않습니다.";
-                }
-              },
-            })}
-          />
-          {passwordErrors.passwordConfirmation && (
-            <span className="errormessage">
-              {passwordErrors.passwordConfirmation.message}
-            </span>
-          )}
-        </div>
-        <button className="mypage-button hover: bg-green100">변경하기</button>
-      </form>
-
-      <div className="divider mt-[32px]"></div>
-
-      {/* 위키 생성 폼 */}
-      <form
-        className="w-full mt-[32px] flex flex-col"
-        onSubmit={handleWikiSubmit(onWikiSubmit)}
-      >
-        <label className="text-md text-gray-500" htmlFor="wikiRegister">
-          위키 생성하기
-        </label>
-        <input
-          className="mypage-input placeholder: text-gray-400"
-          type="text"
-          placeholder="질문을 입력해 주세요"
-          {...registerWiki("wikiQuestion", { required: "질문은 필수입니다." })}
-        />
-        {wikiErrors.wikiQuestion && (
-          <span className="errormessage">
-            {wikiErrors.wikiQuestion.message}
-          </span>
-        )}
-
-        <input
-          className="mypage-input placeholder: text-gray-400"
-          type="text"
-          placeholder="답을 입력해 주세요"
-          {...registerWiki("wikiAnswer", { required: "답은 필수입니다." })}
-        />
-        {wikiErrors.wikiAnswer && (
-          <span className="errormessage">{wikiErrors.wikiAnswer.message}</span>
-        )}
-
-        <button className="mypage-button hover: bg-green100">생성하기</button>
-      </form>
-    </div>
+    <UserSettings
+      onSubmitPasswordChange={handlePasswordSubmit(changePassword)}
+      passwordErrors={passwordErrors}
+      registerPassword={registerPassword}
+      getValues={getValues}
+    />
   );
 };
 
