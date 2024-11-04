@@ -13,8 +13,8 @@ interface PostProfileQuery {
 }
 
 interface PatchProfileQuery {
-  securityAnswer: string;
-  securityQuestion: string;
+  code: string;
+  body: PatchBody;
 }
 
 interface PostProfilePingQuery {
