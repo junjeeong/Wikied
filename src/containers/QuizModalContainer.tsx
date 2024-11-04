@@ -8,23 +8,21 @@ interface QuizModalContainerProps {
   isOpen: boolean;
   onClose: () => void;
   code: string;
-  onSubmitSuccess?: (registeredAt: string) => void;
-  isMe: boolean;
+  onSubmitSuccess?: (quizAnswer: string, registerdAt: string) => void;
+
 }
 
 const QuizModalContainer = ({
   isOpen,
   onClose,
   code,
-  onSubmitSuccess, //시간을 돌려줌
-  isMe,
+  onSubmitSuccess,
 }: QuizModalContainerProps) => {
   const [question, setQuestion] = useState(""); //사용자 질문
   const [quizAnswer, setQuizAnswer] = useState(""); //입력값을 관리
   const [errorMessage, setErrorMessage] = useState(""); //에러값 상태확인
 
   useEffect(() => {
-    // if (code && !isMe) {
     if (code) {
       const getQuestion = async () => {
         const res = await getUserProfile(code);
@@ -43,11 +41,13 @@ const QuizModalContainer = ({
     try {
       if (code) {
         const res = await postProfilePing({ securityAnswer: quizAnswer }, code);
-
+       
+        const registeredAt = res?.data?.registeredAt;
+       
         if (onSubmitSuccess) {
-          onSubmitSuccess(res.data.registeredAt);
+          onSubmitSuccess(quizAnswer, registeredAt);
         }
-        // API 호출이 성공적으로 완료되면 모달을 닫음
+        setErrorMessage("");
         onClose();
       }
     } catch (error) {
@@ -56,10 +56,11 @@ const QuizModalContainer = ({
       } else {
         console.error(error);
       }
+    } finally {
+      setQuizAnswer("");
     }
   };
 
-  // if (isMe || !isOpen) {
   if (!isOpen) {
     return null;
   }

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { serialize } from "cookie"; // cookie.serialize 대신 import
+import { serialize } from "cookie";
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,16 +17,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.setHeader("Set-Cookie", [
         serialize("accessToken", data.accessToken, {
           httpOnly: true, // 스크립트로 쿠키에 접근하지 못하게 함. -> XXS 공격을 보완, 허나 클라이언트에서 쿠키를 set,get 하지 못하게 됨. -> 서버에서 관리가 필요.
-          secure: process.env.NODE_ENV === "production", // 프로덕션 환경에서만 secure 옵션 사용, 개발 환경(development)에서는 secure 속성이 false가 되어 HTTP 연결에서도 쿠키가 전송될 수 있습니다. 이는 개발 과정에서의 편의성을 위해 설정된 것입니다.
+          secure: process.env.NODE_ENV === "production", // 프로덕션 환경에서만 secure 옵션 사용, HTTP 연결에서도 쿠키를 전송할 수 있는 편의 제공.
           sameSite: "none",
-          maxAge: 60 * 60, // 1시간
+          maxAge: 60 * 60, // 생명 1시간
           path: "/",
         }),
         serialize("refreshToken", data.refreshToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "none",
-          maxAge: 60 * 60 * 24 * 30, // 30일
+          maxAge: 60 * 60 * 24 * 30, // 생명 30일
           path: "/",
         }),
       ]);
@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } else {
     res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.status(405).end(`메서드 ${req.method}는 허용되지 않습니다.`);
   }
 };
 

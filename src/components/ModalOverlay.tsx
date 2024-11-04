@@ -8,23 +8,25 @@ interface ModalProps {
   children: ReactNode;
 }
 
-const ModalOverlay = ({ isOpen, onClose, children }: ModalProps) => {
-  if (!isOpen) return null;
+const ModalOverlay = ({
+  isOpen,
+  onClose,
+  children,
+}: ModalProps) => {
 
-  useEffect(() => {
-    if (isOpen) {
-      // 모달이 열렸을 때 스크롤 막기
-      document.body.style.overflow = "hidden";
-    } else {
-      // 모달이 닫히면 스크롤 복원
-      document.body.style.overflow = "";
-    }
-
-    // cleanup 함수: 컴포넌트가 언마운트될 때 스크롤 복원
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+useEffect(() => {
+  if (isOpen) {
+    // 모달이 열렸을 때 스크롤 막기
+    document.body.style.overflow = "hidden";
+  } else {
+    // 모달이 닫히면 스크롤 복원
+    document.body.style.overflow = "";
+  }
+  // cleanup 함수: 컴포넌트가 언마운트될 때 스크롤 복원
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isOpen]);
 
   if (!isOpen) return null;
 

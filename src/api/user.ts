@@ -8,34 +8,14 @@ interface PatchUserQuery {
 
 // 유저 정보를 받아오는 함수
 export const getUser = async () => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.get(`/users/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("유저 정보를 불러오지 못했습니다.", err);
-    return {};
-  }
+  const res = await instance.get(`/api/user`);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
 
 // 새로운 비밀번호와 현재 비밀번호를 data로 받아서 변경하는 함수
-export const patchUser = async (data: PatchUserQuery) => {
-  const token = localStorage.getItem("accessToken");
-
-  try {
-    const res = await instance.patch(`/users/me/password`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("비밀번호 변경에 실패하였습니다.", err);
-    return {};
-  }
+export const patchUser = async (body: PatchUserQuery) => {
+  const res = await instance.patch(`/api/user`, body);
+  if (res.status >= 200 && res.status < 300) return res.data;
+  else return {};
 };
