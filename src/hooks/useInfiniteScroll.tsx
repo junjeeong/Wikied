@@ -8,19 +8,19 @@ const useInfiniteScroll = (initialPage: number, initialList: Profile[]) => {
   const [hasMore, setHasMore] = useState(true);
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
-  const loadMoreProfiles = useCallback(async () => {
-    const newProfiles = await getProfiles({ page: page + 1, pageSize: 12 });
-
-    if (newProfiles.length === 0) {
-      setHasMore(false);
-    } else {
-      setList((prev) => [...prev, ...newProfiles]);
-      setPage((prev) => prev + 1);
-    }
-  }, [page]);
-
   useEffect(() => {
     const currentRef = loadingRef.current;
+
+    const loadMoreProfiles = async () => {
+      const newProfiles = await getProfiles({ page: page + 1, pageSize: 12 });
+
+      if (newProfiles.length === 0) {
+        setHasMore(false);
+      } else {
+        setList((prev) => [...prev, ...newProfiles]);
+        setPage((prev) => prev + 1);
+      }
+    };
 
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore) {
@@ -37,7 +37,7 @@ const useInfiniteScroll = (initialPage: number, initialList: Profile[]) => {
         observer.unobserve(currentRef);
       }
     };
-  }, [loadMoreProfiles, hasMore]);
+  }, []);
 
   return { loadingRef, hasMore, list };
 };

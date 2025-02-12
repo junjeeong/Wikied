@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const instance = axios.create({
-  baseURL: "https://wikied-api.vercel.app/junyeong-9/",
+  baseURL: "https://wikied-api.vercel.app/9-3/",
 });
 
 export const proxy = axios.create({
