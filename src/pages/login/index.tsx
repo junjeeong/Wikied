@@ -1,28 +1,32 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import useAuthStore from "@/store/AuthStore";
+import { useRouter } from "next/router";
 import { InputValues } from "@/containers/SignUpFormContainer";
+import useAuthStore from "@/store/AuthStore";
 import LoginFormContainer from "@/containers/LoginFormContainer";
+import useNotify from "@/hooks/useNotify";
 
-const Login = () => {
-  const [submitError, setSubmitError] = useState("");
+const LoginPage = () => {
   const router = useRouter();
+  const notify = useNotify();
+  const [submitError, setSubmitError] = useState("");
   const { login, isLoggedIn } = useAuthStore();
 
   const onSubmit = async (data: InputValues) => {
-    const errorMsg = await login(data.email, data.password);
+    const res = await login(data.email, data.password);
 
-    if (errorMsg) {
-      setSubmitError(errorMsg);
-      return;
-    } else {
-      clearSubmitError()
+    if (res?.ok) {
+      clearSubmitError();
       const user = useAuthStore.getState().user;
+      console.log(user?.profile);
       if (user?.profile !== null) {
         router.push(`/wiki/${user?.name}`);
       } else {
         router.push("/quiz-settings");
       }
+    } else {
+      console.log(res?.message);
+      notify("로그인에 실패했습니다.", "error");
+      return;
     }
   };
 
@@ -50,4 +54,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

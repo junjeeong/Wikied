@@ -37,9 +37,9 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen -mt-[80px] Mobile:px-5 bg-background">
+      <div className="flex justify-center items-center bg-background -mt-[80px] Mobile:px-5 min-h-screen">
         <div className="w-full max-w-md">
-          <h2 className="text-2xl font-semibold mb-[50px] text-center">
+          <h2 className="mb-[50px] font-semibold text-2xl text-center">
             회원가입
           </h2>
           <form
@@ -55,7 +55,7 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                 required: true,
                 maxLength: {
                   value: 10,
-                  message: "열 자 이하로 작성해 주세요",
+                  message: "10자 이하로 작성해 주세요",
                 },
               })}
               onKeyDown={handleKeyDown}
@@ -109,8 +109,8 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
             </FilledButton>
           </form>
           <div className="flex justify-center gap-[10px]">
-            <span className="text-md text-gray-400">이미 회원이신가요?</span>
-            <Link href="/login" className="text-md font-normal text-green-200">
+            <span className="text-gray-400 text-md">이미 회원이신가요?</span>
+            <Link href="/login" className="font-normal text-green-200 text-md">
               로그인
             </Link>
           </div>

@@ -1,28 +1,29 @@
-import { useRouter } from "next/router";
-import { postSignUp } from "@/api/auth";
-import { AxiosError } from "axios";
-import useNotify from "@/hooks/useNotify";
-import { InputValues } from "@/containers/SignUpFormContainer";
-import SignUpFormContainer from "@/containers/SignUpFormContainer";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { AxiosError } from "axios";
+import { postSignUp } from "@/api/auth";
+import { InputValues } from "@/containers/SignUpFormContainer";
+import useNotify from "@/hooks/useNotify";
+import SignUpFormContainer from "@/containers/SignUpFormContainer";
 import useAuthStore from "@/store/AuthStore";
 
-
-const SignUp = () => {
+const SignUpPage = () => {
   const router = useRouter();
   const notify = useNotify();
-  const {isLoggedIn, user} = useAuthStore()
+  const { isLoggedIn, user } = useAuthStore();
 
   const onSubmit = async (data: InputValues) => {
     try {
-      await postSignUp({
+      const res = await postSignUp({
         email: data.email,
         name: data.name,
         password: data.password,
         passwordConfirmation: data.passwordConfirmation,
       });
-      notify("가입이 완료되었습니다.", "success");
-      router.push("/login");
+      if (res) {
+        notify("가입이 완료되었습니다.", "success");
+        router.push("/login");
+      }
     } catch (err) {
       if (err instanceof AxiosError) {
         const msg =
@@ -47,4 +48,4 @@ const SignUp = () => {
   return <SignUpFormContainer onSubmit={onSubmit} />;
 };
 
-export default SignUp;
+export default SignUpPage;
