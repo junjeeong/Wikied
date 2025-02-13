@@ -40,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (error instanceof AxiosError) {
         const errorMessage = error.response?.data.message;
         // (error as Error).message || "알 수 없는 오류가 발생했습니다.";
-        res.status(500).json({ message: errorMessage });
+        res.status(500).json({ message: errorMessage, user: null });
       }
     }
   } else {
