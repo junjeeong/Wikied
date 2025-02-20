@@ -4,6 +4,7 @@ import WikiListTitle from "@/components/WikiListTitle";
 import WikiCardList from "@/components/WikiCardList";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useWikiListPageState from "@/hooks/useWikiListPageState";
 
 interface WikiListPageProps {
   initialList: Profile[];
@@ -19,7 +20,8 @@ export const getServerSideProps = async () => {
 };
 
 const WikiListPage = ({ initialList }: WikiListPageProps) => {
-  const { loadingRef, hasMore, list } = useInfiniteScroll(1, initialList);
+  const { list, loadMoreProfiles, hasMore } = useWikiListPageState(initialList);
+  const loadingRef = useInfiniteScroll(loadMoreProfiles, hasMore);
 
   return (
     <div className="mx-auto px-[20px] Mobile:px-[100px] Tablet:px-[60px] w-full max-w-[840px] h-full">

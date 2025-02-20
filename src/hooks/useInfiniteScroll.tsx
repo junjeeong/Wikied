@@ -1,30 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { getProfiles } from "@/api/profile";
-import { Profile } from "@/types/types";
+import { useEffect, useRef } from "react";
 
-const useInfiniteScroll = (initialPage: number, initialList: Profile[]) => {
-  const [list, setList] = useState<Profile[]>(initialList);
-  const [page, setPage] = useState(initialPage);
-  const [hasMore, setHasMore] = useState(true);
+const useInfiniteScroll = (loadMore: () => Promise<void>, hasMore: boolean) => {
   const loadingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const currentRef = loadingRef.current;
 
-    const loadMoreProfiles = async () => {
-      const newProfiles = await getProfiles({ page: page + 1, pageSize: 12 });
-
-      if (newProfiles.length === 0) {
-        setHasMore(false);
-      } else {
-        setList((prev) => [...prev, ...newProfiles]);
-        setPage((prev) => prev + 1);
-      }
-    };
-
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore) {
-        loadMoreProfiles();
+        loadMore();
       }
     });
 
@@ -37,9 +21,9 @@ const useInfiniteScroll = (initialPage: number, initialList: Profile[]) => {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [loadMore, hasMore]);
 
-  return { loadingRef, hasMore, list };
+  return loadingRef;
 };
 
 export default useInfiniteScroll;
