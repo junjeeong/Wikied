@@ -4,7 +4,7 @@ import WikiListTitle from "@/components/WikiListTitle";
 import WikiCardList from "@/components/WikiCardList";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import useWikiListPageState from "@/hooks/useWikiListPageState";
+import useListState from "@/hooks/useListState";
 
 interface WikiListPageProps {
   initialList: Profile[];
@@ -20,7 +20,7 @@ export const getServerSideProps = async () => {
 };
 
 const WikiListPage = ({ initialList }: WikiListPageProps) => {
-  const { list, loadMoreProfiles, hasMore } = useWikiListPageState(initialList);
+  const { list, hasMore, loadMoreProfiles } = useListState(initialList);
   const loadingRef = useInfiniteScroll(loadMoreProfiles, hasMore);
 
   return (
