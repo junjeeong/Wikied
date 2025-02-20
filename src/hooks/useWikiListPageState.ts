@@ -10,10 +10,10 @@ const useWikiListPageState = (initialList: Profile[]) => {
   const loadMoreProfiles = async () => {
     const res = await getProfiles({ page: page + 1, pageSize: 12 });
 
-    if (res.data.length === 0) {
+    if (res.length === 0) {
       setHasMore(false);
     } else {
-      setList((prev) => [...prev, ...res.data]);
+      setList((prev) => [...prev, ...res]);
       setPage((prev) => prev + 1);
     }
   };
