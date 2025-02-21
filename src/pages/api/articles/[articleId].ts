@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
+import { AxiosError } from "axios";
 import instance from "@/api/axios";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -8,9 +9,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { articleId } = req.query;
   if (!articleId) {
-    return res
-      .status(400)
-      .json({ message: "쿼리 파라미터에 게시글 ID가 없습니다." });
+    return res.status(400).json({
+      success: false,
+      data: null,
+      message: "게시글 ID를 찾지 못했습니다.",
+    });
   }
 
   switch (req.method) {
@@ -20,10 +23,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.get(`/articles/${articleId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(200).json(response.data);
+        return res.status(200).json({
+          success: true,
+          data: response.data,
+          message: "게시글 조회에 성공했습니다.",
+        });
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 조회에 실패했습니다." });
+        const error = err as AxiosError;
+        console.error("GET /api/articles/airtlceId error : ", error.message);
+        return res.status(error.response?.status as number).json({
+          success: false,
+          data: null,
+          message: error.message,
+        });
       }
 
     case "POST":
@@ -36,10 +48,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        return res.status(201).json(response.data);
+        return res.status(201).json({
+          success: true,
+          data: response.data,
+          message: "댓글 등록에 성공했습니다.",
+        });
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 등록에 실패했습니다." });
+        const error = err as AxiosError;
+        console.error("POST /api/articles/airtlceId error : ", error.message);
+        return res.status(error.response?.status as number).json({
+          success: false,
+          data: null,
+          message: error.message,
+        });
       }
 
     case "PATCH":
@@ -52,10 +73,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        return res.status(200).json(response.data);
+        return res.status(200).json({
+          success: true,
+          data: response.data,
+          message: "게시글 수정에 성공하였습니다.",
+        });
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 수정에 실패했습니다." });
+        const error = err as AxiosError;
+        console.error("PATCH /api/articles/airtlceId error : ", error.message);
+        return res.status(error.response?.status as number).json({
+          success: false,
+          data: null,
+          message: error.message,
+        });
       }
 
     case "DELETE":
@@ -63,10 +93,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.delete(`/articles/${articleId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(200).json(response.data);
+        return res.status(200).json({
+          success: true,
+          data: response.data,
+          message: "게시글 삭제에 성공했습니다.",
+        });
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 삭제에 실패했습니다." });
+        const error = err as AxiosError;
+        console.error("DELETE /api/articles/airtlceId error : ", error.message);
+        return res.status(error.response?.status as number).json({
+          success: false,
+          data: null,
+          message: error.message,
+        });
       }
 
     default:
