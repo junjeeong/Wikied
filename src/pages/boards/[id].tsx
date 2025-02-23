@@ -9,7 +9,8 @@ import BoardsDetailLayout from "@/components/Layout/BoardsDetailLayout";
 
 const BoardsDetailPage = () => {
   const [article, setArticle] = useState<Article | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { id } = router.query;
   const articleId = Number(id);
@@ -18,35 +19,33 @@ const BoardsDetailPage = () => {
     if (!router.isReady) return;
 
     const fetchData = async () => {
-      try {
-        const res = await getArticle(articleId);
-        setArticle(res);
-      } catch (error) {
-        console.error("Failed to fetch article:", error);
-      } finally {
+      setIsLoading(true);
+      const res = await getArticle(articleId);
+
+      if (res.ok) {
         setIsLoading(false);
+        setArticle(res.data);
+      } else {
+        setIsLoading(false);
+        setError(true);
       }
     };
 
     fetchData();
   }, [articleId, router.isReady]);
 
-  if (!article) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
   return (
     <>
       {isLoading && <LoadingSpinner />}
 
-      <BoardsDetailLayout>
-        <ArticleDetailContainer article={article} articleId={articleId} />
-        <ArticleCommentContainer articleId={articleId} />
-      </BoardsDetailLayout>
+      {!error && article ? (
+        <BoardsDetailLayout>
+          <ArticleDetailContainer article={article} articleId={articleId} />
+          <ArticleCommentContainer articleId={articleId} />
+        </BoardsDetailLayout>
+      ) : (
+        <div>안녕 에러가 났네 미안 ㅎㅎ;</div>
+      )}
     </>
   );
 };

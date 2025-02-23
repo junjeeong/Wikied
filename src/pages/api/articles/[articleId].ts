@@ -3,6 +3,18 @@ import { parse } from "cookie";
 import { AxiosError } from "axios";
 import instance from "@/api/axios";
 
+const handleError = (
+  res: NextApiResponse,
+  err: AxiosError,
+  defaultMessage: string
+) => {
+  console.error(`Error occurred: ${err.message}`);
+  return res.status(err.response?.status || 500).json({
+    ok: false,
+    message: err.response?.statusText || defaultMessage,
+  });
+};
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
@@ -10,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { articleId } = req.query;
   if (!articleId) {
     return res.status(400).json({
-      success: false,
+      ok: false,
       data: null,
       message: "게시글 ID를 찾지 못했습니다.",
     });
@@ -18,28 +30,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (req.method) {
     case "GET":
-      // 게시글 조회 로직
       try {
         const response = await instance.get(`/articles/${articleId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         return res.status(200).json({
-          success: true,
+          ok: true,
           data: response.data,
           message: "게시글 조회에 성공했습니다.",
         });
       } catch (err) {
-        const error = err as AxiosError;
-        console.error("GET /api/articles/airtlceId error : ", error.message);
-        return res.status(error.response?.status as number).json({
-          success: false,
-          data: null,
-          message: error.message,
-        });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 조회 중 오류가 발생했습니다."
+        );
       }
 
     case "POST":
-      // 댓글 등록 로직
       try {
         const response = await instance.post(
           `/articles/${articleId}/comments`,
@@ -49,22 +57,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         );
         return res.status(201).json({
-          success: true,
+          ok: true,
           data: response.data,
           message: "댓글 등록에 성공했습니다.",
         });
       } catch (err) {
-        const error = err as AxiosError;
-        console.error("POST /api/articles/airtlceId error : ", error.message);
-        return res.status(error.response?.status as number).json({
-          success: false,
-          data: null,
-          message: error.message,
-        });
+        return handleError(
+          res,
+          err as AxiosError,
+          "댓글 등록 중 오류가 발생했습니다."
+        );
       }
 
     case "PATCH":
-      // 게시글 수정 로직
       try {
         const response = await instance.patch(
           `/articles/${articleId}`,
@@ -74,18 +79,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         );
         return res.status(200).json({
-          success: true,
+          ok: true,
           data: response.data,
           message: "게시글 수정에 성공하였습니다.",
         });
       } catch (err) {
-        const error = err as AxiosError;
-        console.error("PATCH /api/articles/airtlceId error : ", error.message);
-        return res.status(error.response?.status as number).json({
-          success: false,
-          data: null,
-          message: error.message,
-        });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 수정 중 오류가 발생했습니다."
+        );
       }
 
     case "DELETE":
@@ -94,18 +97,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         return res.status(200).json({
-          success: true,
+          ok: true,
           data: response.data,
           message: "게시글 삭제에 성공했습니다.",
         });
       } catch (err) {
-        const error = err as AxiosError;
-        console.error("DELETE /api/articles/airtlceId error : ", error.message);
-        return res.status(error.response?.status as number).json({
-          success: false,
-          data: null,
-          message: error.message,
-        });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 삭제 중 오류가 발생했습니다."
+        );
       }
 
     default:
