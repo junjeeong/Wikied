@@ -34,17 +34,23 @@ const BoardsDetailPage = () => {
     fetchData();
   }, [articleId, router.isReady]);
 
+  if (isLoading) return <LoadingSpinner />;
+
+  if (error)
+    return (
+      <>
+        <h1>404 - 게시글을 찾을 수 없습니다.</h1>
+        <p>요청하신 게시글이 존재하지 않습니다.</p>
+      </>
+    );
+
   return (
     <>
-      {isLoading && <LoadingSpinner />}
-
-      {!error && article ? (
+      {article && (
         <BoardsDetailLayout>
           <ArticleDetailContainer article={article} articleId={articleId} />
           <ArticleCommentContainer articleId={articleId} />
         </BoardsDetailLayout>
-      ) : (
-        <div>안녕 에러가 났네 미안 ㅎㅎ;</div>
       )}
     </>
   );
