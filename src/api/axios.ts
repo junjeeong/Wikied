@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 export const proxy = axios.create({
-  baseURL: "http://localhost:3000/", // 배포시 주소 변경 -> "https://9-3-wikied.vercel.app/"
+  baseURL: "http://localhost:3000", // 배포시 주소 변경 -> "https://9-3-wikied.vercel.app/"
 });
 
 // 응답 인터셉터

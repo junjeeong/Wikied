@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import instance, { proxy } from "./axios";
 
 interface postArticleProps {
@@ -46,23 +47,39 @@ export const postArticle = async (body: postArticleProps) => {
 
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
-  const res = await proxy.get(`/api/articles/${articleId}`);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
+  try {
+    const res = await proxy.get(`/api/articles/${articleId}`);
+    return res.data;
+  } catch (err) {
+    const axiosError = err as AxiosError;
+    if (axiosError.response) {
+      return {
+        ok: false,
+        status: axiosError.response.status,
+        message: axiosError.response.statusText,
+      };
+    } else {
+      return {
+        ok: false,
+        status: 500,
+        message: "서버에 연결할 수 없습니다.",
+      };
+    }
+  }
 };
 
 // 게시글 수정
 export const patchArticle = async (query: patchArticleProps) => {
   const res = await proxy.patch(`/api/articles/${query.articleId}`, query.body);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
+  if (res.status === 200) return res.data;
+  else return null;
 };
 
 // 게시글 삭제
 export const deleteArticle = async (articleId: number) => {
   const res = await proxy.delete(`/api/articles/${articleId}`);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
+  if (res.status === 200) return res.data;
+  else return null;
 };
 
 // 게시글 좋아요 추가
