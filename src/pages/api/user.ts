@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
+import { AxiosError } from "axios";
 import instance from "@/api/axios";
+import handleError from "@/pages/api/handleError";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
@@ -13,10 +15,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.get(`/users/me`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(201).json(response.data);
+        return res.status(201).json({
+          ok: true,
+          data: response.data,
+          message: "프로필 조회에 성공했습니다.",
+        });
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "프로필 조회에 실패했습니다." });
+        handleError(res, err as AxiosError, "프로필 조회에 실패했습니다.");
       }
 
     case "PATCH":
@@ -25,12 +30,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.patch(`/users/me/password/`, req.body, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(201).json(response.data);
+        return res.status(201).json({
+          ok: true,
+          data: response.data,
+          message: "비밀번호 수정에 성공했습니다ㅏ.",
+        });
       } catch (err) {
         console.error(err);
-        return res
-          .status(500)
-          .json({ message: "비밀번호 수정에 실패했습니다." });
+        handleError(res, err as AxiosError, "프로필 조회에 실패했습니다.");
       }
 
     default:

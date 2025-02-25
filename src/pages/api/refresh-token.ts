@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse, serialize } from "cookie";
+import { AxiosError } from "axios";
 import instance from "@/api/axios";
+import handleError from "@/pages/api/handleError";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
@@ -33,14 +35,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         // 성공 응답
         return res.status(200).json({
+          ok: true,
+          data: response.data.accessToken,
           message: "액세스 토큰이 갱신되었습니다.",
-          accessToken: newAccessToken,
         });
       } catch (err) {
-        console.error(err);
-        return res
-          .status(500)
-          .json({ message: "액세스 토큰 갱신에 실패했습니다." });
+        handleError(
+          res,
+          err as AxiosError,
+          "액세스 토큰 재갱신에 실패하였습니다."
+        );
       }
     default:
       res.setHeader("Allow", ["POST"]);

@@ -1,17 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
+import { AxiosError } from "axios";
 import instance from "@/api/axios";
+import handleError from "@/pages/api/handleError";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
-
-  // const { articleId } = req.query;
-  // if (!articleId) {
-  //   return res
-  //     .status(400)
-  //     .json({ message: "쿼리 파라미터에 게시글 ID가 없습니다." });
-  // }
 
   switch (req.method) {
     case "POST":
@@ -20,10 +15,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.post("/articles", req.body, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(201).json(response.data);
+        return res.status(201).json({
+          ok: true,
+          data: response.data,
+          message: "게시글 등록에 성공했습니다.",
+        });
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 등록에 실패했습니다." });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 등록에 실패했습니다."
+        );
       }
 
     default:

@@ -2,18 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
 import { AxiosError } from "axios";
 import instance from "@/api/axios";
-
-const handleError = (
-  res: NextApiResponse,
-  err: AxiosError,
-  defaultMessage: string
-) => {
-  console.error(`Error occurred: ${err.message}`);
-  return res.status(err.response?.status || 500).json({
-    ok: false,
-    message: err.response?.statusText || defaultMessage,
-  });
-};
+import handleError from "@/pages/api/handleError";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
