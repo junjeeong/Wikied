@@ -9,7 +9,7 @@ const handleError = (
   console.error(`API Route Error occurred: ${err.message}`);
   return res.status(err.response?.status || 500).json({
     ok: false,
-    data: null,
+    data: err.response?.data,
     message: err.response?.statusText || defaultMessage,
   });
 };
