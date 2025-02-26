@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({
       ok: false,
       data: null,
-      message: "accessToken을 찾지 못했습니다.",
+      message: "accessToken이 존재하지 않습니다.",
     });
   }
 
