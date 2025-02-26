@@ -1,4 +1,4 @@
-import instance, { proxy } from "./axios";
+import { instance, proxy } from "./axios";
 
 // 이미지 업로드
 export const postImage = async (data: FormData) => {
