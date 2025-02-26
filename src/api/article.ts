@@ -1,5 +1,5 @@
+import { instance, proxy } from "./axios";
 import { AxiosError } from "axios";
-import instance, { proxy } from "./axios";
 import handleError from "@/api/handleError";
 import handleSuccess from "@/api/handleSuccess";
 
