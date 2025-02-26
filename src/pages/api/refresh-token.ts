@@ -3,12 +3,17 @@ import { parse, serialize } from "cookie";
 import { AxiosError } from "axios";
 import instance from "@/api/axios";
 import handleError from "@/pages/api/handleError";
+import handleSuccess from "@/pages/api/handleSuccess";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const refreshToken = cookies.refreshToken;
   if (!refreshToken) {
-    return res.status(400).json({ message: "리프레시 토큰이 없습니다." });
+    return res.status(400).json({
+      ok: false,
+      data: null,
+      message: "refreshToken이 존재하지 않습니다.",
+    });
   }
 
   switch (req.method) {
@@ -34,16 +39,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         );
 
         // 성공 응답
-        return res.status(200).json({
-          ok: true,
-          data: response.data.accessToken,
-          message: "액세스 토큰이 갱신되었습니다.",
-        });
+        return handleSuccess(
+          res,
+          response.data,
+          "accessToken 갱신에 성공했습니다."
+        );
       } catch (err) {
         handleError(
           res,
           err as AxiosError,
-          "액세스 토큰 재갱신에 실패하였습니다."
+          "accessToken 갱신 중 오류가 발생했습니다."
         );
       }
     default:

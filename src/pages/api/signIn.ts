@@ -3,6 +3,7 @@ import { serialize } from "cookie";
 import { AxiosError } from "axios";
 import instance from "@/api/axios";
 import handleError from "@/pages/api/handleError";
+import handleSuccess from "@/pages/api/handleSuccess";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
@@ -31,13 +32,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }),
       ]);
 
-      res.status(200).json({
-        ok: true,
-        message: "로그인 성공",
-        user: userData,
-      });
+      return handleSuccess(res, userData, "로그인에 성공했습니다.");
     } catch (err) {
-      handleError(res, err as AxiosError, "로그인에 실패했습니다.");
+      handleError(res, err as AxiosError, "로그인 중 오류가 발생했습니다.");
     }
   } else {
     res.setHeader("Allow", ["POST"]);
