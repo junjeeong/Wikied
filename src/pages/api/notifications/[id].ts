@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
+import { AxiosError } from "axios";
 import instance from "@/api/axios";
+import handleSuccess from "@/pages/api/handleSuccess";
+import handleError from "@/pages/api/handleError";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
@@ -8,7 +11,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { id } = req.query;
   if (!id) {
-    return res.status(400).json({ message: "삭제할 알림 ID가 없습니다." });
+    return res
+      .status(400)
+      .json({ ok: false, data: null, message: "유효하지 않은 알림 ID입니다." });
   }
 
   switch (req.method) {
@@ -18,10 +23,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.delete(`/notifications/${id}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(200).json(response.data);
+        return handleSuccess(res, response.data, "알림 삭제에 성공했습니다.");
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "알림 삭제에 실패했습니다." });
+        return handleError(
+          res,
+          err as AxiosError,
+          "알림 삭제 중 오류가 발생했습니다."
+        );
       }
 
     default:

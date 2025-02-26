@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: "https://wikied-api.vercel.app/9-3/",
 });
 
@@ -45,5 +45,3 @@ const setupInterceptors = (instance: AxiosInstance) => {
 
 setupInterceptors(instance);
 setupInterceptors(proxy);
-
-export default instance;

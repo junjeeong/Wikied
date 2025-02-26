@@ -6,7 +6,7 @@ const ServerError = () => {
     <main className="flex justify-center items-center h-screen">
       <div className="flex flex-col mb-44 w-[1200px] h-[250px]">
         <h2 className="font-bold text-[#3ecfad] text-[80px]">
-          500 Internal Server Error
+          500 Server Error
         </h2>
         <p className="mt-4 text-gray-400">
           서버에 문제가 발생했습니다.
