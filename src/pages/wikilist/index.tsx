@@ -1,5 +1,5 @@
 import { getProfiles } from "@/api/profile";
-import { Profile } from "@/types/types";
+import { AxiosFailed, AxiosSuccess, Profile } from "@/types/types";
 import WikiListTitle from "@/components/WikiListTitle";
 import WikiCardList from "@/components/WikiCardList";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -12,11 +12,32 @@ interface WikiListPageProps {
 
 export const getServerSideProps = async () => {
   const res = await getProfiles({ pageSize: 12 });
-  return {
-    props: {
-      initialList: res,
-    },
-  };
+
+  if (!res.ok) {
+    const response = res as AxiosFailed;
+    if (response.status === 404) {
+      return {
+        redirect: {
+          destination: "/404",
+          permanent: false,
+        },
+      };
+    } else {
+      return {
+        redirect: {
+          destination: "/500",
+          permanent: false,
+        },
+      };
+    }
+  } else {
+    const response = res as AxiosSuccess;
+    return {
+      props: {
+        initialList: response.data.list,
+      },
+    };
+  }
 };
 
 const WikiListPage = ({ initialList }: WikiListPageProps) => {

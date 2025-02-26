@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
 import { AxiosError } from "axios";
-import instance from "@/api/axios";
+import {instance} from "@/api/axios";
 import handleSuccess from "@/pages/api/handleSuccess";
 import handleError from "@/pages/api/handleError";
 

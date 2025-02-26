@@ -100,3 +100,15 @@ export interface PatchArticleProps {
     title: string;
   };
 }
+
+export interface AxiosFailed {
+  ok: boolean;
+  status: number;
+  message: string;
+}
+
+export interface AxiosSuccess {
+  ok: boolean;
+  data: any;
+  message: string;
+}
