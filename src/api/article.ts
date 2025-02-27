@@ -52,7 +52,7 @@ export const postArticle = async (body: postArticleProps) => {
 // 게시글 상세 조회
 export const getArticle = async (articleId: number) => {
   try {
-    const res = await proxy.get(`/api/articles/${articleId}`);
+    const res = await instance.get(`/articles/${articleId}`);
     return handleSuccess(res, "게시글 상세 조회에 성공했습니다.");
   } catch (err) {
     return handleError(err as AxiosError);
