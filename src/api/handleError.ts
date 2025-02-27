@@ -5,8 +5,8 @@ const handleError = (err: AxiosError) => {
 
   return {
     ok: false,
-    status: err.response?.status || 500,
-    message: err.response?.statusText || "서버에 오류가 발생했습니다.",
+    data: err,
+    message: err.message || "서버에 오류가 발생했습니다.",
   };
 };
 

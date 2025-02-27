@@ -16,7 +16,7 @@ const useFetchArticle = (articleId: number) => {
       if (res.ok) {
         setArticle(res.data);
       } else {
-        if (res.status === 404) {
+        if (res.data.status === 404) {
           router.push("/404");
         } else {
           router.push("/500");
