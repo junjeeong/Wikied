@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
-import instance from "@/api/axios";
-import handleError from "@/pages/api/handleError";
+import { instance } from "@/api/axios";
 import { AxiosError } from "axios";
+import handleError from "@/pages/api/handleError";
 import handleSuccess from "@/pages/api/handleSuccess";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

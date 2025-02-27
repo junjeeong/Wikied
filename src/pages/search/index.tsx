@@ -7,7 +7,7 @@ import PaginationBar from "@/components/PaginationBar";
 import SearchedWikiList from "@/components/SearchedWikiList";
 import useSearchName from "@/hooks/useSearchName";
 import useViewport from "@/hooks/useViewport";
-import TotalCountRender from "./totalCountRender";
+import TotalCountRender from "@/pages/search/TotalCountRender";
 
 interface SearchPageProps extends GetProfilesResponse {
   q: string;
@@ -16,7 +16,7 @@ interface SearchPageProps extends GetProfilesResponse {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  let res: GetProfilesResponse;
+  let res;
   const { page, q } = context.query;
 
   if (context.query) {
@@ -30,8 +30,8 @@ export const getServerSideProps = async (
 
   return {
     props: {
-      totalCount: res.totalCount || 0,
-      list: res.list || [],
+      totalCount: res.data.totalCount || 0,
+      list: res.data.list || [],
       q: q || "",
     },
   };

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
 import { AxiosError } from "axios";
-import instance from "@/api/axios";
+import { instance } from "@/api/axios";
 import handleError from "@/pages/api/handleError";
 import handleSuccess from "@/pages/api/handleSuccess";
 
@@ -9,21 +9,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
-  const articleId = req.query.id;
+  const articleId = req.query.articleId;
+  console.log(articleId);
+
   if (!articleId) {
     return res.status(400).json({
       ok: false,
       data: null,
       message: "유효하지 않은 게시글 ID입니다.",
+      articleId,
     });
   }
 
   switch (req.method) {
     case "GET":
       try {
-        const response = await instance.get(`/articles/${articleId}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const response = await instance.get(`/articles/${articleId}`);
         return handleSuccess(res, response.data, "게시글 조회에 성공했습니다");
       } catch (err) {
         return handleError(

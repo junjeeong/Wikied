@@ -5,6 +5,7 @@ import WikiCardList from "@/components/WikiCardList";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useListState from "@/hooks/useListState";
+import { notFound } from "next/navigation";
 
 interface WikiListPageProps {
   initialList: Profile[];
@@ -12,11 +13,27 @@ interface WikiListPageProps {
 
 export const getServerSideProps = async () => {
   const res = await getProfiles({ pageSize: 12 });
-  return {
-    props: {
-      initialList: res,
-    },
-  };
+
+  console.log(res);
+
+  if (res.ok)
+    return {
+      props: {
+        initialList: res.data.list,
+      },
+    };
+  else if (res.data.status === 404) {
+    return {
+      notFound: true,
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/500",
+        permanent: false,
+      },
+    };
+  }
 };
 
 const WikiListPage = ({ initialList }: WikiListPageProps) => {
