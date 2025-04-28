@@ -13,8 +13,8 @@ Wikied는 위키나무를 벤치마킹해 제작한 사이드 프로젝트입니
 ## 👥팀원
 | 정준영 | 전상민 | 김진 | 김원 | 
 | :---: | :---: | :---: | :---: |
-|<img src="https://avatars.githubusercontent.com/u/81373171?v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/174448906?v=4" width="100" height="100">|<img src="" width="100" height="100">|<img src="" width="100" height="100">|
-|<a href="https://github.com/junjeeong">junjeeong</a>|<a href="https://github.com/venise5224">junjeong</a>|<a href="">venise5224</a>|<a href="https://github.com/wooy0">wooy0</a>|
+|<img src="https://avatars.githubusercontent.com/u/81373171?v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/174448906?v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/159109607?v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/173790047?v=4" width="100" height="100">|
+|<a href="https://github.com/junjeeong">junjeeong</a>|<a href="https://github.com/venise5224">junjeong</a>|<a href="https://github.com/jjeankim">jjeankim</a>|<a href="https://github.com/DrowsyzzZ">DrowsyzzZ</a>|
 
 ## 🛠️기술스택
 <img src="https://github.com/user-attachments/assets/4eeacf3f-e690-43b3-aa52-18c8646497a5" width="12%" height="12%">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -84,5 +84,21 @@ Wikied는 위키나무를 벤치마킹해 제작한 사이드 프로젝트입니
 - 내가 작성한 댓글에 대해서 수정하기 버튼을 누르면 게시글을 수정 할 수 있습니다.
 - 내가 작성한 댓글에 대해서 ‘삭제하기’ 버튼을 누르면 게시글을 삭제할 수 있습니다.
 
-## 영상
+## 미리보기
+[랜딩페이지]
+https://github.com/user-attachments/assets/843e73bd-1681-4c51-98f7-a40aa3090c71
+
+[로그인/회원가입]
+https://github.com/user-attachments/assets/e43b2247-5059-4662-86f8-1fa0fe45f4c8
+
+
+[위키 목록 페이지]
+https://github.com/user-attachments/assets/3f57f4e6-53b6-4518-a2f3-560fb42040c2
+
+[자유 게시판 페이지]
+https://github.com/user-attachments/assets/cd372ecb-6af7-4c21-a785-82aca89073e1
+
+[나의위키/설정 페이지]
+https://github.com/user-attachments/assets/32d4518c-01ae-4ee3-b9f5-b994a6fff177
+
 
