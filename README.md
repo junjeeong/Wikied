@@ -1,5 +1,6 @@
 ## 📚 지인의 위키를 작성하고 공유하는 플랫폼 Wikid!!
-<img width="821" alt="스크린샷 2025-04-28 오후 3 01 54" src="https://github.com/user-attachments/assets/d01613be-510d-4c18-9cf9-d82ebb022bd6" />
+https://github.com/user-attachments/assets/288b4f09-5afa-4f9a-91b9-0ce5f729b962
+
 
 
 ## 💁‍♂️ 소개
