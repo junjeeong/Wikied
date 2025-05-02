@@ -86,20 +86,16 @@ Wikied는 위키나무를 벤치마킹해 제작한 사이드 프로젝트입니
 - 내가 작성한 댓글에 대해서 ‘삭제하기’ 버튼을 누르면 게시글을 삭제할 수 있습니다.
 
 ## 미리보기
-[랜딩페이지]
-https://github.com/user-attachments/assets/843e73bd-1681-4c51-98f7-a40aa3090c71
+[홈페이지]
+![홈](https://github.com/user-attachments/assets/dba4701d-1f76-4358-9ff5-85272ab75ac0)
 
-[로그인/회원가입]
-https://github.com/user-attachments/assets/e43b2247-5059-4662-86f8-1fa0fe45f4c8
-
+[검색 기능]
+![검색](https://github.com/user-attachments/assets/b2a219e6-2cbf-43fc-b4c2-72a9c32c4539)
 
 [위키 목록 페이지]
-https://github.com/user-attachments/assets/3f57f4e6-53b6-4518-a2f3-560fb42040c2
+![모든 위키](https://github.com/user-attachments/assets/63631a9a-7374-4261-9c0d-f91115943ca6)
 
-[자유 게시판 페이지]
-https://github.com/user-attachments/assets/cd372ecb-6af7-4c21-a785-82aca89073e1
 
-[나의위키/설정 페이지]
-https://github.com/user-attachments/assets/32d4518c-01ae-4ee3-b9f5-b994a6fff177
+
 
 
