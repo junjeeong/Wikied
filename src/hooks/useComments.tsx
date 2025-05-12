@@ -7,8 +7,8 @@ const useComments = (articleId: number) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const comments = await getComments(articleId);
-      setList(comments);
+      const res = await getComments(articleId);
+      setList(res.data.list);
     };
     fetchData();
   }, [articleId]);

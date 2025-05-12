@@ -10,8 +10,8 @@ const useSubmitComment = (
   const [value, setValue] = useState<string>("");
 
   const updateList = async () => {
-    const list = await getComments(Number(router.query.id));
-    setList(list);
+    const res = await getComments(Number(router.query.id));
+    setList(res.data.list);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
