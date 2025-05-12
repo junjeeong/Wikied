@@ -1,11 +1,11 @@
 import axios, { AxiosInstance } from "axios";
 
-const instance = axios.create({
-  baseURL: "https://wikied-api.vercel.app/junyeong-9/",
+export const instance = axios.create({
+  baseURL: "https://wikied-api.vercel.app/9-3/",
 });
 
 export const proxy = axios.create({
-  baseURL: "http://localhost:3000/", // 배포시 주소 변경 -> "https://9-3-wikied.vercel.app/"
+  baseURL: "http://localhost:3000", // 배포시 주소 변경 -> "https://9-3-wikied.vercel.app/"
 });
 
 // 응답 인터셉터
@@ -45,5 +45,3 @@ const setupInterceptors = (instance: AxiosInstance) => {
 
 setupInterceptors(instance);
 setupInterceptors(proxy);
-
-export default instance;

@@ -1,33 +1,40 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
-import instance from "@/api/axios";
+import { AxiosError } from "axios";
+import { instance } from "@/api/axios";
+import handleError from "@/pages/api/handleError";
+import handleSuccess from "@/pages/api/handleSuccess";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
-  const { articleId } = req.query;
+  const articleId = req.query.articleId;
+  console.log(articleId);
+
   if (!articleId) {
-    return res
-      .status(400)
-      .json({ message: "쿼리 파라미터에 게시글 ID가 없습니다." });
+    return res.status(400).json({
+      ok: false,
+      data: null,
+      message: "유효하지 않은 게시글 ID입니다.",
+      articleId,
+    });
   }
 
   switch (req.method) {
     case "GET":
-      // 게시글 조회 로직
       try {
-        const response = await instance.get(`/articles/${articleId}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        return res.status(200).json(response.data);
+        const response = await instance.get(`/articles/${articleId}`);
+        return handleSuccess(res, response.data, "게시글 조회에 성공했습니다");
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 조회에 실패했습니다." });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 조회 중 오류가 발생했습니다."
+        );
       }
 
     case "POST":
-      // 댓글 등록 로직
       try {
         const response = await instance.post(
           `/articles/${articleId}/comments`,
@@ -36,14 +43,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        return res.status(201).json(response.data);
+        return handleSuccess(res, response.data, "댓글 등록에 성공했습니다");
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 등록에 실패했습니다." });
+        return handleError(
+          res,
+          err as AxiosError,
+          "댓글 등록 중 오류가 발생했습니다."
+        );
       }
 
     case "PATCH":
-      // 게시글 수정 로직
       try {
         const response = await instance.patch(
           `/articles/${articleId}`,
@@ -52,10 +61,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        return res.status(200).json(response.data);
+        return handleSuccess(res, response.data, "게시글 수정에 성공했습니다");
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 수정에 실패했습니다." });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 수정 중 오류가 발생했습니다."
+        );
       }
 
     case "DELETE":
@@ -63,10 +75,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const response = await instance.delete(`/articles/${articleId}`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        return res.status(200).json(response.data);
+        return handleSuccess(res, response.data, "게시글 삭제에 성공했습니다");
       } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "게시글 삭제에 실패했습니다." });
+        return handleError(
+          res,
+          err as AxiosError,
+          "게시글 삭제 중 오류가 발생했습니다."
+        );
       }
 
     default:

@@ -6,5 +6,4 @@ const formatCurrentDate = () => {
   return `${year}.${month}.${day}`;
 };
 
-
 export default formatCurrentDate;
