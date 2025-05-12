@@ -8,12 +8,15 @@ import { User } from "@/types/types";
 interface AuthStore {
   user: User | null;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => Promise<string | undefined>;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<{ status: number; message: any; ok: boolean } | undefined>;
   logout: () => void;
   updateProfile: (
     securityAnswer: string,
     securityQuestion: string
-  ) => Promise<void>;
+  ) => Promise<{ status: number; message: any; ok: boolean } | undefined>;
 }
 
 // persist 미들웨어에 타입을 추가합니다.
@@ -30,10 +33,19 @@ const useAuthStore = create<AuthStore>()(
               user: userData.user,
               isLoggedIn: true,
             });
+            return {
+              status: 200,
+              message: "로그인에 성공하였습니다.",
+              ok: true,
+            };
           }
         } catch (error) {
           if (error instanceof AxiosError) {
-            return error.response?.data.message;
+            return {
+              status: 400,
+              message: error,
+              ok: false,
+            };
           }
         }
       },
@@ -42,6 +54,11 @@ const useAuthStore = create<AuthStore>()(
           user: null,
           isLoggedIn: false,
         });
+        return {
+          status: 200,
+          message: "로그아웃에 성공하였습니다.",
+          ok: true,
+        };
       },
       updateProfile: async (securityAnswer, securityQuestion) => {
         const { user } = get();
@@ -59,6 +76,11 @@ const useAuthStore = create<AuthStore>()(
               },
             },
           });
+          return {
+            status: 200,
+            message: "프로필 업데이트에 성공했습니다.",
+            ok: true,
+          };
         }
       },
     }),

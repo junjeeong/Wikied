@@ -4,25 +4,44 @@ import WikiListTitle from "@/components/WikiListTitle";
 import WikiCardList from "@/components/WikiCardList";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useListState from "@/hooks/useListState";
+import { notFound } from "next/navigation";
 
-interface WikiListProps {
+interface WikiListPageProps {
   initialList: Profile[];
 }
 
 export const getServerSideProps = async () => {
   const res = await getProfiles({ pageSize: 12 });
-  return {
-    props: {
-      initialList: res,
-    },
-  };
+
+  console.log(res);
+
+  if (res.ok)
+    return {
+      props: {
+        initialList: res.data.list,
+      },
+    };
+  else if (res.data.status === 404) {
+    return {
+      notFound: true,
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/500",
+        permanent: false,
+      },
+    };
+  }
 };
 
-const WikiList = ({ initialList }: WikiListProps) => {
-  const { loadingRef, hasMore, list } = useInfiniteScroll(1, initialList);
+const WikiListPage = ({ initialList }: WikiListPageProps) => {
+  const { list, hasMore, loadMoreProfiles } = useListState(initialList);
+  const loadingRef = useInfiniteScroll(loadMoreProfiles, hasMore);
 
   return (
-    <div className="max-w-[840px] w-full mx-auto h-full px-[20px] Tablet:px-[60px] Mobile:px-[100px]">
+    <div className="mx-auto px-[20px] Mobile:px-[100px] Tablet:px-[60px] w-full max-w-[840px] h-full">
       <WikiListTitle />
       <WikiCardList list={list} />
       {hasMore && (
@@ -34,4 +53,4 @@ const WikiList = ({ initialList }: WikiListProps) => {
   );
 };
 
-export default WikiList;
+export default WikiListPage;

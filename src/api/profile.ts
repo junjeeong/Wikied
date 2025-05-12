@@ -1,5 +1,8 @@
-import instance, { proxy } from "@/api/axios";
+import { AxiosError } from "axios";
+import { instance, proxy } from "@/api/axios";
 import { PatchBody } from "@/types/types";
+import handleError from "@/api/handleError";
+import handleSuccess from "@/api/handleSuccess";
 
 interface GetProfilesQuery {
   page?: number;
@@ -33,10 +36,9 @@ export const getProfiles = async (query: GetProfilesQuery = {}) => {
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);
 
-    return res.data.list;
+    return handleSuccess(res, "프로필 목록 조회에 성공했습니다.");
   } catch (err) {
-    console.error("프로필 정보들을 불러오지 못했습니다.", err);
-    return [];
+    return handleError(err as AxiosError);
   }
 };
 
@@ -44,17 +46,20 @@ export const getProfiles = async (query: GetProfilesQuery = {}) => {
 export const getProfilesByName = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
-
-  const queryString = `?page=${page}&pageSize=3&name=${query?.name || ""}`;
+  const pageSize = query?.pageSize || 3;
+  const name = query?.name || "";
+  const queryString = `?page=${page}&pageSize=${pageSize}&name=${name}`;
 
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);
 
     // 이름 검색과 관련한 api 요청은 totalCount도 받아야 하기 때문에 data까지만 return
-    return res.data;
+    return handleSuccess(
+      res,
+      "해당하는 이름의 프로필을 조회하는데 성공했습니다."
+    );
   } catch (err) {
-    console.error("프로필 정보들을 불러오지 못했습니다.", err);
-    return [];
+    return handleError(err as AxiosError);
   }
 };
 
@@ -62,36 +67,41 @@ export const getProfilesByName = async (query: GetProfilesQuery = {}) => {
 export const getUserProfile = async (code: string) => {
   try {
     const res = await instance.get(`/profiles/${code}`);
-    return res;
+    return handleSuccess(res, "사용자 프로필 조회에 성공했습니다.");
   } catch (err) {
-    console.error("프로필 정보들을 불러오지 못했습니다.", err);
-    return;
+    return handleError(err as AxiosError);
   }
 };
 
 export const patchProfile = async (query: PatchProfileQuery) => {
   const { code, body } = query;
-  const res = await proxy.patch(`/api/profiles/${code}`, body);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
+
+  try {
+    const res = await proxy.patch(`/api/profiles/${code}`, body);
+    return handleSuccess(res);
+  } catch (err) {
+    return handleError(err as AxiosError);
+  }
 };
 
 // 프로필 수정 중 체크
 export const getProfilePing = async (code: string) => {
   try {
     const res = await instance.get(`/profiles/${code}/ping`);
-    return res;
+    return handleSuccess(res, "프로필 수정중 확인 요청에 성공했습니다.");
   } catch (err) {
-    console.error("프로필 핑 요청 중 에러 발생: ", err);
-    return;
+    return handleError(err as AxiosError);
   }
 };
 
 // 프로필 생성
 export const postProfile = async (body: PostProfileQuery) => {
-  const res = await proxy.post(`/api/profiles`, body);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
+  try {
+    const res = await proxy.post(`/api/profiles`, body);
+    return handleSuccess(res);
+  } catch (err) {
+    return handleError(err as AxiosError);
+  }
 };
 
 // 프로필 수정 중 갱신
@@ -99,7 +109,10 @@ export const postProfilePing = async (
   content: PostProfilePingQuery,
   code: string
 ) => {
-  const res = await proxy.post(`/api/profiles/${code}`, content);
-  if (res.status >= 200 && res.status < 300) return res.data;
-  else return {};
+  try {
+    const res = await proxy.post(`/api/profiles/${code}`, content);
+    return handleSuccess(res);
+  } catch (err) {
+    handleError(err as AxiosError);
+  }
 };

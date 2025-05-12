@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import useAuthStore from "@/store/AuthStore";
@@ -6,6 +6,7 @@ import { PatchBody, UserProfile } from "@/types/types";
 import {
   getProfilePing,
   getProfiles,
+  getProfilesByName,
   getUserProfile,
   patchProfile,
   postProfilePing,
@@ -28,30 +29,39 @@ interface WikiPageProps {
   code: string;
 }
 
-export const getServerSideProps: GetServerSideProps<WikiPageProps> = async (
-  context
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
 ) => {
   // URL 경로에서 'name' 파라미터 추출
   const { name } = context.params!;
+  let res;
   if (typeof name !== "string") {
     return { notFound: true };
   }
 
   // 'name'으로 'code'가 포함된 해당 유저의 프로필 데이터를 가져옴
-  const [profileByName] = await getProfiles({ name });
-  const currentCode = profileByName.code;
+  res = await getProfilesByName({ name });
+
+  const currentCode = res.data.list[0].code;
 
   // 가져온 'code'로 유저의 상세 프로필 데이터를 가져옴 (SSR)
-  const res = await getUserProfile(currentCode);
-  if (!res?.data) {
-    return { notFound: true };
+  res = await getUserProfile(currentCode);
+  if (res.ok)
+    return {
+      props: {
+        initialProfile: res.data,
+        code: currentCode,
+      },
+    };
+  else {
+    if (res.data.status === 404) return { notFound: true };
+    else
+      return {
+        redirect: {
+          destination: "/500",
+        },
+      };
   }
-  return {
-    props: {
-      initialProfile: res.data,
-      code: currentCode,
-    },
-  };
 };
 
 const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
@@ -121,14 +131,14 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
 
   // 위키 참여하기 버튼을 누르면
   const handleEdit = async () => {
-    const res = await getUserProfile(code);
-    setUserProfile(res?.data);
+    const userProfile = await getUserProfile(code);
+    setUserProfile(userProfile?.data);
     // 해당 위키 페이지가 수정 중인지 확인
     const getPingData = await getProfilePing(code);
 
     // status = 200 -> 누군가 편집 중
-    if (getPingData?.status === 200) {
-      const updatedTime = new Date(userProfile.updatedAt);
+    if (getPingData.data.status === 200) {
+      const updatedTime = new Date(userProfile.data.updatedAt);
       const registeredTime = new Date(getPingData.data.registeredAt);
 
       if (updatedTime > registeredTime) {
@@ -192,9 +202,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
       image: imageUrl,
     };
 
-    const response = await patchProfile({ code, body: editedUserProfile });
+    const res = await patchProfile({ code, body: editedUserProfile });
 
-    setUserProfile(response);
+    setUserProfile(res.data);
     setIsEditing(false);
   };
 
@@ -214,7 +224,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="relative flex justify-center w-full h-full mb-[40px]"
+        className="relative flex justify-center mb-[40px] w-full h-full"
       >
         <div
           className={`${
@@ -224,9 +234,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
           {/* Profile title */}
           {/* 편집 상태에서는 렌더링 제외 */}
           {!isEditing && (
-            <div className="relative mt-[78px] Tablet:mt-[60px] Mobile:mt-10">
+            <div className="relative mt-[78px] Mobile:mt-10 Tablet:mt-[60px]">
               <WikiProfileTitle name={userProfile.name} />
-              <div className="absolute top-0 right-0">
+              <div className="top-0 right-0 absolute">
                 <FilledButton
                   onClick={handleEdit}
                   editing={isEditing}
@@ -248,8 +258,8 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
           )}
 
           {/* Profile  Card */}
-          {/* <div className="PC:absolute PC:top-[38px] PC:right-0 Tablet:mt-[107px] Mobile:mt-[70px]"> */}
-          <div className="PC:absolute PC:top-[38px] PC:right-0 Tablet:mt-[107px] Mobile:mt-[70px]">
+          {/* <div className="PC:top-[38px] PC:right-0 PC:absolute Mobile:mt-[70px] Tablet:mt-[107px]"> */}
+          <div className="PC:top-[38px] PC:right-0 PC:absolute Mobile:mt-[70px] Tablet:mt-[107px]">
             <ProfileCard
               userProfile={userProfile}
               isMe={isMe}
@@ -260,7 +270,7 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
 
             {/* 편집 상태일 때 취소 / 제출 버튼 렌더링 */}
             {isEditing && (
-              <div className="PC:relative absolute Tablet:top-[35px] Mobile:top-[10px] Mobile:right-[20px] Tablet:right-[60px] flex gap-[10px] justify-end PC:mt-[33px]">
+              <div className="Mobile:top-[10px] Tablet:top-[35px] Mobile:right-[20px] Tablet:right-[60px] absolute PC:relative flex justify-end gap-[10px] PC:mt-[33px]">
                 <OutlineButton
                   type="button"
                   size="small"
@@ -277,12 +287,12 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
 
           {/* Profile Content */}
           {isEditing && (
-            <div className="mt-[40px] Tablet:mt-[10px] Mobile:mt-[15px]">
+            <div className="mt-[40px] Mobile:mt-[15px] Tablet:mt-[10px]">
               <TextEditor contentData={userProfile.content} />
             </div>
           )}
           {!isEditing && (
-            <div className="ql-editor mt-[41px] Tablet:mt-[45px] Mobile:mt-7 min-h-[500px]">
+            <div className="mt-[41px] Mobile:mt-7 Tablet:mt-[45px] min-h-[500px] ql-editor">
               <WikiContent content={userProfile.content} onClick={handleEdit} />
             </div>
           )}

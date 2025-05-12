@@ -15,26 +15,26 @@ export const getServerSideProps: GetServerSideProps = async (
   let totalCount = 0;
 
   try {
-    const bestResponse = await getArticles({
+    const res = await getArticles({
       page: 1,
       pageSize: 4,
       orderBy: "like",
       keyword: "",
     });
-    bestArticles = bestResponse.list;
+    bestArticles = res.data.list;
   } catch (error) {
     console.error("Error fetching best articles:", error);
   }
 
   try {
-    const response = await getArticles({
+    const res = await getArticles({
       page: Number(page),
       pageSize: 10,
       orderBy: String(order),
       keyword: String(keyword),
     });
-    totalArticles = response.list;
-    totalCount = response.totalCount;
+    totalArticles = res.data.list;
+    totalCount = res.data.totalCount;
   } catch (error) {
     console.error("Error fetching total articles:", error);
   }

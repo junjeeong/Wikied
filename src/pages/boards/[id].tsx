@@ -1,52 +1,26 @@
 import { useRouter } from "next/router";
-import { getArticle } from "@/api/article";
-import { Article } from "@/types/types";
-import { useEffect, useState } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ArticleCommentContainer from "@/containers/ArticleCommentContainer";
 import ArticleDetailContainer from "@/containers/ArticleDetailContainer";
 import BoardsDetailLayout from "@/components/Layout/BoardsDetailLayout";
+import useFetchArticle from "@/hooks/useFetchData";
 
 const BoardsDetailPage = () => {
-  const [article, setArticle] = useState<Article | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { id } = router.query;
   const articleId = Number(id);
+  const { article, isLoading } = useFetchArticle(Number(id));
 
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    const fetchData = async () => {
-      try {
-        const res = await getArticle(articleId);
-        setArticle(res);
-      } catch (error) {
-        console.error("Failed to fetch article:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [articleId, router.isReady]);
-
-  if (!article) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <>
-      {isLoading && <LoadingSpinner />}
-
-      <BoardsDetailLayout>
-        <ArticleDetailContainer article={article} articleId={articleId} />
-        <ArticleCommentContainer articleId={articleId} />
-      </BoardsDetailLayout>
+      {article && (
+        <BoardsDetailLayout>
+          <ArticleDetailContainer article={article} articleId={articleId} />
+          <ArticleCommentContainer articleId={articleId} />
+        </BoardsDetailLayout>
+      )}
     </>
   );
 };
