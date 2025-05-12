@@ -6,6 +6,7 @@ import { PatchBody, UserProfile } from "@/types/types";
 import {
   getProfilePing,
   getProfiles,
+  getProfilesByName,
   getUserProfile,
   patchProfile,
   postProfilePing,
@@ -39,8 +40,9 @@ export const getServerSideProps = async (
   }
 
   // 'name'으로 'code'가 포함된 해당 유저의 프로필 데이터를 가져옴
-  res = await getProfiles({ name });
-  const currentCode = res.data.code;
+  res = await getProfilesByName({ name });
+
+  const currentCode = res.data.list[0].code;
 
   // 가져온 'code'로 유저의 상세 프로필 데이터를 가져옴 (SSR)
   res = await getUserProfile(currentCode);
@@ -178,12 +180,9 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
   // 편집 시작 시 5분 타이머 시작
   useEffect(() => {
     if (isEditing) {
-      const timer = setTimeout(
-        () => {
-          setDisconnectModalOpen(true);
-        },
-        5 * 60 * 1000
-      );
+      const timer = setTimeout(() => {
+        setDisconnectModalOpen(true);
+      }, 5 * 60 * 1000);
       return () => clearTimeout(timer);
     }
   }, [isEditing]);

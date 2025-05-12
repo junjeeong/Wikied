@@ -1,4 +1,4 @@
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { instance, proxy } from "@/api/axios";
 import { PatchBody } from "@/types/types";
 import handleError from "@/api/handleError";
@@ -46,8 +46,9 @@ export const getProfiles = async (query: GetProfilesQuery = {}) => {
 export const getProfilesByName = async (query: GetProfilesQuery = {}) => {
   const baseUrl = "/profiles";
   const page = query?.page || 1;
-
-  const queryString = `?page=${page}&pageSize=3&name=${query?.name || ""}`;
+  const pageSize = query?.pageSize || 3;
+  const name = query?.name || "";
+  const queryString = `?page=${page}&pageSize=${pageSize}&name=${name}`;
 
   try {
     const res = await instance.get(`${baseUrl}${queryString}`);

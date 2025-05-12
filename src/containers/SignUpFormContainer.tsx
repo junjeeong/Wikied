@@ -1,6 +1,6 @@
+import { useForm } from "react-hook-form";
 import FilledButton from "@/components/ui/Button/FilledButton";
 import FormInput from "@/components/FormInput";
-import { useForm } from "react-hook-form";
 import Link from "next/link";
 
 export interface InputValues {
@@ -53,6 +53,10 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
               type="text"
               register={register("name", {
                 required: true,
+                pattern: {
+                  value: /^[가-힣a-zA-Z]+$/,
+                  message: "한글 또는 영문으로 입력해 주세요",
+                },
                 maxLength: {
                   value: 10,
                   message: "10자 이하로 작성해 주세요",
@@ -72,6 +76,10 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                   value: /^\S+@\S+\.\S+$/,
                   message: "이메일 형식으로 작성해 주세요.",
                 },
+                maxLength: {
+                  value: 50,
+                  message: "50자 이하로 작성해 주세요",
+                },
               })}
               onKeyDown={handleKeyDown}
               error={errors.email}
@@ -85,7 +93,11 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
                 required: true,
                 minLength: {
                   value: 8,
-                  message: "8자 이상 작성해 주세요",
+                  message: "8자 이상 20자 이하로 작성해 주세요.",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "8자 이상 20자 이하로 작성해 주세요.",
                 },
               })}
               onKeyDown={handleKeyDown}
@@ -98,8 +110,10 @@ const SignUpFormContainer = ({ onSubmit }: SignUpFormContainerProps) => {
               type="password"
               register={register("passwordConfirmation", {
                 required: true,
-                validate: (value) =>
-                  value === password || "비밀번호가 일치하지 않습니다",
+                validate: {
+                  isPasswordCorrect: (value) =>
+                    value === password || "비밀번호가 일치하지 않습니다",
+                },
               })}
               onKeyDown={handleKeyDown}
               error={errors.passwordConfirmation}
