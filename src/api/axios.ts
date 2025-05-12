@@ -8,7 +8,7 @@ export const proxy = axios.create({
   baseURL:
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000" // 개발 모드
-      : "https://wikied-api.vercel.app/9-3/", // 프로덕션 모드
+      : "https://wikied-api.vercel.app/", // 프로덕션 모드
 });
 
 // 응답 인터셉터
