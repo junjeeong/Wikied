@@ -26,9 +26,9 @@ const UserPaginationContainer = () => {
 
   useEffect(() => {
     const fetchData = async (query: Query) => {
-      const { list, totalCount } = await getProfiles(query);
-      setData(list);
-      setTotalPage(Math.ceil(totalCount / query.pageSize));
+      const res = await getProfiles(query);
+      setData(res.data.list);
+      setTotalPage(Math.ceil(res.data.totalCount / query.pageSize));
     };
     fetchData({
       page: currentPage,

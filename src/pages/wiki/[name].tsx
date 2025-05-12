@@ -113,7 +113,10 @@ const WikiPage = ({ initialProfile, code }: WikiPageProps) => {
     await postProfilePing({ securityAnswer: quizAnswer }, code);
     const data = getUpdatedPatchBody();
     const res = await patchProfile({ code, body: data });
-    setUserProfile({ userProfile, ...res });
+    setUserProfile((prev) => ({
+      ...prev,
+      ...res.data,
+    }));
     setIsEditing(false);
     reset();
   };

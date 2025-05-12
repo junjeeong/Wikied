@@ -23,3 +23,7 @@ declare module "*.mp4" {
   const src: string;
   export default src;
 }
+
+interface Window {
+  Kakao: any; // Kakao SDK의 타입을 정의합니다. 필요하면 정확한 타입으로 수정하세요.
+}
