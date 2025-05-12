@@ -28,7 +28,7 @@ export const postSignUp = async (body: PostSignUpQuery) => {
 // 로그인
 export const postSignIn = async (body: PostSignInQuery) => {
   try {
-    const res = await proxy.post(`/auth/signIn`, body);
+    const res = await proxy.post(`/api/signIn`, body);
     return handleSuccess(res);
   } catch (err) {
     return handleError(err as AxiosError);
