@@ -69,7 +69,7 @@ const WikiCard = ({ info }: WikiCardProps) => {
       {isOpen && (
         <ShareModal
           setIsOpen={setIsOpen}
-          url={`https://9-3-wikied.vercel.app/${info.name}`}
+          url={`https://9-3-wikied.vercel.app/wiki/${info.name}`}
         />
       )}
     </>
