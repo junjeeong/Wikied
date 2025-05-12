@@ -5,7 +5,10 @@ export const instance = axios.create({
 });
 
 export const proxy = axios.create({
-  baseURL: "http://localhost:3000", // 배포시 주소 변경 -> "https://9-3-wikied.vercel.app/"
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000" // 개발 모드
+      : "https://wikied-api.vercel.app/9-3/", // 프로덕션 모드
 });
 
 // 응답 인터셉터
