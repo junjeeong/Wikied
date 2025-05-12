@@ -28,9 +28,10 @@ const useAuthStore = create<AuthStore>()(
       login: async (email, password) => {
         try {
           const res = await postSignIn({ email, password });
-          if (res.data) {
+
+          if (res.ok) {
             set({
-              user: res.data.user,
+              user: res.data.data,
               isLoggedIn: true,
             });
             return {

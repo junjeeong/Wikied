@@ -17,7 +17,6 @@ const LoginPage = () => {
     if (res?.ok) {
       clearSubmitError();
       const user = useAuthStore.getState().user;
-      console.log(user?.profile);
       if (user?.profile !== null) {
         router.push(`/wiki/${user?.name}`);
       } else {
