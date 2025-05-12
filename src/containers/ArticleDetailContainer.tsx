@@ -44,7 +44,7 @@ const ArticleDetailContainer = ({
       setIsUpdating(true);
       const res = await patchArticle({ articleId, body });
 
-      setArticle(res);
+      setArticle(res.data);
       setIsOpen(false);
     } catch (error) {
       console.error("Failed to update article:", error);
@@ -73,7 +73,7 @@ const ArticleDetailContainer = ({
     try {
       const res = await postArticleLike(articleId);
 
-      setArticle(res);
+      setArticle(res.data);
     } catch (error) {
       console.error("Failed to add like:", error);
     }
@@ -83,7 +83,7 @@ const ArticleDetailContainer = ({
     try {
       const res = await deleteArticleLike(articleId);
 
-      setArticle(res);
+      setArticle(res.data);
     } catch (error) {
       console.error("Failed to remove like:", error);
     }

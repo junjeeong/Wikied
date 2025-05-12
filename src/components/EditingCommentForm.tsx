@@ -27,8 +27,10 @@ const EditingCommentForm = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await patchComment({ commentId: info.id, body: { content: value } });
-    const updatedComments = await getComments(Number(router.query.id));
-    setList(updatedComments);
+    const response = await getComments(Number(router.query.id));
+    if (response.ok) {
+      setList(response.data);
+    }
     setIsEdit(false);
   };
 
