@@ -27,10 +27,10 @@ const useAuthStore = create<AuthStore>()(
       isLoggedIn: false,
       login: async (email, password) => {
         try {
-          const userData = await postSignIn({ email, password });
-          if (userData) {
+          const res = await postSignIn({ email, password });
+          if (res.data) {
             set({
-              user: userData.user,
+              user: res.data.user,
               isLoggedIn: true,
             });
             return {
@@ -63,7 +63,7 @@ const useAuthStore = create<AuthStore>()(
       updateProfile: async (securityAnswer, securityQuestion) => {
         const { user } = get();
         if (user) {
-          const updatedProfileData = await postProfile({
+          const res = await postProfile({
             securityAnswer,
             securityQuestion,
           });
@@ -72,7 +72,7 @@ const useAuthStore = create<AuthStore>()(
               ...user,
               profile: {
                 ...user.profile,
-                ...updatedProfileData,
+                ...res.data,
               },
             },
           });
