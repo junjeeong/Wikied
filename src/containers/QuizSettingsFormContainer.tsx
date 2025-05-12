@@ -20,15 +20,15 @@ const QuizSettingsFormContainer = ({ onSubmit }: QuizSettingsFormProps) => {
     mode: "onSubmit",
   });
 
- const handleFormSubmit = async (data: QuizSettingsFormValues) => {
-   await onSubmit(data);
- };
+  const handleFormSubmit = async (data: QuizSettingsFormValues) => {
+    await onSubmit(data);
+  };
 
-const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  if (event.key === "Enter") {
-    handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
-  }
-};
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit(handleFormSubmit)(); // 엔터 키를 누르면 폼 제출
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen -mt-[80px] Mobile:px-5 bg-background">
@@ -58,6 +58,14 @@ const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
             type="text"
             register={register("securityQuestion", {
               required: "질문을 입력해 주세요",
+              maxLength: {
+                value: 10,
+                message: "질문은 최대 10자 이하이어야 합니다.",
+              },
+              pattern: {
+                value: /^[가-힣a-zA-Z\s]+[?]$/,
+                message: `한글 또는 영문이어야 하며 "?"로 끝나야 합니다.`,
+              },
             })}
             onKeyDown={handleKeyDown}
             error={errors.securityQuestion}
