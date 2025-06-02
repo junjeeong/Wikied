@@ -23,8 +23,7 @@ const LoginPage = () => {
         router.push("/quiz-settings");
       }
     } else {
-      console.log(res?.message);
-      notify("로그인에 실패했습니다.", "error");
+      notify(res?.message, "error");
       return;
     }
   };

@@ -34,7 +34,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       return handleSuccess(res, userData, "로그인에 성공했습니다.");
     } catch (err) {
-      handleError(res, err as AxiosError, "로그인 중 오류가 발생했습니다.");
+      return handleError(
+        res,
+        err as AxiosError,
+        "로그인 중 오류가 발생했습니다."
+      );
     }
   } else {
     res.setHeader("Allow", ["POST"]);
