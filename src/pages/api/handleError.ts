@@ -1,17 +1,21 @@
 import { AxiosError } from "axios";
 import { NextApiResponse } from "next";
 
+interface ErrorResponse {
+  message: string;
+  details: {
+    [key: string]: {
+      message: string;
+    };
+  };
+}
+
 const handleError = (
   res: NextApiResponse,
   err: AxiosError,
   defaultMessage: string
 ) => {
-  console.error(`API Route Error occurred: ${err.message}`);
-  return res.status(err.response?.status || 500).json({
-    ok: false,
-    data: err,
-    message: err.message || defaultMessage,
-  });
+  return res.status(err.response?.status || 500).json(err.response?.data);
 };
 
 export default handleError;

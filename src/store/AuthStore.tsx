@@ -26,28 +26,24 @@ const useAuthStore = create<AuthStore>()(
       user: null,
       isLoggedIn: false,
       login: async (email, password) => {
-        try {
-          const res = await postSignIn({ email, password });
+        const res = await postSignIn({ email, password });
 
-          if (res.ok) {
-            set({
-              user: res.data.data,
-              isLoggedIn: true,
-            });
-            return {
-              status: 200,
-              message: "로그인에 성공하였습니다.",
-              ok: true,
-            };
-          }
-        } catch (error) {
-          if (error instanceof AxiosError) {
-            return {
-              status: 400,
-              message: error,
-              ok: false,
-            };
-          }
+        if (res.ok) {
+          set({
+            user: res.data.data,
+            isLoggedIn: true,
+          });
+          return {
+            status: 200,
+            message: "로그인에 성공하였습니다.",
+            ok: true,
+          };
+        } else {
+          return {
+            status: 400,
+            message: res.message,
+            ok: false,
+          };
         }
       },
       logout: () => {
