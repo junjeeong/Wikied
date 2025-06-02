@@ -1,15 +1,6 @@
 import { AxiosError } from "axios";
 import { NextApiResponse } from "next";
 
-interface ErrorResponse {
-  message: string;
-  details: {
-    [key: string]: {
-      message: string;
-    };
-  };
-}
-
 const handleError = (
   res: NextApiResponse,
   err: AxiosError,

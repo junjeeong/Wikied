@@ -29,7 +29,7 @@ export const postSignUp = async (body: PostSignUpQuery) => {
   } catch (err) {
     return handleError(err as AxiosError);
   }
-}; //예외처리를 singUp 페이지에서 하고, 에러 메세지를 처리함
+};
 
 // 로그인
 export const postSignIn = async (
